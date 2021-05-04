@@ -26,9 +26,9 @@ class CompanyController extends Controller
             'domain' => Str::random(5) . 'empresax.com',
             'bd_database' => 'multi_tenant_' . Str::random(5),
             // 'bd_database' => 'teste_banco_externo',
-            'bd_hostname' => '127.0.0.1',
-            'bd_username' => 'root',
-            'bd_password' => '1@@LpjAdmin',
+            'bd_hostname' => env('DB_HOST'),
+            'bd_username' => env('DB_USERNAME'),
+            'bd_password' => env('DB_PASSWORD'),
         ]);
 
 
