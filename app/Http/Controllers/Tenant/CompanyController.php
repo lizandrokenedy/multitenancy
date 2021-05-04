@@ -32,10 +32,10 @@ class CompanyController extends Controller
         ]);
 
 
-        if ($criaDatabaseExterno = false) {
-            event(new CompanyCreated($company));
-        } else {
+        if ($rodaApenasMigrationsDatabaseExterno = false) {
             event(new DatabaseCreated($company));
+        } else {
+            event(new CompanyCreated($company));
         }
 
         dd($company);
