@@ -24,8 +24,8 @@ class CompanyController extends Controller
         $company = $this->company->create([
             'name' => 'Empresa X ' . Str::random(5),
             'domain' => Str::random(5) . 'empresax.com',
-            // 'bd_database' => 'multi_tenant_' . Str::random(5),
-            'bd_database' => 'teste_banco_externo',
+            'bd_database' => 'multi_tenant_' . Str::random(5),
+            // 'bd_database' => 'teste_banco_externo',
             'bd_hostname' => '127.0.0.1',
             'bd_username' => 'root',
             'bd_password' => '1@@LpjAdmin',
