@@ -19,12 +19,15 @@ class CompanyController extends Controller
         $this->company = $company;
     }
 
+    
+
     public function store(Request $request)
     {
         $company = $this->company->create([
-            'name' => 'Empresa X ' . Str::random(5),
-            'domain' => Str::random(5) . 'empresax.com',
-            'bd_database' => 'multi_tenant_' . Str::random(5),
+            'name' => 'Magazine Luiza',
+            // 'domain' => Str::random(5) . 'empresax.com',
+            'domain' => 'magazine-tenancy.local',
+            'bd_database' => 'magazine_tenant',
             // 'bd_database' => 'teste_banco_externo',
             'bd_hostname' => env('DB_HOST'),
             'bd_username' => env('DB_USERNAME'),
