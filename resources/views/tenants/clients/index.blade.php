@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <table id="table">
+                    <table id="table" class="table table-striped">
 
                     </table>
                 </div>
@@ -41,7 +41,7 @@
 
                 "ajax": {
                     "headers": {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        'X-CSRF-TOKEN': "{{csrf_token()}}"
                     },
                     "url": "{{ route('clients-list') }}",
                     "type": "POST"

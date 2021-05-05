@@ -86,14 +86,24 @@ class ClientController extends Controller
     public function clientsList(Request $request)
     {
         $clients = [
-            // "draw" => 1,
-            // "recordsTotal" => 57,
-            // "recordsFiltered" => 57,
+            "draw" => 1,
+            "recordsTotal" => 1,
+            "recordsFiltered" => 1,
             "data" => [
                 [
                     "id" => 1,
                     "nome" => "Magazine",
                     "host" => "magazine-tenancy.local"
+                ],
+                [
+                    "id" => 2,
+                    "nome" => "Ponto-frio",
+                    "host" => "Ponto-frio-tenancy.local"
+                ],
+                [
+                    "id" => 3,
+                    "nome" => "Casas-bahia",
+                    "host" => "Casas-bahia-tenancy.local"
                 ]
 
             ]
