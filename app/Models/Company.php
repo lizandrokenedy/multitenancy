@@ -9,6 +9,14 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $connection = 'tenant';
+
+    protected $table = 'companies';
+
+    protected $guarded = [
+        'id',
+    ];
+
     protected $fillable = [
         'name',
         'domain',

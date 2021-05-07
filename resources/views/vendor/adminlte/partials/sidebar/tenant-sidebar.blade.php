@@ -1,6 +1,6 @@
 <li class="nav-item">
 
-    <a class="nav-link" href="{{route('clients.index')}}">
+    <a class="nav-link" href="{{route('companies.index')}}">
         <i class="fas fa-building mr-1"></i>
         <p>
             Clientes
