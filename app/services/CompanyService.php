@@ -28,4 +28,9 @@ class CompanyService
     {
         return $this->repository->save($data);
     }
+
+    public function delete($id)
+    {
+        return $this->repository->delete($id);
+    }
 }

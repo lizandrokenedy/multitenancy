@@ -26,28 +26,16 @@ const index = (new function () {
         });
     }
 
-
-
-
-    excluir = function (id) {
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': self.token
-            },
-            url: `/tenants/companies/${id}`,
-            type: 'DELETE',
-        }).then(function (data) {
-            toastr.success(data.message);
-        }).catch(function (error) {
-            console.log(error.message);
-        })
+    destroy = function (id) {
+        deleteAjax(`/tenants/companies/${id}`);
+        document.location.reload();
     }
 
     self.renderAcoes = function (id) {
         const acoes = `
         <div>
             <a href="/tenants/companies/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
-            <a href="javascript:void(0)" data-acao="excluir" onclick="excluir(${id})" class="btn-sm btn-danger fa fa-trash"></a>
+            <a href="javascript:void(0)" data-acao="excluir" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>
         </div>
         `
         return acoes;

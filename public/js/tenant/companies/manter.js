@@ -1,5 +1,3 @@
-import * as ajaxTenant from '../../custom/ajax.js';
-
 const manter = (new function () {
     const self = this;
     self.id = $('#id');
@@ -14,12 +12,10 @@ const manter = (new function () {
         const data = self.form.serializeArray();
 
         if (self.id.val()) {
-            ajaxTenant.putAjax(`/tenants/companies/${self.id.val()}`, data)
+            putAjax(`/tenants/companies/${self.id.val()}`, data)
             return;
         }
-        ajaxTenant.postAjax('/tenants/companies', data);
+        postAjax('/tenants/companies', data);
     }
 
 });
-
-manter.init();

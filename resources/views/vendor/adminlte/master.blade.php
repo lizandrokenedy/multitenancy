@@ -105,7 +105,10 @@
         @endif
     @endif
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-    <script src="{{ asset('js/global.js') }}"></script>
+    <script src="{{ asset('js/config.js') }}"></script>
+    <script src="{{ asset('js/custom/messages.js') }}"></script>
+    <script src="{{ asset('js/custom/redirect.js') }}"></script>
+    <script src="{{ asset('js/custom/ajax.js') }}"></script>
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')

@@ -1,7 +1,4 @@
-import { toastrMessage } from './messages.js';
-import { refirectBackRouteWithMesssage } from './redirect.js'
-
-export function getAjax(url) {
+const getAjax = (url) => {
     $.ajax({
         url,
         type: 'GET',
@@ -12,7 +9,7 @@ export function getAjax(url) {
     });
 }
 
-export function postAjax(url, data = {}) {
+const postAjax = (url, data = {}) => {
     $.ajax({
         url,
         type: 'POST',
@@ -24,7 +21,7 @@ export function postAjax(url, data = {}) {
     });
 }
 
-export function putAjax(url, data = {}) {
+const putAjax = (url, data = {}) => {
     $.ajax({
         url,
         type: 'PUT',
@@ -36,7 +33,7 @@ export function putAjax(url, data = {}) {
     });
 }
 
-export function deleteAjax(url) {
+const deleteAjax = (url) => {
     $.ajax({
         url,
         type: 'DELETE',
