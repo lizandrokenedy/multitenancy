@@ -12,10 +12,10 @@ const manter = (new function () {
         const data = self.form.serializeArray();
 
         if (self.id.val()) {
-            putAjax(`/tenants/companies/${self.id.val()}`, data)
+            tenantAjax.put(`/tenants/companies/${self.id.val()}`, data)
             return;
         }
-        postAjax('/tenants/companies', data);
+        tenantAjax.post('/tenants/companies', data);
     }
 
 });

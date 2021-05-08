@@ -20,25 +20,24 @@ const index = (new function () {
                 { data: "bd_database", name: "bd_database", title: "BD Nome" },
                 { data: "bd_hostname", name: "bd_hostname", title: "BD Host" },
                 { data: "bd_username", name: "bd_username", title: "BD usuário" },
-                { data: "id", name: "id", title: "Ações", render: self.renderAcoes },
+                { data: "id", name: "id", title: "Ações", render: self.renderActions},
             ],
 
         });
     }
 
     destroy = function (id) {
-        deleteAjax(`/tenants/companies/${id}`);
-        document.location.reload();
+        tenantAjax.delete(`/tenants/companies/${id}`);
     }
 
-    self.renderAcoes = function (id) {
-        const acoes = `
+    self.renderActions= function (id) {
+        const actions = `
         <div>
             <a href="/tenants/companies/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
             <a href="javascript:void(0)" data-acao="excluir" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>
         </div>
         `
-        return acoes;
+        return actions;
     }
 
 });

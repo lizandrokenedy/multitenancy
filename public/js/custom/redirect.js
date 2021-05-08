@@ -1,10 +1,16 @@
-const redirectBackRoute = () => {
-    setTimeout(function () {
-        history.go(-1);
-    }, 2000)
-}
+const tenantRedirect = (new function () {
+    const self = this;
 
-const refirectBackRouteWithMesssage = (message, success = true) => {
-    toastrMessage(message, success)
-    redirectBackRoute()
-}
+    self.redirectBackRoute = () => {
+        setTimeout(function () {
+            history.go(-1);
+        }, 2000)
+    }
+
+    self.refirectBackRouteWithMesssage = (message, success = true) => {
+        toastrMessage(message, success)
+        self.redirectBackRoute()
+    }
+})
+
+
