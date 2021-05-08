@@ -3,7 +3,7 @@
     <a class="nav-link" href="{{route('companies.index')}}">
         <i class="fas fa-building mr-1"></i>
         <p>
-            Clientes
+            Empresa
         </p>
     </a>
 </li>

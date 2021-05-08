@@ -33,9 +33,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/tenant/companies/manter.js') }}"></script>
-    <script>
-        manter.init();
-
-    </script>
+    <script src="{{ asset('js/tenant/companies/manter.js') }}" type="module"></script>
 @stop

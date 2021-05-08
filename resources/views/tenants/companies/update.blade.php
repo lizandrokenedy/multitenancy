@@ -12,9 +12,8 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('companies.store') }}" method="post">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                        <input name="_method" type="hidden" value="PUT">
+                    <form name="form" id="form">
+                        <input type="hidden" name="id" id="id" value="{{ $company->id }}" />
                         @include('tenants.companies._partials.form')
                     </form>
                 </div>
@@ -34,9 +33,5 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/tenant/companies/manter.js') }}"></script>
-    <script>
-        manter.init();
-
-    </script>
+    <script src="{{ asset('js/tenant/companies/manter.js') }}" type="module"></script>
 @stop

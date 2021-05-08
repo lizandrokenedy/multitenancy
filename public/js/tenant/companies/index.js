@@ -1,7 +1,7 @@
 const index = (new function () {
 
     const self = this;
-    self.token = $('meta[name=csrf-token]').attr('content');
+
     self.table = $('#table');
 
     self.init = function () {
@@ -9,19 +9,11 @@ const index = (new function () {
     }
 
     self.createTable = function () {
-
         self.table.DataTable({
-            serverSide: true,
-            processing: true,
-            language: { url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json' },
             ajax: {
-                headers: {
-                    'X-CSRF-TOKEN': self.token
-                },
                 url: '/tenants/companies/companies-list',
                 type: "POST"
             },
-            searching: false,
             columns: [
                 { data: "name", name: "name", title: "Nome" },
                 { data: "domain", name: "domain", title: "Domínio" },
@@ -54,7 +46,7 @@ const index = (new function () {
     self.renderAcoes = function (id) {
         const acoes = `
         <div>
-            <a href="/tenants/companies/${id}" class="btn-sm btn-primary fa fa-edit"></a>
+            <a href="/tenants/companies/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
             <a href="javascript:void(0)" data-acao="excluir" onclick="excluir(${id})" class="btn-sm btn-danger fa fa-trash"></a>
         </div>
         `

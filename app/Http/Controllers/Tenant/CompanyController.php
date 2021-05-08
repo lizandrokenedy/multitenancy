@@ -30,34 +30,11 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request->all());
-
-        // $company = Company::create([
-        //     'name' => 'Magazine Luiza',
-        //     // 'domain' => Str::random(5) . 'empresax.com',
-        //     'domain' => 'magazine2-tenancy.local',
-        //     'bd_database' => 'magazine2_tenant',
-        //     // 'bd_database' => 'teste_banco_externo',
-        //     'bd_hostname' => env('DB_HOST'),
-        //     'bd_username' => env('DB_USERNAME'),
-        //     'bd_password' => env('DB_PASSWORD'),
-        // ]);
-
-
-        // if ($rodaApenasMigrationsDatabaseExterno = false) {
-        //     event(new DatabaseCreated($company));
-        // } else {
-        //     event(new CompanyCreated($company));
-        // }
-
-        // dd($company);
-
         try {
             DB::transaction(function () use ($request) {
 
                 $company = $this->service->save($request->all());
                 event(new CompanyCreated($company));
-
             });
 
             return $this->responseSuccess();
@@ -78,6 +55,17 @@ class CompanyController extends Controller
     public function create()
     {
         return view('tenants.companies.create');
+    }
+
+    public function edit($id)
+    {
+        $company = $this->service->findById($id);
+        return view('tenants.companies.update', compact('company'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        return $this->responseSuccess();
     }
 
     public function show($id)
