@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Messages\Messages;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -11,12 +12,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function responseSuccess($msg = 'Operação realizada com sucesso.', $status = 200)
+    public function responseSuccess($msg = Messages::OPERACAO_REALIZADA_COM_SUCESSO, $status = 200)
     {
         return response()->json(['message' => $msg, 'success' => true], $status);
     }
 
-    public function responseDataSuccess($data = [], $msg = 'Operação realizada com sucesso.', $status = 200)
+    public function responseDataSuccess($data = [], $msg = Messages::OPERACAO_REALIZADA_COM_SUCESSO, $status = 200)
     {
         return response()->json([
             "draw" => count($data),
@@ -28,7 +29,7 @@ class Controller extends BaseController
         ], $status);
     }
 
-    public function responseError($msg = 'Erro ao realizar operação.', $status = 400)
+    public function responseError($msg = Messages::ERRO_AO_REALIZAR_OPERACAO, $status = 400)
     {
         return response()->json(['message' => $msg, 'success' => false], $status);
     }

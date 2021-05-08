@@ -8,7 +8,7 @@ const tenantRedirect = (new function () {
     }
 
     self.refirectBackRouteWithMesssage = (message, success = true) => {
-        toastrMessage(message, success)
+        tenantMessage.toastrMessage(message, success)
         self.redirectBackRoute()
     }
 })

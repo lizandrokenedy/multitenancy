@@ -3,6 +3,8 @@ const manter = (new function () {
     self.id = $('#id');
     self.form = $('form');
     self.btnSave = $('#salvar');
+    self.domain = $('#domain');
+    self.name = $('#name');
 
     self.init = function () {
         self.btnSave.on('click', self.save);

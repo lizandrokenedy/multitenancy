@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Tenant;
 use App\Events\Tenant\CompanyCreated;
 use App\Events\Tenant\DatabaseCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompanyRequest;
+use App\Messages\CompanyMessages;
 use App\Models\Company;
 use App\Services\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class CompanyController extends Controller
@@ -31,11 +34,14 @@ class CompanyController extends Controller
     {
 
         try {
-            DB::transaction(function () use ($request) {
 
-                $company = $this->service->save($request->all());
-                event(new CompanyCreated($company));
-            });
+            $validate = Validator::make($request->all(), (new CompanyRequest())->rules());
+
+            if ($validate->fails()) {
+                return $this->responseError($validate->errors());
+            }
+
+            $this->service->save($request->all());
 
             return $this->responseSuccess();
         } catch (Exception $e) {
@@ -65,7 +71,20 @@ class CompanyController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $this->responseSuccess();
+        try {
+
+            $validate = Validator::make($request->all(), (new CompanyRequest())->rules());
+
+            if ($validate->fails()) {
+                return $this->responseError($validate->errors());
+            }
+
+            $this->service->update($request->all(), $id);
+            
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            $this->responseError($e->getMessage());
+        }
     }
 
     public function show($id)

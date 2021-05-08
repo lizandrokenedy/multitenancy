@@ -8,7 +8,12 @@ const tenantAjax = (new function () {
         }).then(function (res) {
             return res;
         }).catch(function (error) {
-            toastrMessage(error.responseJSON.message, false);
+            const errorMessage = error.responseJSON.message;
+            if (typeof errorMessage === 'object' && errorMessage !== null) {
+                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
+                return;
+            }
+            tenantMessage.toastrMessage(error.responseJSON.message, false);
         });
     }
 
@@ -20,7 +25,12 @@ const tenantAjax = (new function () {
         }).then(function (data) {
             tenantRedirect.refirectBackRouteWithMesssage(data.message);
         }).catch(function (error) {
-            toastrMessage(error.responseJSON.message, false);
+            const errorMessage = error.responseJSON.message;
+            if (typeof errorMessage === 'object' && errorMessage !== null) {
+                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
+                return;
+            }
+            tenantMessage.toastrMessage(error.responseJSON.message, false);
         });
     }
 
@@ -32,7 +42,12 @@ const tenantAjax = (new function () {
         }).then(function (data) {
             tenantRedirect.refirectBackRouteWithMesssage(data.message)
         }).catch(function (error) {
-            toastrMessage(error.responseJSON.message, false);
+            const errorMessage = error.responseJSON.message;
+            if (typeof errorMessage === 'object' && errorMessage !== null) {
+                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
+                return;
+            }
+            tenantMessage.toastrMessage(error.responseJSON.message, false);
         });
     }
 
@@ -41,12 +56,17 @@ const tenantAjax = (new function () {
             url,
             type: 'DELETE',
         }).then(function (data) {
-            toastrMessage(data.message);
+            tenantMessage.toastrMessage(data.message);
             setTimeout(function () {
                 document.location.reload();
             }, 2000)
         }).catch(function (error) {
-            toastrMessage(error.responseJSON.message, false);
+            const errorMessage = error.responseJSON.message;
+            if (typeof errorMessage === 'object' && errorMessage !== null) {
+                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
+                return;
+            }
+            tenantMessage.toastrMessage(error.responseJSON.message, false);
         })
     }
 
