@@ -21,11 +21,11 @@ class CompanyService
     /**
      * List All
      *
-     * @return Collection
+     *
      */
-    public function listDataTable(array $params, array $order): Collection
+    public function listAll()
     {
-        return $this->repository->queryDataTable($params, $order);
+        return $this->repository->query();
     }
 
 

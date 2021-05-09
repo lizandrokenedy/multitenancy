@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Tenant;
 
-use App\Helpers\DataTable;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRequest;
 use App\Services\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class CompanyController extends Controller
 {
@@ -47,10 +48,9 @@ class CompanyController extends Controller
     public function companiesList(Request $request)
     {
         try {
-            $order = DataTable::getOrder($request->all());
-            $data = $this->service->listDataTable($request->all(), $order);
-
-            return $this->responseDataTable($data, $request->draw);
+            return DataTables::of($this->service->listAll())
+                ->addIndexColumn()
+                ->toJson();
         } catch (Exception $e) {
             return $this->responseError();
         }

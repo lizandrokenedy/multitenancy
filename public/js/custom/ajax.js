@@ -57,9 +57,6 @@ const tenantAjax = (new function () {
             type: 'DELETE',
         }).then(function (data) {
             tenantMessage.toastrMessage(data.message);
-            setTimeout(function () {
-                document.location.reload();
-            }, 2000)
         }).catch(function (error) {
             const errorMessage = error.responseJSON.message;
             if (typeof errorMessage === 'object' && errorMessage !== null) {

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Company;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CompanyFactory extends Factory
@@ -21,10 +22,11 @@ class CompanyFactory extends Factory
      */
     public function definition()
     {
+        $firstName = strtolower(Str::random(10));
         return [
             'name' => $this->faker->name(),
-            'domain' => strtolower($this->faker->unique()->firstName()) . '-tenancy.local',
-            'bd_database' => strtolower($this->faker->unique()->firstName()) . '_tenancy',
+            'domain' => $firstName . '-tenancy.local',
+            'bd_database' => $firstName . '_tenancy',
             'bd_hostname' => 'localhost',
             'bd_username' => 'root',
             'bd_password' => '1@@LpjAdmin',
