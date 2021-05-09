@@ -22,7 +22,9 @@ const index = (new function () {
                 { data: "bd_username", name: "bd_username", title: "BD usuário" },
                 { data: "id", name: "id", title: "Ações", orderable: false, render: self.renderActions },
             ],
-
+            rowCallback: function (data, b, c) {
+                console.log(b);
+            }
         });
     }
 

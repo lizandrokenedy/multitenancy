@@ -8,6 +8,8 @@ use App\Models\Company;
 use App\Repositories\Eloquent\CompanyRepository;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class CompanyService
 {
@@ -48,7 +50,9 @@ class CompanyService
      */
     public function save(array $data): Company
     {
-        $company = $this->repository->save($data);
+        $formattedData = $this->formatDataForCreateCompany($data);
+
+        $company = $this->repository->save($formattedData);
 
         if (!$company) {
             throw new Exception(CompanyMessages::ERRO_AO_CRIAR_EMPRESA);
@@ -57,6 +61,27 @@ class CompanyService
         event(new CompanyCreated($company));
 
         return $company;
+    }
+
+    private function formatDataForCreateCompany(array $data): array
+    {
+        $database = [];
+
+        $database['bd_database'] = $this->createNameDataBase($data['name']);
+        $database['bd_hostname'] = env('DB_HOST');
+        $database['bd_username'] = env('DB_USERNAME');
+        $database['bd_password'] = Crypt::encrypt(env('DB_PASSWORD'));
+
+        return array_merge($data, $database);
+    }
+
+    private function createNameDataBase(string $companyName): string
+    {
+        if (!$companyName) {
+            throw new Exception(CompanyMessages::ERRO_AO_CRIAR_NOME_BASE);
+        }
+
+        return  explode(' ', strtolower($companyName))[0] . '_tenancy';
     }
 
     /**

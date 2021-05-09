@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRequest;
+use App\Models\Company;
 use App\Services\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
