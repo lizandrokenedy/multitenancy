@@ -1,8 +1,8 @@
 $.extend(true, $.fn.dataTable.defaults, {
     language: { url: '../datatable-pt-br.json' },
     serverSide: true,
-    processing: false,
-    searching: false,
+    processing: true,
+    searching: true,
 });
 
 $.ajaxSetup({

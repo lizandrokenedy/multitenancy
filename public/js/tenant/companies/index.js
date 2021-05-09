@@ -20,7 +20,7 @@ const index = (new function () {
                 { data: "bd_database", name: "bd_database", title: "BD Nome" },
                 { data: "bd_hostname", name: "bd_hostname", title: "BD Host" },
                 { data: "bd_username", name: "bd_username", title: "BD usuário" },
-                { data: "id", name: "id", title: "Ações", render: self.renderActions},
+                { data: "id", name: "id", title: "Ações", render: self.renderActions },
             ],
 
         });
@@ -30,7 +30,7 @@ const index = (new function () {
         tenantAjax.delete(`/tenants/companies/${id}`);
     }
 
-    self.renderActions= function (id) {
+    self.renderActions = function (id) {
         const actions = `
         <div>
             <a href="/tenants/companies/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>

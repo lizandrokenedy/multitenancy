@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Tenant;
 
-use App\Events\Tenant\CompanyCreated;
-use App\Events\Tenant\DatabaseCreated;
+use App\Helpers\DataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRequest;
-use App\Messages\CompanyMessages;
-use App\Models\Company;
 use App\Services\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class CompanyController extends Controller
 {
@@ -52,7 +47,10 @@ class CompanyController extends Controller
     public function companiesList(Request $request)
     {
         try {
-            return $this->responseDataSuccess($this->service->listar());
+            $order = DataTable::getOrder($request->all());
+            $data = $this->service->listDataTable($request->all(), $order);
+
+            return $this->responseDataTable($data, $request->draw);
         } catch (Exception $e) {
             return $this->responseError();
         }
@@ -80,7 +78,7 @@ class CompanyController extends Controller
             }
 
             $this->service->update($request->all(), $id);
-            
+
             return $this->responseSuccess();
         } catch (Exception $e) {
             $this->responseError($e->getMessage());

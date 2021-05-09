@@ -23,9 +23,9 @@ class CompanyService
      *
      * @return Collection
      */
-    public function listar(): Collection
+    public function listDataTable(array $params, array $order): Collection
     {
-        return $this->repository->all();
+        return $this->repository->queryDataTable($params, $order);
     }
 
 
