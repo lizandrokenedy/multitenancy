@@ -3,10 +3,22 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Services\UserService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new UserService();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('tenants.users.create');
     }
 
     /**
@@ -35,8 +47,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $validate = Validator::make($request->all(), (new UserRequest())->rules($request->all()));
+
+            if ($validate->fails()) {
+                return $this->responseError($validate->errors());
+            }
+
+            $this->service->create($request->all());
+
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            return $this->responseError($e->getMessage());
+        }
     }
+
+
+    /**
+     * List all
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function listAll(Request $request)
+    {
+        try {
+            return DataTables::of($this->service->listAll())->toJson();
+        } catch (Exception $e) {
+            return $this->responseError();
+        }
+    }
+
 
     /**
      * Display the specified resource.
@@ -57,7 +99,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->service->findById($id);
+        return view('tenants.users.update', compact('user'));
     }
 
     /**
@@ -69,7 +112,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $validate = Validator::make($request->all(), (new UserRequest())->rules($request->all()));
+
+            if ($validate->fails()) {
+                return $this->responseError($validate->errors());
+            }
+
+            $this->service->update($request->all(), $id);
+
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            $this->responseError($e->getMessage());
+        }
     }
 
     /**

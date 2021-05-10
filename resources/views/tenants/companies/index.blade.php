@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Clientes')
+@section('title', 'Empresa')
 
 @section('content_header')
     <div class="container-fluid">
@@ -17,7 +17,6 @@
 
 @section('content')
     <div class="card card-secondary">
-        <!-- /.card-header -->
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
@@ -27,13 +26,7 @@
                 </div>
             </div>
         </div>
-        <!-- /.card-body -->
-        {{-- <div class="card-footer">
-            The footer of the card
-        </div> --}}
-        <!-- /.card-footer -->
     </div>
-    <!-- /.card -->
 @stop
 
 @section('css')

@@ -11,32 +11,29 @@ const index = (new function () {
     self.createTable = function () {
         self.table.DataTable({
             ajax: {
-                url: '/tenants/companies/list-all',
+                url: '/tenants/users/list-all',
                 type: "POST"
             },
             columns: [
                 { data: "name", name: "name", title: "Nome" },
-                { data: "domain", name: "domain", title: "Domínio" },
-                { data: "bd_database", name: "bd_database", title: "BD Nome" },
-                { data: "bd_hostname", name: "bd_hostname", title: "BD Host" },
-                { data: "bd_username", name: "bd_username", title: "BD usuário" },
+                { data: "email", name: "email", title: "E-mail" },
                 { data: "id", name: "id", title: "Ações", class: 'text-center', orderable: false, render: self.renderActions },
             ],
             rowCallback: function (row, data) {
-
+                console.log(data)
             }
         });
     }
 
     destroy = function (id) {
-        tenantAjax.delete(`/tenants/companies/${id}`);
+        tenantAjax.delete(`/tenants/users/${id}`);
         self.table.DataTable().ajax.reload();
     }
 
     self.renderActions = function (id) {
         const actions = `
         <div>
-            <a href="/tenants/companies/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
+            <a href="/tenants/users/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
             <a href="javascript:void(0)" data-acao="excluir" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>
         </div>
         `

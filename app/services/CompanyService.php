@@ -22,8 +22,6 @@ class CompanyService
 
     /**
      * List All
-     *
-     *
      */
     public function listAll()
     {
@@ -48,7 +46,7 @@ class CompanyService
      * @param array $data
      * @return Company
      */
-    public function save(array $data): Company
+    public function create(array $data): Company
     {
         $formattedData = $this->formatDataForCreateCompany($data);
 
@@ -93,6 +91,12 @@ class CompanyService
      */
     public function update(array $data, int $id): bool
     {
+        $registry = $this->findById($id);
+
+        if (!$registry) {
+            throw new Exception(CompanyMessages::REGISTRO_NAO_ENCONTRADO);
+        }
+
         return $this->repository->update($data, $id);
     }
 

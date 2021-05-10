@@ -10,18 +10,18 @@
             value="{{ $company->domain ?? '' }}">
     </div>
 </div>
-<div class="form-row">
-    {{-- <div class="form-group col-sm-12 col-md-6">
+{{-- <div class="form-row">
+    <div class="form-group col-sm-12 col-md-6">
         <label for="bd_database" class="required">BD Nome</label>
         <input type="text" required class="form-control" id="bd_database" name="bd_database"
             placeholder="Nome da Base de Dados" value="{{ $company->bd_database ?? '' }}">
-    </div> --}}
-    {{-- <div class="form-group col-sm-12 col-md-6">
+    </div>
+    <div class="form-group col-sm-12 col-md-6">
         <label for="bd_hostname" class="required">BD Host</label>
         <input type="text" required class="form-control" id="bd_hostname" name="bd_hostname"
             placeholder="Hostname da Base De Dados" value="{{ $company->bd_hostname ?? env('DB_HOST') }}">
-    </div> --}}
-</div>
+    </div>
+</div> --}}
 {{-- <div class="form-row">
     <div class="form-group col-sm-12 col-md-6">
         <label for="bd_username" class="required">BD Usuário</label>
@@ -44,7 +44,6 @@
     </div>
 </div> --}}
 <div class="text-center">
-
     <button type="button" id="salvar" class="btn btn-primary">
         <i class="far fa-save mr-2"></i>
         Salvar

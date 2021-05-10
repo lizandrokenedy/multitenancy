@@ -38,7 +38,7 @@ class CompanyController extends Controller
                 return $this->responseError($validate->errors());
             }
 
-            $this->service->save($request->all());
+            $this->service->create($request->all());
 
             return $this->responseSuccess();
         } catch (Exception $e) {
@@ -46,7 +46,13 @@ class CompanyController extends Controller
         }
     }
 
-    public function companiesList(Request $request)
+    /**
+     * List all
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function listAll(Request $request)
     {
         try {
             return DataTables::of($this->service->listAll())
