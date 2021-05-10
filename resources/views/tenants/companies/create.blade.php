@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('companies.store') }}" method="post">
+                    <form name="form" id="form">
                         @include('tenants.companies._partials.form')
                     </form>
                 </div>
