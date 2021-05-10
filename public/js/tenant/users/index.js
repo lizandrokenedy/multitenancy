@@ -25,8 +25,8 @@ const index = (new function () {
         });
     }
 
-    destroy = function (id) {
-        tenantAjax.delete(`/tenants/users/${id}`);
+    destroy = async function (id) {
+        await tenantAjax.delete(`/tenants/users/${id}`);
         self.table.DataTable().ajax.reload();
     }
 

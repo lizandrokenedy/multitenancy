@@ -8,12 +8,7 @@ const tenantAjax = (new function () {
         }).then(function (res) {
             return res;
         }).catch(function (error) {
-            const errorMessage = error.responseJSON.message;
-            if (typeof errorMessage === 'object' && errorMessage !== null) {
-                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
-                return;
-            }
-            tenantMessage.toastrMessage(error.responseJSON.message, false);
+            tenantMessage.messageErrorAjax(error)
         });
     }
 
@@ -25,12 +20,7 @@ const tenantAjax = (new function () {
         }).then(function (data) {
             tenantRedirect.refirectBackRouteWithMesssage(data.message);
         }).catch(function (error) {
-            const errorMessage = error.responseJSON.message;
-            if (typeof errorMessage === 'object' && errorMessage !== null) {
-                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
-                return;
-            }
-            tenantMessage.toastrMessage(error.responseJSON.message, false);
+            tenantMessage.messageErrorAjax(error)
         });
     }
 
@@ -42,29 +32,20 @@ const tenantAjax = (new function () {
         }).then(function (data) {
             tenantRedirect.refirectBackRouteWithMesssage(data.message)
         }).catch(function (error) {
-            const errorMessage = error.responseJSON.message;
-            if (typeof errorMessage === 'object' && errorMessage !== null) {
-                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
-                return;
-            }
-            tenantMessage.toastrMessage(error.responseJSON.message, false);
+            tenantMessage.messageErrorAjax(error)
         });
     }
 
-    self.delete = (url) => {
-        $.ajax({
+    self.delete = async (url) => {
+        await $.ajax({
             url,
             type: 'DELETE',
         }).then(function (data) {
             tenantMessage.toastrMessage(data.message);
         }).catch(function (error) {
-            const errorMessage = error.responseJSON.message;
-            if (typeof errorMessage === 'object' && errorMessage !== null) {
-                $.each(errorMessage, (index, value) => tenantMessage.toastrMessage(value, false))
-                return;
-            }
-            tenantMessage.toastrMessage(error.responseJSON.message, false);
+            tenantMessage.messageErrorAjax(error)
         })
     }
+
 
 })

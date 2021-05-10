@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => ['required_if:alter-password,true', new MinPasswordIf($params, 8, 'senha')],
             'password_confirmation' => 'same:password',
         ];

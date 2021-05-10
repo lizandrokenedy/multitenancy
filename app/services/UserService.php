@@ -88,4 +88,23 @@ class UserService
 
         return $this->repository->save($formattedData);
     }
+
+
+    /**
+     * Delete Registre
+     *
+     * @param integer $id
+     * @return boolean
+     */
+    public function delete(int $id): bool
+    {
+
+        $registry = $this->findById($id);
+
+        if (!$registry) {
+            throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
+        }
+
+        return $this->repository->delete($id);
+    }
 }

@@ -108,6 +108,13 @@ class CompanyService
      */
     public function delete(int $id): bool
     {
+
+        $registry = $this->findById($id);
+
+        if (!$registry) {
+            throw new Exception(CompanyMessages::REGISTRO_NAO_ENCONTRADO);
+        }
+
         return $this->repository->delete($id);
     }
 }
