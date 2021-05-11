@@ -29,10 +29,10 @@ class TenantMiddleware
         }
 
         $company = $this->getCompany($request->getHost());
-        
-        if (!$company && $request->url() !== route('404.tenant')) {
-            return redirect()->route('404.tenant');
-        } else if ($request->url() !== route('404.tenant')) {
+
+        if (!$company) {
+            abort(401, 'Acesso não permitido!');
+        } else if ($request->url()) {
             $manager->setConnection($company);
         }
 
