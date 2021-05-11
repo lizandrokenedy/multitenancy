@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="container-fluid">
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-between">
             <h5>Criar Empresa</h5>
             <x-breadcrumb :items="$items" />
         </div>
