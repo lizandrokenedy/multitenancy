@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         try {
 
-            $validate = $this->validateRequest($request->all());
+            $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
@@ -117,7 +117,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $validate = $this->validateRequest($request->all());
+            $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
@@ -134,7 +134,7 @@ class UserController extends Controller
     private function validateRequest($request)
     {
         return Validator::make(
-            $request,
+            $request->all(),
             (new UserRequest())->rules($request),
             (new UserRequest())->messages()
         );
