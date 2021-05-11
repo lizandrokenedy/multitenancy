@@ -5,11 +5,8 @@
 @section('content_header')
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            <h1>Usuários</h1>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">
-                <i class="fa fa-plus mr-2"></i>
-                Novo
-            </a>
+            <x-btn-new route="users.create" />
+            <x-breadcrumb :items="$items" />
         </div>
     </div>
 @stop

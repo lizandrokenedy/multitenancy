@@ -28,4 +28,12 @@ class CompanyRequest extends FormRequest
             'domain' => 'required|max:255',
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'domain.required' => 'O campo domínio é obrigatório'
+        ];
+    }
 }

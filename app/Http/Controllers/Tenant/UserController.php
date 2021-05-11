@@ -26,7 +26,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('tenants.users.index');
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Usuários', 'url' => ''],
+        ];
+
+        return view('tenants.users.index', compact('items'));
     }
 
     /**
@@ -36,7 +41,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('tenants.users.create');
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Usuários', 'url' => route('users.index')],
+            (object)['title' => 'Criar Usuário', 'url' => '']
+        ];
+        return view('tenants.users.create', compact('items'));
     }
 
     /**
@@ -49,7 +59,7 @@ class UserController extends Controller
     {
         try {
 
-            $validate = Validator::make($request->all(), (new UserRequest())->rules($request->all()));
+            $validate = $this->validateRequest($request->all());
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
@@ -79,18 +89,6 @@ class UserController extends Controller
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -99,8 +97,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Usuários', 'url' => route('users.index')],
+            (object)['title' => 'Editar Usuário', 'url' => '']
+        ];
+
         $user = $this->service->findById($id);
-        return view('tenants.users.update', compact('user'));
+        return view('tenants.users.update', compact('user', 'items'));
     }
 
     /**
@@ -113,7 +117,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $validate = Validator::make($request->all(), (new UserRequest())->rules($request->all()));
+            $validate = $this->validateRequest($request->all());
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
@@ -125,6 +129,15 @@ class UserController extends Controller
         } catch (Exception $e) {
             $this->responseError($e->getMessage());
         }
+    }
+
+    private function validateRequest($request)
+    {
+        return Validator::make(
+            $request,
+            (new UserRequest())->rules($request),
+            (new UserRequest())->messages()
+        );
     }
 
     /**

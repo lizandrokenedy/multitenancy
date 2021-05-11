@@ -31,4 +31,12 @@ class UserRequest extends FormRequest
             'password_confirmation' => 'same:password',
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'required_if' => 'O campo senha é obrigatório quando o campo alterar senha estiver marcado.'
+        ];
+    }
 }

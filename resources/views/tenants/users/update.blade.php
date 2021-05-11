@@ -3,7 +3,12 @@
 @section('title', 'Usuário')
 
 @section('content_header')
-    <h1>Atualizar Usuário</h1>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between">
+            <h5>Editar Usuário</h5>
+            <x-breadcrumb :items="$items" />
+        </div>
+    </div>
 @stop
 
 @section('content')

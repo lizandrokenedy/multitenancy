@@ -13,11 +13,12 @@
 
 <div class="form-row" id="div-alter-password">
     <div class="form-group col-sm-12 col-md-6">
-        <label for="password">Senha</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Senha do Usuário" value="">
+        <label for="password" class="required">Senha</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Senha do Usuário"
+            value="">
     </div>
     <div class="form-group col-sm-12 col-md-6">
-        <label for="password_confirmation">Confirmação de Senha</label>
+        <label for="password_confirmation" class="required">Confirmação de Senha</label>
         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
             placeholder="Senha de Confirmação do Usuário" value="">
     </div>

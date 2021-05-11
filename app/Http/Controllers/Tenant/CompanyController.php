@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CompanyRequest;
-use App\Models\Company;
 use App\Services\CompanyService;
 use Exception;
 use Illuminate\Http\Request;
@@ -24,7 +23,12 @@ class CompanyController extends Controller
 
     public function index()
     {
-        return view('tenants.companies.index');
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Empresas', 'url' => ''],
+        ];
+
+        return view('tenants.companies.index', compact('items'));
     }
 
     public function store(Request $request)
@@ -32,7 +36,7 @@ class CompanyController extends Controller
 
         try {
 
-            $validate = Validator::make($request->all(), (new CompanyRequest())->rules());
+            $validate = $this->validateRequest($request->all());
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
@@ -65,20 +69,33 @@ class CompanyController extends Controller
 
     public function create()
     {
-        return view('tenants.companies.create');
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Empresas', 'url' => route('companies.index')],
+            (object)['title' => 'Criar Empresa', 'url' => '']
+        ];
+
+        return view('tenants.companies.create', compact('items'));
     }
 
     public function edit($id)
     {
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Empresas', 'url' => route('companies.index')],
+            (object)['title' => 'Editar Empresa', 'url' => '']
+        ];
+
         $company = $this->service->findById($id);
-        return view('tenants.companies.update', compact('company'));
+
+        return view('tenants.companies.update', compact('company', 'items'));
     }
 
     public function update(Request $request, $id)
     {
         try {
 
-            $validate = Validator::make($request->all(), (new CompanyRequest())->rules());
+            $validate = $this->validateRequest($request->all());
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
@@ -92,10 +109,14 @@ class CompanyController extends Controller
         }
     }
 
-    public function show($id)
+
+    private function validateRequest($request)
     {
-        $company = $this->service->findById($id);
-        return view('tenants.companies.show', compact('company'));
+        return Validator::make(
+            $request,
+            (new CompanyRequest())->rules($request),
+            (new CompanyRequest())->messages()
+        );
     }
 
     public function destroy($id)

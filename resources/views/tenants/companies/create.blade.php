@@ -3,7 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Criar Empresa</h1>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-end">
+            <x-breadcrumb :items="$items" />
+        </div>
+    </div>
 @stop
 
 @section('content')
