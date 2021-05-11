@@ -44,12 +44,6 @@
     </div>
 </div> --}}
 <div class="text-center">
-    <button type="button" id="salvar" class="btn btn-primary">
-        <i class="far fa-save mr-2"></i>
-        Salvar
-    </button>
-    <a href="{{ route('companies.index') }}" class="btn btn-danger">
-        <i class="fa fa-chevron-left mr-2"></i>
-        Voltar
-    </a>
+    <x-btn-save />
+    <x-btn-back route="companies.index" />
 </div>
