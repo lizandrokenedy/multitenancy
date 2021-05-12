@@ -3,6 +3,7 @@ $.extend(true, $.fn.dataTable.defaults, {
     serverSide: true,
     processing: true,
     searching: true,
+    responsive: true,
 });
 
 $.ajaxSetup({
