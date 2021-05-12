@@ -34,7 +34,7 @@ class RegisterNewUser extends Mailable
     {
         $this->subject('Bem vindo novo usuário!');
         $this->to($this->user->email, $this->user->name);
-        $this->from('lizandrosantos@live.com', 'Avaliações Cultivar');
+        $this->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
 
         return $this->markdown('mail.register-user', ['user' => $this->user]);
     }
