@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('users.store') }}" method="post">
+                    <form name="form" id="form">
                         @include('clients.users._partials.form')
                     </form>
                 </div>
