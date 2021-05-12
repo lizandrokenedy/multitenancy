@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'domain_main' => 'multi-tenancy.local', 
+    'domain_main' => ENV('DOMAIN_MASTER'),
 ];
