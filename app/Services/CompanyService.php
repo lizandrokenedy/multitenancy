@@ -92,7 +92,7 @@ class CompanyService
      */
     private function createNameDataBase(string $companyName): string
     {
-        return  explode(' ', strtolower($companyName))[0] . "_" . strtolower(Str::random(3)) . '_tenant';
+        return  explode(' ', strtolower($companyName))[0] . '_tenant';
     }
 
     /**
