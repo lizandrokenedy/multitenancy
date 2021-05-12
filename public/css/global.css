@@ -2,3 +2,13 @@
     content:" *";
     color: red;
   }
+
+
+  @media (max-width: 600px)
+  {
+    .breadcrumb-item {
+        font-size: 10px;
+    }
+  }
+
+
