@@ -36,12 +36,12 @@ class CompanyController extends Controller
 
         try {
 
-            $validate = $this->validateRequest($request->all());
+            $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
             }
-
+            
             $this->service->create($request->all());
 
             return $this->responseSuccess();
@@ -95,7 +95,7 @@ class CompanyController extends Controller
     {
         try {
 
-            $validate = $this->validateRequest($request->all());
+            $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
@@ -113,7 +113,7 @@ class CompanyController extends Controller
     private function validateRequest($request)
     {
         return Validator::make(
-            $request,
+            $request->all(),
             (new CompanyRequest())->rules($request),
             (new CompanyRequest())->messages()
         );

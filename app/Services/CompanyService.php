@@ -5,11 +5,12 @@ namespace App\Services;
 use App\Events\Tenant\CompanyCreated;
 use App\Messages\CompanyMessages;
 use App\Models\Company;
+use App\Repositories\DB\InformationSchemaRepository;
 use App\Repositories\Eloquent\CompanyRepository;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 
 class CompanyService
 {
@@ -50,6 +51,10 @@ class CompanyService
     {
         $formattedData = $this->formatDataForCreateCompany($data);
 
+        if ($this->validateDatabaseExists($formattedData['bd_database'])) {
+            throw new Exception(CompanyMessages::ERRO_EXISTE_UMA_BASE_DADOS_COM_ESTE_NOME);
+        }
+
         $company = $this->repository->save($formattedData);
 
         if (!$company) {
@@ -73,13 +78,15 @@ class CompanyService
         return array_merge($data, $database);
     }
 
+    private function validateDatabaseExists($database)
+    {
+        return (new InformationSchemaRepository())->databaseQueryByBame($database) > 0 ?
+            true : false;
+    }
+
     private function createNameDataBase(string $companyName): string
     {
-        if (!$companyName) {
-            throw new Exception(CompanyMessages::ERRO_AO_CRIAR_NOME_BASE);
-        }
-
-        return  explode(' ', strtolower($companyName))[0] . '_tenancy';
+        return  explode(' ', strtolower($companyName))[0] . "_" . strtolower(Str::random(3)) . '_tenant';
     }
 
     /**

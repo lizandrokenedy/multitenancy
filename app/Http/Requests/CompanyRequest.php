@@ -21,11 +21,11 @@ class CompanyRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules($request)
     {
         return [
             'name' => 'required|max:255',
-            'domain' => 'required|max:255',
+            'domain' => 'required|max:255|unique:companies,domain,' . $request->id,
         ];
     }
 
@@ -33,7 +33,9 @@ class CompanyRequest extends FormRequest
     public function messages()
     {
         return [
-            'domain.required' => 'O campo domínio é obrigatório'
+            'domain.required' => 'O campo domínio é obrigatório',
+            'domain.unique' => 'O campo domínio já está sendo utilizado',
+            'domain.max' => 'O campo domínio pode ter no máximo 255 caracteres',
         ];
     }
 }
