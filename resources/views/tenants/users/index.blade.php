@@ -16,9 +16,10 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <table id="table" class="table table-striped">
-
-                    </table>
+                    <div class="table-responsive">
+                        <table id="table" class="table table-striped">
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
