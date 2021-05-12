@@ -1,13 +1,29 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Usuário')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between">
+            <h5>Editar Usuário</h5>
+            <x-breadcrumb :items="$items" />
+        </div>
+    </div>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <div class="card card-secondary">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <form name="form" id="form">
+                        <input type="hidden" name="id" id="id" value="{{ $user->id }}" />
+                        @include('clients.users._partials.form')
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -15,5 +31,9 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script src="{{ asset('js/clients/users/manter.js') }}"></script>
+    <script>
+        manter.init();
+
+    </script>
 @stop

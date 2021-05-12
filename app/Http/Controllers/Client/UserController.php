@@ -3,10 +3,22 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Services\UserService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new UserService();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +26,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('clients.users.index');
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Usuários', 'url' => ''],
+        ];
+
+        return view('clients.users.index', compact('items'));
     }
 
     /**
@@ -24,7 +41,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Usuários', 'url' => route('clients.users.index')],
+            (object)['title' => 'Criar Usuário', 'url' => '']
+        ];
+        return view('clients.users.create', compact('items'));
     }
 
     /**
@@ -35,18 +57,36 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $validate = $this->validateRequest($request);
+
+            if ($validate->fails()) {
+                return $this->responseError($validate->errors());
+            }
+
+            $this->service->create($request->all());
+
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            return $this->responseError($e->getMessage());
+        }
     }
 
+
     /**
-     * Display the specified resource.
+     * List all
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function show($id)
+    public function listAll(Request $request)
     {
-        //
+        try {
+            return DataTables::of($this->service->listAll())->toJson();
+        } catch (Exception $e) {
+            return $this->responseError();
+        }
     }
 
     /**
@@ -57,7 +97,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $items = [
+            (object)['title' => 'Home', 'url' => route('home'),],
+            (object)['title' => 'Usuários', 'url' => route('clients.users.index')],
+            (object)['title' => 'Editar Usuário', 'url' => '']
+        ];
+
+        $user = $this->service->findById($id);
+        return view('clients.users.update', compact('user', 'items'));
     }
 
     /**
@@ -69,7 +116,28 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $validate = $this->validateRequest($request);
+
+            if ($validate->fails()) {
+                return $this->responseError($validate->errors());
+            }
+
+            $this->service->update($request->all(), $id);
+
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            $this->responseError($e->getMessage());
+        }
+    }
+
+    private function validateRequest($request)
+    {
+        return Validator::make(
+            $request->all(),
+            (new UserRequest())->rules($request),
+            (new UserRequest())->messages()
+        );
     }
 
     /**
@@ -80,6 +148,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->delete($id);
+        return $this->responseSuccess();
     }
 }

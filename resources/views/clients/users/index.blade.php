@@ -1,13 +1,29 @@
 @extends('adminlte::page')
 
-@section('title', 'Usuários')
+@section('title', 'Usuário')
 
 @section('content_header')
-    <h1>Usuários</h1>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between">
+            <x-btn-new route="clients.users.create" />
+            <x-breadcrumb :items="$items" />
+        </div>
+    </div>
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <div class="card card-secondary">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table id="table" class="table table-striped">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('css')
@@ -15,5 +31,9 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script src="{{ asset('js/clients/users/index.js') }}"></script>
+    <script>
+        index.init();
+
+    </script>
 @stop

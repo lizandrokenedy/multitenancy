@@ -51,6 +51,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('web', 'check.domain.main')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/tenant.php'));
+
+            Route::prefix('clients')
+                ->middleware('web')
+                ->name('clients.')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/client.php'));
         });
     }
 
