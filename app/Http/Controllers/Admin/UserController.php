@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
@@ -31,7 +31,7 @@ class UserController extends Controller
             (object)['title' => 'Usuários', 'url' => ''],
         ];
 
-        return view('clients.users.index', compact('items'));
+        return view('admin.users.index', compact('items'));
     }
 
     /**
@@ -43,10 +43,10 @@ class UserController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Usuários', 'url' => route('clients.users.index')],
+            (object)['title' => 'Usuários', 'url' => route('admin.users.index')],
             (object)['title' => 'Criar Usuário', 'url' => '']
         ];
-        return view('clients.users.create', compact('items'));
+        return view('admin.users.create', compact('items'));
     }
 
     /**
@@ -99,12 +99,12 @@ class UserController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Usuários', 'url' => route('clients.users.index')],
+            (object)['title' => 'Usuários', 'url' => route('admin.users.index')],
             (object)['title' => 'Editar Usuário', 'url' => '']
         ];
 
         $user = $this->service->findById($id);
-        return view('clients.users.update', compact('user', 'items'));
+        return view('admin.users.update', compact('user', 'items'));
     }
 
     /**

@@ -17,10 +17,10 @@ const manter = (new function () {
         const data = self.form.serializeArray();
 
         if (self.id.val()) {
-            tenantAjax.put(`/clients/users/${self.id.val()}`, data)
+            tenantAjax.put(`/admin/users/${self.id.val()}`, data)
             return;
         }
-        tenantAjax.post('/clients/users', data);
+        tenantAjax.post('/admin/users', data);
     }
 
     self.alterPassword = function () {

@@ -17,9 +17,9 @@
                 {{-- Configured sidebar links --}}
                 {{-- @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item') --}}
                 @if (request()->getHost() === config('tenant.domain_main'))
-                    @include('vendor.adminlte.partials.sidebar.tenant-sidebar')
+                    @include('vendor.adminlte.partials.sidebar.admin-sidebar')
                 @else
-                    @include('vendor.adminlte.partials.sidebar.client-sidebar')
+                    @include('vendor.adminlte.partials.sidebar.tenant-sidebar')
                 @endif
             </ul>
         </nav>

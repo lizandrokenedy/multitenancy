@@ -45,5 +45,5 @@
 </div> --}}
 <div class="text-center">
     <x-btn-save />
-    <x-btn-back route="companies.index" />
+    <x-btn-back route="admin.companies.index" />
 </div>

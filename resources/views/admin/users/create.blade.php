@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <form name="form" id="form">
-                        @include('clients.users._partials.form')
+                        @include('admin.users._partials.form')
                     </form>
                 </div>
             </div>
@@ -30,7 +30,7 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/clients/users/manter.js') }}"></script>
+    <script src="{{ asset('js/admin/users/manter.js') }}"></script>
     <script>
         manter.init();
 

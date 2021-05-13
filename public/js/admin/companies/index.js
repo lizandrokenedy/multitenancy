@@ -11,7 +11,7 @@ const index = (new function () {
     self.createTable = function () {
         self.table.DataTable({
             ajax: {
-                url: '/tenants/companies/list-all',
+                url: '/admin/companies/list-all',
                 type: "POST"
             },
             columns: [
@@ -29,14 +29,14 @@ const index = (new function () {
     }
 
     destroy = async function (id) {
-        await tenantAjax.delete(`/tenants/companies/${id}`);
+        await tenantAjax.delete(`/admin/companies/${id}`);
         self.table.DataTable().ajax.reload();
     }
 
     self.renderActions = function (id) {
         const actions = `
         <div>
-            <a href="/tenants/companies/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
+            <a href="/admin/companies/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
             <a href="javascript:void(0)" data-acao="excluir" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>
         </div>
         `

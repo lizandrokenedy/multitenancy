@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
@@ -28,7 +28,7 @@ class CompanyController extends Controller
             (object)['title' => 'Empresas', 'url' => ''],
         ];
 
-        return view('tenants.companies.index', compact('items'));
+        return view('admin.companies.index', compact('items'));
     }
 
     public function store(Request $request)
@@ -41,7 +41,7 @@ class CompanyController extends Controller
             if ($validate->fails()) {
                 return $this->responseError($validate->errors());
             }
-            
+
             $this->service->create($request->all());
 
             return $this->responseSuccess();
@@ -71,24 +71,24 @@ class CompanyController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Empresas', 'url' => route('companies.index')],
+            (object)['title' => 'Empresas', 'url' => route('admin.companies.index')],
             (object)['title' => 'Criar Empresa', 'url' => '']
         ];
 
-        return view('tenants.companies.create', compact('items'));
+        return view('admin.companies.create', compact('items'));
     }
 
     public function edit($id)
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Empresas', 'url' => route('companies.index')],
+            (object)['title' => 'Empresas', 'url' => route('admin.companies.index')],
             (object)['title' => 'Editar Empresa', 'url' => '']
         ];
 
         $company = $this->service->findById($id);
 
-        return view('tenants.companies.update', compact('company', 'items'));
+        return view('admin.companies.update', compact('company', 'items'));
     }
 
     public function update(Request $request, $id)

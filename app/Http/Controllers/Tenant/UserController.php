@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Usuários', 'url' => route('users.index')],
+            (object)['title' => 'Usuários', 'url' => route('tenants.users.index')],
             (object)['title' => 'Criar Usuário', 'url' => '']
         ];
         return view('tenants.users.create', compact('items'));
@@ -99,7 +99,7 @@ class UserController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Usuários', 'url' => route('users.index')],
+            (object)['title' => 'Usuários', 'url' => route('tenants.users.index')],
             (object)['title' => 'Editar Usuário', 'url' => '']
         ];
 

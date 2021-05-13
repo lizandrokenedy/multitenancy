@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\Tenant;
+namespace App\Http\Middleware;
 
 use App\Models\Company;
 use App\Tenant\ManagerTenant;

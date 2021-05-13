@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('users.store') }}" method="post">
+                    <form name="form" id="form">
                         @include('tenants.users._partials.form')
                     </form>
                 </div>
@@ -30,7 +30,7 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/tenant/users/manter.js') }}"></script>
+    <script src="{{ asset('js/tenants/users/manter.js') }}"></script>
     <script>
         manter.init();
 

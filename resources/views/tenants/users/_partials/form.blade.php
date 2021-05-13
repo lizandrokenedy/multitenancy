@@ -34,5 +34,5 @@
 
 <div class="text-center">
     <x-btn-save />
-    <x-btn-back route="users.index" />
+    <x-btn-back route="tenants.users.index" />
 </div>

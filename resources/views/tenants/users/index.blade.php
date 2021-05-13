@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            <x-btn-new route="users.create" />
+            <x-btn-new route="tenants.users.create" />
             <x-breadcrumb :items="$items" />
         </div>
     </div>
@@ -31,7 +31,7 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/tenant/users/index.js') }}"></script>
+    <script src="{{ asset('js/tenants/users/index.js') }}"></script>
     <script>
         index.init();
 

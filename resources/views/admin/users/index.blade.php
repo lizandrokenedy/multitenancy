@@ -1,15 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'Empresa')
+@section('title', 'Usuário')
 
 @section('content_header')
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            <x-btn-new route="companies.create" />
+            <x-btn-new route="admin.users.create" />
             <x-breadcrumb :items="$items" />
         </div>
     </div>
-
 @stop
 
 @section('content')
@@ -32,7 +31,7 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/tenant/companies/index.js') }}"></script>
+    <script src="{{ asset('js/admin/users/index.js') }}"></script>
     <script>
         index.init();
 
