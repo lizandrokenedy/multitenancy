@@ -13,6 +13,8 @@ use Yajra\DataTables\Facades\DataTables;
 class RoleController extends Controller
 {
     private $service;
+    private $title = "Perfil";
+    private $routePath = 'tenants.roles';
 
     public function __construct()
     {
@@ -28,10 +30,10 @@ class RoleController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Perfis', 'url' => ''],
+            (object)['title' => $this->title, 'url' => ''],
         ];
 
-        return view('tenants.roles.index', compact('items'));
+        return view("{$this->routePath}.index", compact('items'));
     }
 
     /**
@@ -43,10 +45,10 @@ class RoleController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Perfis', 'url' => route('tenants.roles.index')],
-            (object)['title' => 'Criar Perfil', 'url' => '']
+            (object)['title' => $this->title, 'url' => route("{$this->routePath}.index")],
+            (object)['title' => "Criar {$this->title}", 'url' => '']
         ];
-        return view('tenants.roles.create', compact('items'));
+        return view("{$this->routePath}.create", compact('items'));
     }
 
     /**
@@ -99,12 +101,12 @@ class RoleController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Perfis', 'url' => route('tenants.roles.index')],
-            (object)['title' => 'Editar Perfil', 'url' => '']
+            (object)['title' => $this->title, 'url' => route("{$this->routePath}.index")],
+            (object)['title' => "Editar {$this->title}", 'url' => '']
         ];
 
-        $user = $this->service->findById($id);
-        return view('tenants.roles.update', compact('user', 'items'));
+        $role = $this->service->findById($id);
+        return view("{$this->routePath}.update", compact('role', 'items'));
     }
 
     /**
