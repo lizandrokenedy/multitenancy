@@ -32,6 +32,15 @@
         </p>
     </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link {{ Route::is('tenants.permissions*') ? 'active' : '' }}"
+        href="{{ route('tenants.permissions.index') }}">
+        <i class="fa fa-clipboard mr-1"></i>
+        <p>
+            Avaliações
+        </p>
+    </a>
+</li>
 
 <li class="nav-item {{ Route::is('tenants.users*', 'tenants.roles*', 'tenants.permissions*') ? 'menu-open' : '' }}">
     <a href="#"
