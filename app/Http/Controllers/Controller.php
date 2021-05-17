@@ -26,16 +26,6 @@ class Controller extends BaseController
         ], $status);
     }
 
-    public function responseDataTable($data = [], $draw = 1)
-    {
-        return response()->json([
-            "draw" => $draw,
-            "recordsTotal" => count($data),
-            "recordsFiltered" => count($data),
-            'data' => $data,
-        ], 200);
-    }
-
     public function responseError($msg = Messages::ERRO_AO_REALIZAR_OPERACAO, $status = 400)
     {
         return response()->json([

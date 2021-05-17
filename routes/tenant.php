@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Tenant\AssessmentController;
 use App\Http\Controllers\Tenant\GradeController;
+use App\Http\Controllers\Tenant\ModuleController;
 use App\Http\Controllers\Tenant\PermissionController;
 use App\Http\Controllers\Tenant\RoleController;
 use App\Http\Controllers\Tenant\SchoolController;
@@ -57,6 +58,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('permissions', PermissionController::class);
     Route::group(['prefix' => 'permissions', 'as' => 'permissions.'], function () {
         Route::post('list-all', [PermissionController::class, 'listAll'])->name('list-all');
+    });
+
+    #Modules/Módulos
+    Route::resource('modules', ModuleController::class);
+    Route::group(['prefix' => 'modules', 'as' => 'modules.'], function () {
+        Route::post('list-all', [ModuleController::class, 'listAll'])->name('list-all');
     });
 
     #Imports/Importações

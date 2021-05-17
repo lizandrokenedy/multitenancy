@@ -11,6 +11,148 @@
     </div>
 </div>
 
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Tela</th>
+            <th>Permissão</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Usuário</td>
+            <td>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="name">Visualizar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Editar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Atualizar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Excluir</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="name">Todas</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+                </div>
+
+
+
+
+            </td>
+        </tr>
+        <tr>
+            <td>Escola</td>
+            <td>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="name">Visualizar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Editar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Atualizar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Excluir</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="name">Todas</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+                </div>
+
+
+
+
+            </td>
+        </tr>
+        <tr>
+            <td>Professores</td>
+            <td>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="name">Visualizar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Editar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Atualizar</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <label for="name">Excluir</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="name">Todas</label>
+                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                            value="tela-usuario-visualizar">
+                    </div>
+                </div>
+
+
+
+
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+
 <div class="text-center">
     <x-btn-save />
     <x-btn-back route="tenants.roles.index" />

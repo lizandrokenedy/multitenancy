@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Perfil')
+@section('title', $title)
 
 @section('content_header')
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            <h5>Criar Perfil</h5>
+            <h5>Editar {{ $title }}</h5>
             <x-breadcrumb :items="$items" />
         </div>
     </div>
@@ -17,7 +17,8 @@
             <div class="row">
                 <div class="col-12">
                     <form name="form" id="form">
-                        @include('tenants.roles._partials.form')
+                        <input type="hidden" name="id" id="id" value="{{ $data->id }}" />
+                        @include("tenants.{$path}._partials.form")
                     </form>
                 </div>
             </div>
@@ -30,8 +31,9 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/tenants/roles/manter.js') }}"></script>
+    <script src="{{ asset("js/tenants/{$path}/manter.js") }}"></script>
     <script>
+        manter.path = "{{ $path }}"
         manter.init();
 
     </script>

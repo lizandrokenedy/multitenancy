@@ -1,5 +1,6 @@
 const tenantAjax = (new function () {
     const self = this;
+    self.buttons = $('.btn');
 
     self.get = (url) => {
         $.ajax({
@@ -13,26 +14,34 @@ const tenantAjax = (new function () {
     }
 
     self.post = (url, data = {}) => {
-        $.ajax({
+        return $.ajax({
             url,
             type: 'POST',
             data
         }).then(function (data) {
+            self.buttons.attr('disabled', 'disabled');
             tenantRedirect.refirectBackRouteWithMesssage(data.message);
+            return true;
         }).catch(function (error) {
+            self.buttons.removeAttr('disabled');
             tenantMessage.messageErrorAjax(error)
+            return false;
         });
     }
 
     self.put = (url, data = {}) => {
-        $.ajax({
+        return $.ajax({
             url,
             type: 'PUT',
             data
         }).then(function (data) {
+            self.buttons.attr('disabled', 'disabled');
             tenantRedirect.refirectBackRouteWithMesssage(data.message)
+            return true;
         }).catch(function (error) {
+            self.buttons.removeAttr('disabled');
             tenantMessage.messageErrorAjax(error)
+            return false;
         });
     }
 

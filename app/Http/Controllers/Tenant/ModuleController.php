@@ -3,23 +3,26 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoleRequest;
+use App\Http\Requests\ModuleRequest;
+use App\Services\ModuleService;
 use App\Services\PermissionService;
-use App\Services\RoleService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
-class RoleController extends Controller
+class ModuleController extends Controller
 {
     private $service;
-    private $title = "Perfil";
-    private $routePath = 'tenants.roles';
+    private $title = 'Módulo';
+    private $path = 'modules';
 
     public function __construct()
     {
-        $this->service = new RoleService();
+        $this->service = new ModuleService();
+        // $this->title = 'Módulo';
+        // $this->path = 'modules';
     }
 
     /**
@@ -34,7 +37,11 @@ class RoleController extends Controller
             (object)['title' => $this->title, 'url' => ''],
         ];
 
-        return view("{$this->routePath}.index", compact('items'));
+        return view("tenants.{$this->path}.index", [
+            'items' => $items,
+            'title' => $this->title,
+            'path' => $this->path
+        ]);
     }
 
     /**
@@ -46,11 +53,15 @@ class RoleController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => $this->title, 'url' => route("{$this->routePath}.index")],
+            (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
             (object)['title' => "Criar {$this->title}", 'url' => '']
         ];
 
-        return view("{$this->routePath}.create", compact('items'));
+        return view("tenants.{$this->path}.create", [
+            'items' => $items,
+            'title' => $this->title,
+            'path' => $this->path
+        ]);
     }
 
     /**
@@ -69,7 +80,9 @@ class RoleController extends Controller
                 return $this->responseError($validate->errors());
             }
 
-            $this->service->create($request->all());
+
+            $this->service->createModuleAndPermissions($request->all());
+
 
             return $this->responseSuccess();
         } catch (Exception $e) {
@@ -103,12 +116,17 @@ class RoleController extends Controller
     {
         $items = [
             (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => $this->title, 'url' => route("{$this->routePath}.index")],
+            (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
             (object)['title' => "Editar {$this->title}", 'url' => '']
         ];
 
-        $role = $this->service->findById($id);
-        return view("{$this->routePath}.update", compact('role', 'items'));
+        $data = $this->service->findById($id);
+        return view("tenants.{$this->path}.update", [
+            'items' => $items,
+            'title' => $this->title,
+            'path' => $this->path,
+            'data' => $data
+        ]);
     }
 
     /**
@@ -139,8 +157,8 @@ class RoleController extends Controller
     {
         return Validator::make(
             $request->all(),
-            (new RoleRequest())->rules($request),
-            (new RoleRequest())->messages()
+            (new ModuleRequest())->rules($request),
+            (new ModuleRequest())->messages()
         );
     }
 

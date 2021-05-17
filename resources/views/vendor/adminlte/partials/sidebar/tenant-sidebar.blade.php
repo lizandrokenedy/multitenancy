@@ -42,9 +42,9 @@
     </a>
 </li>
 
-<li class="nav-item {{ Route::is('tenants.users*', 'tenants.roles*', 'tenants.permissions*') ? 'menu-open' : '' }}">
+<li class="nav-item {{ Route::is('tenants.users*', 'tenants.roles*', 'tenants.permissions*', 'tenants.modules*') ? 'menu-open' : '' }}">
     <a href="#"
-        class="nav-link {{ Route::is('tenants.users*', 'tenants.roles*', 'tenants.permissions*') ? 'active' : '' }}">
+        class="nav-link {{ Route::is('tenants.users*', 'tenants.roles*', 'tenants.permissions*', 'tenants.modules*') ? 'active' : '' }}">
         <i class="fa fa-lock mr-1"></i>
         <p>
             Controle de Acesso
@@ -76,6 +76,15 @@
                 <i class="fa fa-unlock mr-1 ml-2"></i>
                 <p>
                     Permissões
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ Route::is('tenants.modules*') ? 'active' : '' }}"
+                href="{{ route('tenants.modules.index') }}">
+                <i class="fa fa-unlock mr-1 ml-2"></i>
+                <p>
+                    Módulos
                 </p>
             </a>
         </li>

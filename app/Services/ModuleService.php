@@ -2,22 +2,21 @@
 
 namespace App\Services;
 
-use App\Messages\PermissionMessages;
+use App\Messages\ModuleMessages;
 use App\Models\Module;
-use App\Models\Permission;
-use App\Repositories\Eloquent\PermissionRepository;
-use Illuminate\Support\Str;
+use App\Repositories\Eloquent\ModuleRepository;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
-class PermissionService
+class ModuleService
 {
     private $repository;
     private $messages;
 
     public function __construct()
     {
-        $this->repository = new PermissionRepository();
-        $this->messages = new PermissionMessages();
+        $this->repository = new ModuleRepository();
+        $this->messages = new ModuleMessages();
     }
 
 
@@ -39,31 +38,6 @@ class PermissionService
     public function findById(int $id)
     {
         return $this->repository->find($id);
-    }
-
-    private function formatData(Module $module)
-    {
-        $slug = Str::slug($module->name, "-");
-
-        return [
-            ['slug' => "tela-{$slug}-editar", 'name' => 'Editar', 'module_id' => $module->id],
-            ['slug' => "tela-{$slug}-visualizar", 'name' => 'Visualizar', 'module_id' => $module->id],
-            ['slug' => "tela-{$slug}-excluir", 'name' => 'Excluir', 'module_id' => $module->id],
-            ['slug' => "tela-{$slug}-criar", 'name' => 'Criar', 'module_id' => $module->id],
-        ];
-    }
-
-    public function createPermissionsForModule(Module $module)
-    {
-        $permissions = $this->formatData($module);
-
-        foreach ($permissions as $permission) {
-            $this->create($permission);
-        }
-    }
-
-    public function createPermissionModule(array $data)
-    {
     }
 
     /**
@@ -93,10 +67,21 @@ class PermissionService
      * @param integer $id
      * @return boolean
      */
-    public function create(array $data): Permission
+    public function create(array $data): Module
     {
         return $this->repository->save($data);
     }
+
+
+    public function createModuleAndPermissions(array $data): Module
+    {
+        return DB::transaction(function () use ($data) {
+            $module = $this->create($data);
+            (new PermissionService)->createPermissionsForModule($module);
+            return $module;
+        });
+    }
+
 
 
     /**

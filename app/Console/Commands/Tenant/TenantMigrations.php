@@ -58,7 +58,7 @@ class TenantMigrations extends Command
         }
 
         $companies = Company::all();
-
+    
         foreach ($companies as $company) {
             $this->execCommand($company);
         }
