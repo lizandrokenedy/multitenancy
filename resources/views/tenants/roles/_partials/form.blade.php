@@ -27,8 +27,9 @@
                     <div class="row">
                         @foreach ($module->permissions as $permission)
                             <div class="col-md-2">
-                                <input type="checkbox" class="" id="name" name="name" value="{{ $permission->slug }}">
-                                <label for="name">{{ $permission->name }}</label>
+                                <input type="checkbox" class="" id="{{ $permission->slug }}" name="permissions[]"
+                                    value="{{ $permission->slug }}">
+                                <label for="{{ $permission->slug }}">{{ $permission->name }}</label>
                             </div>
                         @endforeach
 
