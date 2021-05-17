@@ -20,134 +20,27 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Usuário</td>
-            <td>
-                <div class="row">
-                    <div class="col-md-2">
-                        <label for="name">Visualizar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
+        @foreach ($modules as $module)
+            <tr>
+                <td>{{ $module->name }}</td>
+                <td>
+                    <div class="row">
+                        @foreach ($module->permissions as $permission)
+                            <div class="col-md-2">
+                                <input type="checkbox" class="" id="name" name="name" value="{{ $permission->slug }}">
+                                <label for="name">{{ $permission->name }}</label>
+                            </div>
+                        @endforeach
+
+                        <div class="col-md-2">
+                            <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
+                                value="todos-{{ $module->id }}">
+                            <label for="name">Todas</label>
+                        </div>
                     </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Editar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Atualizar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Excluir</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-                    <div class="col-md-2">
-                        <label for="name">Todas</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-                </div>
-
-
-
-
-            </td>
-        </tr>
-        <tr>
-            <td>Escola</td>
-            <td>
-                <div class="row">
-                    <div class="col-md-2">
-                        <label for="name">Visualizar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Editar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Atualizar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Excluir</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-                    <div class="col-md-2">
-                        <label for="name">Todas</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-                </div>
-
-
-
-
-            </td>
-        </tr>
-        <tr>
-            <td>Professores</td>
-            <td>
-                <div class="row">
-                    <div class="col-md-2">
-                        <label for="name">Visualizar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Editar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Atualizar</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <label for="name">Excluir</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-                    <div class="col-md-2">
-                        <label for="name">Todas</label>
-                        <input type="checkbox" class="" id="name" name="name" placeholder="Nome do Perfil"
-                            value="tela-usuario-visualizar">
-                    </div>
-                </div>
-
-
-
-
-            </td>
-        </tr>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 
 </table>

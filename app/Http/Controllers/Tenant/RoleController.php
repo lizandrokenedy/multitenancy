@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
+use App\Services\ModuleService;
 use App\Services\PermissionService;
 use App\Services\RoleService;
 use Exception;
@@ -50,7 +51,9 @@ class RoleController extends Controller
             (object)['title' => "Criar {$this->title}", 'url' => '']
         ];
 
-        return view("{$this->routePath}.create", compact('items'));
+        $modules = (new ModuleService)->listAll()->with(['permissions'])->get();
+
+        return view("{$this->routePath}.create", compact('items', 'modules'));
     }
 
     /**
