@@ -6,6 +6,7 @@ use App\Messages\RoleMessages;
 use App\Models\Role;
 use App\Repositories\Eloquent\RoleRepository;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class RoleService
 {
@@ -66,9 +67,19 @@ class RoleService
      */
     public function create(array $data): Role
     {
-        return $this->repository->save($data);
-    }
 
+        $role = DB::transaction(function () use ($data) {
+            $roleCreated = $this->repository->save($data);
+
+            (new PermissionRoleService())->createPermissionForRole($roleCreated->id, $data['permissions']);
+
+            return $roleCreated;
+        });
+
+
+
+        return $role;
+    }
 
     /**
      * Delete Registre

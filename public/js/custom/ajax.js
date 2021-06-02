@@ -19,8 +19,8 @@ const tenantAjax = (new function () {
             type: 'POST',
             data
         }).then(function (data) {
-            self.buttons.attr('disabled', 'disabled');
-            tenantRedirect.refirectBackRouteWithMesssage(data.message);
+            // self.buttons.attr('disabled', 'disabled');
+            // tenantRedirect.refirectBackRouteWithMesssage(data.message);
             return true;
         }).catch(function (error) {
             self.buttons.removeAttr('disabled');
