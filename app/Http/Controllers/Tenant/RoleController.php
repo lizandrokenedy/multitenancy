@@ -35,9 +35,7 @@ class RoleController extends Controller
             (object)['title' => 'Home', 'url' => route('home'),],
             (object)['title' => $this->title, 'url' => ''],
         ];
-        $roles = Role::with('permissions')->find(14);
-
-        dd($roles);
+        
         return view("{$this->routePath}.index", compact('items'));
     }
 
