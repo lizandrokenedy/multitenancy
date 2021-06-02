@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequest;
+use App\Models\Role;
 use App\Services\ModuleService;
 use App\Services\PermissionService;
 use App\Services\RoleService;
@@ -34,7 +35,9 @@ class RoleController extends Controller
             (object)['title' => 'Home', 'url' => route('home'),],
             (object)['title' => $this->title, 'url' => ''],
         ];
+        $roles = Role::with('permissions')->find(14);
 
+        dd($roles);
         return view("{$this->routePath}.index", compact('items'));
     }
 
