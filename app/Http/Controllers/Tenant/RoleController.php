@@ -35,7 +35,7 @@ class RoleController extends Controller
             (object)['title' => 'Home', 'url' => route('home'),],
             (object)['title' => $this->title, 'url' => ''],
         ];
-        
+
         return view("{$this->routePath}.index", compact('items'));
     }
 
@@ -52,7 +52,7 @@ class RoleController extends Controller
             (object)['title' => "Criar {$this->title}", 'url' => '']
         ];
 
-        $modules = (new ModuleService)->listAll()->with(['permissions'])->get();
+        $modules = (new ModuleService)->listAll()->get();
 
         return view("{$this->routePath}.create", compact('items', 'modules'));
     }
@@ -112,7 +112,9 @@ class RoleController extends Controller
         ];
 
         $role = $this->service->findById($id);
-        return view("{$this->routePath}.update", compact('role', 'items'));
+
+        $modules = (new ModuleService)->listAll()->get();
+        return view("{$this->routePath}.update", compact('role', 'modules', 'items'));
     }
 
     /**

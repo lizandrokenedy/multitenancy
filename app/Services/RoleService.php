@@ -33,9 +33,9 @@ class RoleService
      * @param integer $id
      * @return void
      */
-    public function findById(int $id)
+    public function findById(int $id): Role
     {
-        return $this->repository->find($id);
+        return $this->repository->getRoleAndPermissionsById($id);
     }
 
     /**
@@ -45,15 +45,15 @@ class RoleService
      * @param integer $id
      * @return boolean
      */
-    public function update(array $data, int $id): bool
+    public function update(array $data, int $id): Role
     {
         $registry = $this->findById($id);
 
         if (!$registry) {
             throw new Exception(RoleMessages::REGISTRO_NAO_ENCONTRADO);
         }
-
-        return $this->repository->update($data, $id);
+        
+        return $this->repository->save($data, $id);
     }
 
 
@@ -67,18 +67,7 @@ class RoleService
      */
     public function create(array $data): Role
     {
-
-        $role = DB::transaction(function () use ($data) {
-            $roleCreated = $this->repository->save($data);
-
-            (new PermissionRoleService())->createPermissionForRole($roleCreated->id, $data['permissions']);
-
-            return $roleCreated;
-        });
-
-
-
-        return $role;
+        return $this->repository->save($data);
     }
 
     /**

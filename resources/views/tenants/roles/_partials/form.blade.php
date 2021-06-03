@@ -29,7 +29,9 @@
 
                             <li class="list-group-item">
                                 <input type="checkbox" class="mr-2 checkbox check" id="{{ $permission->id }}"
-                                    name="permissions[]" value="{{ $permission->id }}">
+                                    name="permissions[]"
+                                    {{ isset($role) && $role->permissions->contains('id', $permission->id) ? 'checked' : '' }}
+                                    value="{{ $permission->id }}">
                                 <label for="{{ $permission->slug }}">{{ $permission->name }}</label>
                             </li>
                         @endforeach
