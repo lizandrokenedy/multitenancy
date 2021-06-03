@@ -35,7 +35,7 @@ class UserService
      */
     public function findById(int $id)
     {
-        return $this->repository->find($id);
+        return $this->repository->getUserAndRoleById($id);
     }
 
     /**

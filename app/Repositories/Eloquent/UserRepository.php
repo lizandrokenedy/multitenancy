@@ -19,4 +19,11 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
     {
         return $this->model::query();
     }
+
+    public function getUserAndRoleById(int $idUser)
+    {
+        return $this->model::where('id', $idUser)
+            ->with('roles.permissions')
+            ->first();
+    }
 }

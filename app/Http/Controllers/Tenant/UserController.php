@@ -104,6 +104,7 @@ class UserController extends Controller
         ];
 
         $user = $this->service->findById($id);
+
         return view('tenants.users.update', compact('user', 'items'));
     }
 
