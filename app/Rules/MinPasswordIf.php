@@ -43,6 +43,6 @@ class MinPasswordIf implements Rule
      */
     public function message()
     {
-        return "O campo {$this->field} deve ter no mínimo 8 caracteres.'";
+        return "O campo {$this->field} deve ter no mínimo 8 caracteres.";
     }
 }

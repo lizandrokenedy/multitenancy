@@ -87,7 +87,7 @@ class UserController extends Controller
     public function listAll(Request $request)
     {
         try {
-            return DataTables::of($this->service->listAll())->toJson();
+            return DataTables::of($this->service->listAll()->with('roles'))->toJson();
         } catch (Exception $e) {
             return $this->responseError();
         }

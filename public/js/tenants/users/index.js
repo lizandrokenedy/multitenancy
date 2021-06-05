@@ -17,6 +17,7 @@ const index = (new function () {
             columns: [
                 { data: "name", name: "name", title: "Nome" },
                 { data: "email", name: "email", title: "E-mail" },
+                { data: "roles[0].name", name: "role", title: "Perfil", orderable: false },
                 { data: "id", name: "id", title: "Ações", class: 'text-center', orderable: false, render: self.renderActions },
             ],
             rowCallback: function (row, data) {
