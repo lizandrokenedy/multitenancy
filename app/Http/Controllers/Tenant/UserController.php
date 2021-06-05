@@ -49,7 +49,7 @@ class UserController extends Controller
         ];
 
         $roles = (new RoleService())->listAll()->get();
-        
+
         return view('tenants.users.create', compact('items', 'roles'));
     }
 
@@ -109,7 +109,9 @@ class UserController extends Controller
 
         $user = $this->service->findById($id);
 
-        return view('tenants.users.update', compact('user', 'items'));
+        $roles = (new RoleService())->listAll()->get();
+
+        return view('tenants.users.update', compact('user', 'items', 'roles'));
     }
 
     /**

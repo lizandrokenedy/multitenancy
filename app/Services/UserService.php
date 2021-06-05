@@ -45,7 +45,7 @@ class UserService
      * @param integer $id
      * @return boolean
      */
-    public function update(array $data, int $id): bool
+    public function update(array $data, int $id): User
     {
 
         $formattedData = $this->formatData($data);
@@ -56,7 +56,7 @@ class UserService
             throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
         }
 
-        return $this->repository->update($formattedData, $id);
+        return $this->repository->save($formattedData, $id);
     }
 
     private function formatData(array $data): array
@@ -65,6 +65,7 @@ class UserService
 
         $user['name'] = $data['name'];
         $user['email'] = $data['email'];
+        $user['role_id'] = $data['role_id'];
 
         if (isset($data['alter-password']) || !isset($data['id'])) {
             $user['password'] = Hash::make($data['password']);

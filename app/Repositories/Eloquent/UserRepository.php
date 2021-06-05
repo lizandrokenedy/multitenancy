@@ -5,14 +5,27 @@ namespace App\Repositories\Eloquent;
 use App\Models\User;
 use App\Repositories\Contracts\RepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository extends AbstractRepository implements RepositoryInterface, UserRepositoryInterface
 {
     protected $model = User::class;
 
-    public function save(array $data): User
+    public function save(array $data, int $id = 0): User
     {
-        return $this->model::create($data);
+        if ($id != 0) {
+            return DB::transaction(function () use ($data, $id) {
+                $registry = $this->model::find($id);
+                $registry->update($data);
+                $registry->roles()->sync($data['role_id']);
+                return $registry;
+            });
+        }
+        return DB::transaction(function () use ($data) {
+            $registry = $this->model::create($data);
+            $registry->roles()->attach($data['role_id']);
+            return $registry;
+        });
     }
 
     public function query()

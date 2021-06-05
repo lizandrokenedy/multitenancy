@@ -26,7 +26,7 @@
 
 <div class="form-row">
     <div class="form-group col-sm-12 col-md-6">
-        <label for="name" class="required">Perfil</label>
+        <label for="role_id" class="required">Perfil</label>
         <select class="form-control" name="role_id" id="role_id">
             <option value="">Selecione</option>
             @foreach ($roles as $role)
