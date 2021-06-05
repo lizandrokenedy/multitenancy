@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Services\RoleService;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
@@ -46,7 +47,10 @@ class UserController extends Controller
             (object)['title' => 'Usuários', 'url' => route('tenants.users.index')],
             (object)['title' => 'Criar Usuário', 'url' => '']
         ];
-        return view('tenants.users.create', compact('items'));
+
+        $roles = (new RoleService())->listAll()->get();
+        
+        return view('tenants.users.create', compact('items', 'roles'));
     }
 
     /**

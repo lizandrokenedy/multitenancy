@@ -24,6 +24,18 @@
     </div>
 </div>
 
+<div class="form-row">
+    <div class="form-group col-sm-12 col-md-6">
+        <label for="name" class="required">Perfil</label>
+        <select class="form-control" name="role_id" id="role_id">
+            <option value="">Selecione</option>
+            @foreach ($roles as $role)
+                <option value="{{$role->id}}">{{$role->name}}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
 <div class="form-row" id="div-check-alter-password">
     <div class="form-group col-sm-12 col-md-6">
         <input type="checkbox" name="alter-password" id="alter-password" value="">
