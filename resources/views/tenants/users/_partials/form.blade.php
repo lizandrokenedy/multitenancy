@@ -30,7 +30,7 @@
         <select class="form-control" name="role_id" id="role_id">
             <option value="">Selecione</option>
             @foreach ($roles as $role)
-                <option {{ isset($user) && $user->roles[0]->id == $role->id ? 'selected' : '' }} value="{{ $role->id }}">
+                <option {{ isset($user) && $user->roles->contains('id', $role->id) ? 'selected' : '' }} value="{{ $role->id }}">
                     {{ $role->name }}
                 </option>
             @endforeach
