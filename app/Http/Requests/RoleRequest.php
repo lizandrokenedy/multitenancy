@@ -13,7 +13,7 @@ class RoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'permissions' => 'required',
+            'description' => 'required',
+            'name' => 'required',
+        ];
+    }
+
+
+    public function messages()
+    {
+        return [
+            'permissions.required' => 'É necessário selecionar ao menos uma permissão.',
+            'description.required' => 'O campo descrição é obrigatório.',
+            'name' => 'O campo nome é obrigatório.',
         ];
     }
 }
