@@ -70,6 +70,7 @@
                 </p>
             </a>
         </li>
+        @if(env('APP_ENV') == 'local')
         <li class="nav-item">
             <a class="nav-link {{ Route::is('tenants.permissions*') ? 'active' : '' }}"
                 href="{{ route('tenants.permissions.index') }}">
@@ -88,6 +89,7 @@
                 </p>
             </a>
         </li>
+        @endif
     </ul>
 </li>
 
