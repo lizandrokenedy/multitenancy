@@ -14,6 +14,7 @@
         </p>
     </a>
 </li>
+@can('tela-alunos-visualizar')
 <li class="nav-item">
     <a class="nav-link {{ Route::is('tenants.students*') ? 'active' : '' }}"
         href="{{ route('tenants.students.index') }}">
@@ -23,6 +24,7 @@
         </p>
     </a>
 </li>
+@endcan
 <li class="nav-item">
     <a class="nav-link {{ Route::is('tenants.grades*') ? 'active' : '' }}"
         href="{{ route('tenants.grades.index') }}">
