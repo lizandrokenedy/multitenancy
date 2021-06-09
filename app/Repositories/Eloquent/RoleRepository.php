@@ -19,6 +19,8 @@ class RoleRepository extends AbstractRepository implements RepositoryInterface, 
 
     public function save(array $data, int $id = 0): Role
     {
+
+        // dd($data);
         if ($id != 0) {
             return DB::transaction(function () use ($data, $id) {
                 $registry = $this->model::find($id);

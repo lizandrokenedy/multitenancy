@@ -29,7 +29,8 @@ class RunMigrationsTenant
     {
         $company = $event->company();
         $migration = Artisan::call('tenants:migrations', [
-            'id' => $company->id
+            'id' => $company->id,
+            '--seed' => true
         ]);
 
         // 0 = sucesso
