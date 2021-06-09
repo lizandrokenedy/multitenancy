@@ -20,17 +20,6 @@ class CreateModulesTable extends Migration
             $table->boolean('status');
             $table->timestamps();
         });
-
-        $this->createUserAdminDefault();
-    }
-
-    private function createUserAdminDefault()
-    {
-        return (new UserService())->create([
-            'name' => 'Administrador',
-            'email' => 'lizandrokenedy@gmail.com',
-            'password' => '12345678',
-        ]);
     }
 
     /**
