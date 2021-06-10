@@ -64,7 +64,10 @@
                     <label for="remember">{{ __('adminlte::adminlte.remember_me') }}</label>
                 </div>
             </div>
-            <div class="col-5">
+        </div>
+
+        <div class="row">
+            <div class="col-12">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
                     {{ __('adminlte::adminlte.sign_in') }}
@@ -79,7 +82,7 @@
     {{-- Password reset link --}}
     @if($password_reset_url)
         <p class="my-0">
-            <a href="{{ $password_reset_url }}">
+            <a class="btn btn-danger btn-block" href="{{ $password_reset_url }}">
                 {{ __('adminlte::adminlte.i_forgot_my_password') }}
             </a>
         </p>
@@ -87,10 +90,10 @@
 
     {{-- Register link --}}
     @if($register_url)
-        <p class="my-0">
+        {{-- <p class="my-0">
             <a href="{{ $register_url }}">
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>
-        </p>
+        </p> --}}
     @endif
 @stop
