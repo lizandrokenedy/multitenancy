@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users,email,'.$request->id,
             'password' => ['required_if:alter-password,true', new MinPasswordIf($request->all(), 8, 'senha')],
             'password_confirmation' => 'same:password',
-            'role_id' => 'required',
+            'role_id' => 'required_if:admin,false',
         ];
     }
 
@@ -37,8 +37,8 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            'required_if' => 'O campo senha é obrigatório quando o campo alterar senha estiver marcado.',
-            'role_id.required' => 'O campo perfil é obrigatório.'
+            'password.required_if' => 'O campo senha é obrigatório quando o campo alterar senha estiver marcado.',
+            'role_id.required_if' => 'O campo perfil é obrigatório.'
         ];
     }
 }

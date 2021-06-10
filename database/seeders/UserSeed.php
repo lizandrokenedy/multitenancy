@@ -20,17 +20,39 @@ class UserSeed extends Seeder
         $users = [
             [
                 'name' => 'Administrador',
-                'email' => 'lizandrokenedy@gmail.com',
-                'password' => Hash::make('12345678'),
-            ]
+                'email' => 'admin@gmail.com',
+                'admin' => true,
+            ],
+            [
+                'name' => 'Administrador Gestor',
+                'email' => 'admingestor@gmail.com',
+                'admin' => false,
+                'role' => 1,
+            ],
+            [
+                'name' => 'Administrador Escola',
+                'email' => 'adminescola@gmail.com',
+                'admin' => false,
+                'role' => 2,
+            ],
+            [
+                'name' => 'Professor',
+                'email' => 'professor@gmail.com',
+                'admin' => false,
+                'role' => 3
+            ],
         ];
 
-        foreach($users as $user) {
-            DB::table('users')->insert([
+        foreach ($users as $user) {
+            $data = User::create([
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'password' => Hash::make('12345678'),
+                'admin' => $user['admin']
             ]);
+            if (!$data->admin) {
+                $data->roles()->sync($user['role']);
+            }
         }
     }
 }

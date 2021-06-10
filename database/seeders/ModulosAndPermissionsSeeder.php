@@ -39,6 +39,10 @@ class ModulosAndPermissionsSeeder extends Seeder
                 'name' => 'Notas Administrativo',
                 'status' => 1
             ],
+            [
+                'name' => 'Perfis Administrativo',
+                'status' => 1
+            ],
         ];
 
         foreach ($modules as $module) {

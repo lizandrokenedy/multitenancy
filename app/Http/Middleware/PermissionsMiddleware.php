@@ -23,10 +23,9 @@ class PermissionsMiddleware
 
         foreach ($permissions as $permission) {
             Gate::define($permission->slug, function (User $user) use ($permission) {
-                return $user->hasPermissions($permission->slug);
+                return $user->admin ? true : $user->hasPermissions($permission->slug);
             });
         }
-
 
         return $next($request);
     }

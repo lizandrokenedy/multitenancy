@@ -17,11 +17,11 @@ const index = (new function () {
             columns: [
                 { data: "name", name: "name", title: "Nome" },
                 { data: "email", name: "email", title: "E-mail" },
-                { data: "roles[0].name", name: "role", title: "Perfil", orderable: false },
+                { data: "roles[0].name", name: "role", title: "Perfil", orderable: false, render: self.renderRole },
                 { data: "id", name: "id", title: "Ações", class: 'text-center', orderable: false, render: self.renderActions },
             ],
             rowCallback: function (row, data) {
-                console.log(data)
+                // console.log(data)
             }
         });
     }
@@ -31,6 +31,10 @@ const index = (new function () {
         self.table.DataTable().ajax.reload();
     }
 
+    self.renderRole = function (value, display, data) {
+        return data.admin === 1 ? 'ADMINISTRADOR' : data.roles[0].name
+    }
+    
     self.renderActions = function (id) {
         const actions = `
         <div>

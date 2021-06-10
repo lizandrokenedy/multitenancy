@@ -24,13 +24,14 @@
     </div>
 </div>
 
-<div class="form-row">
+<div class="form-row" id="div-role">
     <div class="form-group col-sm-12 col-md-6">
         <label for="role_id" class="required">Perfil</label>
         <select class="form-control" name="role_id" id="role_id">
             <option value="">Selecione</option>
             @foreach ($roles as $role)
-                <option {{ isset($user) && $user->roles->contains('id', $role->id) ? 'selected' : '' }} value="{{ $role->id }}">
+                <option {{ isset($user) && $user->roles->contains('id', $role->id) ? 'selected' : '' }}
+                    value="{{ $role->id }}">
                     {{ $role->name }}
                 </option>
             @endforeach
@@ -40,8 +41,19 @@
 
 <div class="form-row" id="div-check-alter-password">
     <div class="form-group col-sm-12 col-md-6">
-        <input type="checkbox" name="alter-password" id="alter-password" value="">
-        <label class="form-check-label">Alterar Senha</label>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" name="alter-password" id="alter-password" value="">
+            <label class="custom-control-label" for="alter-password">Alterar Senha</label>
+        </div>
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="custom-control custom-switch ml-1">
+        <input type="hidden" name="admin" id="admin">
+        <input type="checkbox" class="custom-control-input" id="is-admin"
+            {{ isset($user) && $user->admin ? 'checked' : '' }}>
+        <label class="custom-control-label" for="is-admin">Administrador</label>
     </div>
 </div>
 

@@ -18,6 +18,11 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+
+    protected $guarded = [
+        'id',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,6 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'admin',
     ];
 
     /**
@@ -65,7 +71,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
-    public function hasPermissions($permission)
+    public function hasPermissions($permission): bool
     {
         $user = $this->roles()->with('permissions')->first();
         return $user->permissions->contains('slug', $permission);

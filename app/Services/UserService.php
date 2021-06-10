@@ -65,7 +65,11 @@ class UserService
 
         $user['name'] = $data['name'];
         $user['email'] = $data['email'];
-        $user['role_id'] = $data['role_id'];
+        $user['admin'] = $data['admin'] == 'true' ? true : false;
+        $user['role_id'] = $data['role_id'] ? $data['role_id'] : [];
+        // if (isset($data['role_id'])) {
+        //     $user['role_id'] = $data['role_id'];
+        // }
 
         if (isset($data['alter-password']) || !isset($data['id'])) {
             $user['password'] = Hash::make($data['password']);

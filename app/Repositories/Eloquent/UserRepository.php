@@ -18,12 +18,14 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
                 $registry = $this->model::find($id);
                 $registry->update($data);
                 $registry->roles()->sync($data['role_id']);
+
                 return $registry;
             });
         }
         return DB::transaction(function () use ($data) {
             $registry = $this->model::create($data);
-            $registry->roles()->attach($data['role_id']);
+            $registry->roles()->sync($data['role_id']);
+
             return $registry;
         });
     }
