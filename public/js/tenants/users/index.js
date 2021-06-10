@@ -34,7 +34,7 @@ const index = (new function () {
     self.renderRole = function (value, display, data) {
         return data.admin === 1 ? 'ADMINISTRADOR' : data.roles[0].name
     }
-    
+
     self.renderActions = function (id) {
         const actions = `
         <div>
