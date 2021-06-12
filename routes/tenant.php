@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Tenant\AssessmentController;
+use App\Http\Controllers\Tenant\CityController;
 use App\Http\Controllers\Tenant\GradeController;
 use App\Http\Controllers\Tenant\ModuleController;
 use App\Http\Controllers\Tenant\PermissionController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\Tenant\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('cities/{state_id}', [CityController::class, 'getCitiesFromStates']);
+
     #Schools/Escolas
     Route::resource('schools', SchoolController::class);
     Route::group(['prefix' => 'schools', 'as' => 'schools.'], function () {

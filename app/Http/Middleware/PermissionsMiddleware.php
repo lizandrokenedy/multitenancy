@@ -19,6 +19,10 @@ class PermissionsMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if (request()->getHost() === config('tenant.domain_main')) {
+            return $next($request);
+        }
+
         $permissions = (new PermissionService())->listAll()->get();
 
         foreach ($permissions as $permission) {

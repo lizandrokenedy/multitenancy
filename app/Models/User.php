@@ -71,6 +71,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
+    public function address()
+    {
+        return $this->hasOne(Address::class, 'user_id', 'id');
+    }
+
     public function hasPermissions($permission): bool
     {
         $user = $this->roles()->with('permissions')->first();

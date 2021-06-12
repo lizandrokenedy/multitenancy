@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\City;
+use App\Models\State;
 use App\Services\RoleService;
 use App\Services\UserService;
 use Exception;
@@ -49,8 +51,9 @@ class UserController extends Controller
         ];
 
         $roles = (new RoleService())->listAll()->get();
+        $states = State::all();
 
-        return view('tenants.users.create', compact('items', 'roles'));
+        return view('tenants.users.create', compact('items', 'roles', 'states'));
     }
 
     /**
@@ -110,8 +113,9 @@ class UserController extends Controller
         $user = $this->service->findById($id);
 
         $roles = (new RoleService())->listAll()->get();
+        $states = State::all();
 
-        return view('tenants.users.update', compact('user', 'items', 'roles'));
+        return view('tenants.users.update', compact('user', 'items', 'roles', 'states'));
     }
 
     /**

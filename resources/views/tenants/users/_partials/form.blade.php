@@ -11,6 +11,40 @@
     </div>
 </div>
 
+<div class="form-row">
+    <div class="form-group col-sm-12 col-md-6">
+        <label for="telephone" class="required">Telefone</label>
+        <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telefone do Usuário"
+            value="{{ $user->telephone ?? '' }}">
+    </div>
+    <div class="form-group col-sm-12 col-md-6">
+        <label for="cell" class="required">Celular</label>
+        <input type="text" class="form-control" id="cell" name="cell" placeholder="Celular do Usuário"
+            value="{{ $user->cell ?? '' }}">
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-sm-12 col-md-6">
+        <label for="state" class="required">Estado</label>
+        <select class="form-control" name="state_id" id="state_id">
+            <option value="">Selecione</option>
+            @foreach ($states as $state)
+                <option {{ isset($user) && $user->state->contains('id', $state->id) ? 'selected' : '' }}
+                    value="{{ $state->id }}">
+                    {{ $state->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group col-sm-12 col-md-6">
+        <label for="city" class="required">Cidade</label>
+        <select class="form-control" name="city" id="city">
+            <option value="">Selecione</option>
+        </select>
+    </div>
+</div>
+
 <div class="form-row" id="div-alter-password">
     <div class="form-group col-sm-12 col-md-6">
         <label for="password" class="required">Senha</label>

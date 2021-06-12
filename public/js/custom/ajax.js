@@ -3,7 +3,7 @@ const tenantAjax = (new function () {
     self.buttons = $('.btn');
 
     self.get = (url) => {
-        $.ajax({
+        return $.ajax({
             url,
             type: 'GET',
         }).then(function (res) {

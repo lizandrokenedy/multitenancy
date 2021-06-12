@@ -10,11 +10,15 @@ const manter = (new function () {
     self.checkBoxIsAdmin = $('#is-admin');
     self.role = $('#role_id');
     self.admin = $('#admin');
+    self.state = $('#state_id');
+    self.city = $('#city_id');
 
     self.init = function () {
         self.isAdmin();
+        self.getCities()
         self.alterPassword();
         self.btnSave.on('click', self.save);
+        self.state.on('change', self.getCities);
         self.checkBoxAlterPassword.on('click', self.alterPassword);
         self.checkBoxIsAdmin.on('change', self.isAdmin);
     }
@@ -28,6 +32,23 @@ const manter = (new function () {
         }
         tenantAjax.post('/tenants/users', data);
     }
+
+    self.getCities = async function () {
+        const stateId = self.state.val();
+        if (stateId) {
+            const cities = await tenantAjax.get(`/tenants/cities/${self.state.val()}`);
+            self.city.empty();
+            self.city.append(
+                `<option value="">Selecione</option>`
+            )
+            cities.data.map(city => {
+                self.city.append(
+                    `<option value="${city.id}">${city.name}</option>`
+                )
+            })
+        }
+    }
+
 
     self.alterPassword = function () {
 
