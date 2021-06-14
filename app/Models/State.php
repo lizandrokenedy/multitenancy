@@ -26,4 +26,9 @@ class State extends Model
     {
         return $this->hasMany(City::class, 'state_id', 'id');
     }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class, 'state_id', 'id');
+    }
 }

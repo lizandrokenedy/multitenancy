@@ -38,12 +38,31 @@
         </select>
     </div>
     <div class="form-group col-sm-12 col-md-6">
-        <label for="city" class="required">Cidade</label>
-        <select class="form-control" name="city" id="city">
+        <label for="city_id" class="required">Cidade</label>
+        <select class="form-control" name="city_id" id="city_id">
             <option value="">Selecione</option>
         </select>
     </div>
 </div>
+
+<div class="form-row">
+    <div class="form-group col-sm-12 col-md-6">
+        <label for="address" class="required">Endereço</label>
+        <input type="text" class="form-control" id="address" name="address" placeholder="Endereço do Usuário"
+            value="{{ $user->address ?? '' }}">
+    </div>
+    <div class="form-group col-sm-12 col-md-3">
+        <label for="district" class="required">Bairro</label>
+        <input type="text" class="form-control" id="district" name="district" placeholder="Município do Usuário"
+            value="{{ $user->district ?? '' }}">
+    </div>
+    <div class="form-group col-sm-12 col-md-3">
+        <label for="number" class="required">Número</label>
+        <input type="text" class="form-control" id="number" name="number" placeholder="Número do Endereço"
+            value="{{ $user->number ?? '' }}">
+    </div>
+</div>
+
 
 <div class="form-row" id="div-alter-password">
     <div class="form-group col-sm-12 col-md-6">

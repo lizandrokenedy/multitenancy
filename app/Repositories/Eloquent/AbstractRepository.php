@@ -39,9 +39,9 @@ abstract class AbstractRepository
         return app($this->model);
     }
 
-    public function create(array $data): bool
+    public function create(array $data)
     {
-        return (bool) $this->model->create($data);
+        return $this->model->create($data);
     }
 
     public function find(int $id)
@@ -49,11 +49,11 @@ abstract class AbstractRepository
         return $this->model->find($id);
     }
 
-    public function update(array $data, int $id): bool
+    public function update(array $data, int $id)
     {
         $register = $this->find($id);
         if ($register) {
-            return (bool) $register->update($data);
+            return $register->update($data);
         } else {
             return false;
         }

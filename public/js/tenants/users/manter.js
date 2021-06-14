@@ -36,7 +36,7 @@ const manter = (new function () {
     self.getCities = async function () {
         const stateId = self.state.val();
         if (stateId) {
-            const cities = await tenantAjax.get(`/tenants/cities/${self.state.val()}`);
+            const cities = await tenantAjax.get(`/tenants/cities/${stateId}`);
             self.city.empty();
             self.city.append(
                 `<option value="">Selecione</option>`

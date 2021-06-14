@@ -89,9 +89,12 @@ class UserService
      */
     public function create(array $data): User
     {
-        $formattedData = $this->formatData($data);
+        $formattedDataForCreateUser = $this->formatData($data);
 
-        return $this->repository->save($formattedData);
+        $user = $this->repository->save($formattedDataForCreateUser);
+
+        
+        return $user;
     }
 
 
