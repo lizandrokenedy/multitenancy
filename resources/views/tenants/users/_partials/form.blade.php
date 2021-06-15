@@ -30,8 +30,7 @@
         <select class="form-control" name="state_id" id="state_id">
             <option value="">Selecione</option>
             @foreach ($states as $state)
-                <option {{ isset($user) && $user->state->contains('id', $state->id) ? 'selected' : '' }}
-                    value="{{ $state->id }}">
+                <option value="{{ $state->id }}">
                     {{ $state->name }}
                 </option>
             @endforeach

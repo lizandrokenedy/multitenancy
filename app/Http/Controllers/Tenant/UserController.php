@@ -10,6 +10,7 @@ use App\Services\RoleService;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -29,12 +30,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Usuários', 'url' => ''],
-        ];
+        try {
+            $this->checkPermission('tela-usuarios-administrativo-visualizar');
 
-        return view('tenants.users.index', compact('items'));
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => 'Usuários', 'url' => ''],
+            ];
+
+            $canCreate = Gate::check('tela-usuarios-administrativo-criar');
+            $canEdit = Gate::check('tela-usuarios-administrativo-editar');
+            $canRemove = Gate::check('tela-usuarios-administrativo-excluir');
+            return view('tenants.users.index', compact('items', 'canEdit', 'canRemove', 'canCreate'));
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError($e->getMessage());
+        }
     }
 
     /**
@@ -44,16 +57,26 @@ class UserController extends Controller
      */
     public function create()
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Usuários', 'url' => route('tenants.users.index')],
-            (object)['title' => 'Criar Usuário', 'url' => '']
-        ];
+        try {
 
-        $roles = (new RoleService())->listAll()->get();
-        $states = State::all();
+            $this->checkPermission('tela-usuarios-administrativo-criar');
 
-        return view('tenants.users.create', compact('items', 'roles', 'states'));
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => 'Usuários', 'url' => route('tenants.users.index')],
+                (object)['title' => 'Criar Usuário', 'url' => '']
+            ];
+
+            $roles = (new RoleService())->listAll()->get();
+            $states = State::all();
+
+            return view('tenants.users.create', compact('items', 'roles', 'states'));
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError($e->getMessage());
+        }
     }
 
     /**
@@ -65,6 +88,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
+            $this->checkPermission('tela-usuarios-administrativo-criar');
 
             $validate = $this->validateRequest($request);
 
@@ -90,6 +114,7 @@ class UserController extends Controller
     public function listAll(Request $request)
     {
         try {
+            $this->checkPermission('tela-usuarios-administrativo-visualizar');
             return DataTables::of($this->service->listAll()->with('roles'))->toJson();
         } catch (Exception $e) {
             return $this->responseError();
@@ -104,18 +129,26 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => 'Usuários', 'url' => route('tenants.users.index')],
-            (object)['title' => 'Editar Usuário', 'url' => '']
-        ];
+        try {
+            $this->checkPermission('tela-usuarios-administrativo-editar');
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => 'Usuários', 'url' => route('tenants.users.index')],
+                (object)['title' => 'Editar Usuário', 'url' => '']
+            ];
 
-        $user = $this->service->findById($id);
+            $user = $this->service->findById($id);
+            
+            $roles = (new RoleService())->listAll()->get();
+            $states = State::all();
 
-        $roles = (new RoleService())->listAll()->get();
-        $states = State::all();
-
-        return view('tenants.users.update', compact('user', 'items', 'roles', 'states'));
+            return view('tenants.users.update', compact('user', 'items', 'roles', 'states'));
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError();
+        }
     }
 
     /**
@@ -128,6 +161,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $this->checkPermission('tela-usuarios-administrativo-editar');
+
             $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {
@@ -138,7 +173,10 @@ class UserController extends Controller
 
             return $this->responseSuccess();
         } catch (Exception $e) {
-            $this->responseError($e->getMessage());
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError($e->getMessage());
         }
     }
 
@@ -159,7 +197,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $this->service->delete($id);
-        return $this->responseSuccess();
+        try {
+            $this->checkPermission('tela-usuarios-administrativo-excluir');
+
+            $this->service->delete($id);
+
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            return $this->responseError($e->getMessage());
+        }
     }
 }

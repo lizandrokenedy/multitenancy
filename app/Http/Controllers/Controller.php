@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Messages\Messages;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Gate;
 
 class Controller extends BaseController
 {
@@ -32,5 +34,20 @@ class Controller extends BaseController
             'message' => $msg,
             'success' => false
         ], $status);
+    }
+
+    public function checkPermission($permissions)
+    {
+        if (is_array($permissions)) {
+            foreach ($permissions as $permission) {
+                if(!Gate::check($permission)) {
+                    throw new Exception(Messages::ACESSO_NEGADO, 403);
+                }
+            }
+        }
+
+        if(!Gate::check($permissions)) {
+            throw new Exception(Messages::ACESSO_NEGADO, 403);
+        }
     }
 }

@@ -5,7 +5,9 @@
 @section('content_header')
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            <x-btn-new route="tenants.users.create" />
+            @if ($canCreate)
+                <x-btn-new route="tenants.users.create" />
+            @endif
             <x-breadcrumb :items="$items" />
         </div>
     </div>
@@ -34,6 +36,8 @@
     <script src="{{ asset('js/tenants/users/index.js') }}"></script>
     <script>
         index.init();
+        index.canEdit = "{{ $canEdit }}"
+        index.canRemove = "{{ $canRemove }}"
 
     </script>
 @stop
