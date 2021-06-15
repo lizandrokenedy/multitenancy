@@ -19,7 +19,9 @@ class RoleSeeder extends Seeder
             [
                 'name' => 'ADMIN GESTOR PÚBLICO',
                 'description' => 'Full access aos perfis: ADMIN ESCOLA / PROFESSOR / ALUNOS',
-                'permissions' => [5, 6, 7, 8, 13, 14, 15, 16, 17, 18, 19, 20]
+                'permissions' => [
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 26, 27, 28
+                ]
             ],
             [
                 'name' => 'ADMIN ESCOLA',

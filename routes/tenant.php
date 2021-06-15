@@ -3,8 +3,10 @@
 use App\Http\Controllers\Tenant\AssessmentController;
 use App\Http\Controllers\Tenant\CityController;
 use App\Http\Controllers\Tenant\GradeController;
+use App\Http\Controllers\Tenant\HelpCenterController;
 use App\Http\Controllers\Tenant\ModuleController;
 use App\Http\Controllers\Tenant\PermissionController;
+use App\Http\Controllers\Tenant\ReportController;
 use App\Http\Controllers\Tenant\RoleController;
 use App\Http\Controllers\Tenant\SchoolController;
 use App\Http\Controllers\Tenant\StudentController;
@@ -87,4 +89,17 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('import', [StudentController::class, 'import'])->name('import');
         });
     });
+
+    #Help Center/Central de Ajuda
+    Route::resource('help-center', HelpCenterController::class);
+    Route::group(['prefix' => 'help-center', 'as' => 'help-center.'], function () {
+        Route::post('list-all', [HelpCenterController::class, 'listAll'])->name('list-all');
+    });
+
+
+     #Help Center/Central de Ajuda
+     Route::resource('reports', ReportController::class);
+     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
+         Route::post('list-all', [ReportController::class, 'listAll'])->name('list-all');
+     });
 });

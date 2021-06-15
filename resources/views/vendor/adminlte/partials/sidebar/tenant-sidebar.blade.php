@@ -31,7 +31,7 @@
         </a>
     </li>
 @endcan
-@can('tela-notas-administrativo-visualizar')
+{{-- @can('tela-notas-administrativo-visualizar')
     <li class="nav-item">
         <a class="nav-link {{ Route::is('tenants.grades*') ? 'active' : '' }}"
             href="{{ route('tenants.grades.index') }}">
@@ -41,7 +41,7 @@
             </p>
         </a>
     </li>
-@endcan
+@endcan --}}
 @can('tela-avaliacoes-administrativo-visualizar')
     <li class="nav-item">
         <a class="nav-link {{ Route::is('tenants.assessments*') ? 'active' : '' }}"
@@ -54,6 +54,17 @@
     </li>
 @endcan
 
+
+<li class="nav-item">
+    <a class="nav-link {{ Route::is('tenants.reports*') ? 'active' : '' }}"
+        href="{{ route('tenants.reports.index') }}">
+        <i class="fa fa-chart-pie mr-1"></i>
+        <p>
+            Relatórios
+        </p>
+    </a>
+</li>
+
 @canany(['tela-usuarios-administrativo-visualizar', 'tela-perfis-administrativo-visualizar'])
     <li
         class="nav-item {{ Route::is('tenants.users*', 'tenants.roles*', 'tenants.permissions*', 'tenants.modules*') ? 'menu-open' : '' }}">
@@ -61,7 +72,7 @@
             class="nav-link {{ Route::is('tenants.users*', 'tenants.roles*', 'tenants.permissions*', 'tenants.modules*') ? 'active' : '' }}">
             <i class="fa fa-lock mr-1"></i>
             <p>
-                Controle de Acesso
+                Configurações
                 <i class="right fas fa-angle-left"></i>
             </p>
         </a>
@@ -111,9 +122,12 @@
         </ul>
     </li>
 @endcanany
-@if (Auth::user()->admin)
-    <li class="nav-item {{ Route::is('tenants.imports*') ? 'menu-open' : '' }}">
-        <a href="#" class="nav-link {{ Route::is('tenants.imports*') ? 'active' : '' }}">
+
+@if (env('APP_ENV') == 'local')
+    <li
+        class="nav-item {{ Route::is('tenants.schools*', 'tenants.students*', 'tenants.teachers*') ? 'menu-open' : '' }}">
+        <a href="#"
+            class="nav-link {{ Route::is('tenants.schools*', 'tenants.students*', 'tenants.teachers*') ? 'active' : '' }}">
             <i class="fa fa-file-csv mr-1"></i>
             <p>
                 Importações
@@ -152,3 +166,16 @@
     </li>
 @endif
 
+
+
+@can('tela-avaliacoes-administrativo-visualizar')
+    <li class="nav-item">
+        <a class="nav-link {{ Route::is('tenants.help-center*') ? 'active' : '' }}"
+            href="{{ route('tenants.help-center.index') }}">
+            <i class="fa fa-question-circle mr-1"></i>
+            <p>
+                Central de Ajuda
+            </p>
+        </a>
+    </li>
+@endcan
