@@ -51,7 +51,7 @@ class UserService
 
         $address = $registry->address()->first();
 
-        if (!$registry || !$address) {
+        if (!$registry) {
             throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
         }
 
@@ -59,8 +59,12 @@ class UserService
 
         $user = $this->repository->save($formattedData, $id);
 
-        $address->fill($data);
+        if (!$address) {
+            $user->address()->create($data);
+            return $user;
+        }
 
+        $address->fill($data);
         $address->save();
 
         return $user;
@@ -99,7 +103,7 @@ class UserService
 
         $user = $this->repository->save($formattedDataForCreateUser);
 
-        $address = $user->address()->create($data);
+        $user->address()->create($data);
 
         return $user;
     }
