@@ -33,9 +33,9 @@ class UserService
      * @param integer $id
      * @return void
      */
-    public function findById(int $id)
+    public function findById(int $id): User
     {
-        return $this->repository->getUserAndRoleById($id);
+        return $this->repository->getUserByIdAndRelations($id);
     }
 
     /**
@@ -47,16 +47,23 @@ class UserService
      */
     public function update(array $data, int $id): User
     {
-
-        $formattedData = $this->formatData($data);
-
         $registry = $this->findById($id);
 
-        if (!$registry) {
+        $address = $registry->address()->first();
+
+        if (!$registry || !$address) {
             throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
         }
 
-        return $this->repository->save($formattedData, $id);
+        $formattedData = $this->formatData($data);
+
+        $user = $this->repository->save($formattedData, $id);
+
+        $address->fill($data);
+
+        $address->save();
+
+        return $user;
     }
 
     private function formatData(array $data): array
@@ -67,12 +74,11 @@ class UserService
         $user['email'] = $data['email'];
         $user['admin'] = $data['admin'] == 'true' ? true : false;
         $user['role_id'] = $data['role_id'] ? $data['role_id'] : [];
-        // if (isset($data['role_id'])) {
-        //     $user['role_id'] = $data['role_id'];
-        // }
+        $user['telephone'] = preg_replace('/[^0-9]/', '', $data['telephone']);
+        $user['cell'] = preg_replace('/[^0-9]/', '', $data['cell']);
 
+        $user['password'] = Hash::make($data['password']);
         if (isset($data['alter-password']) || !isset($data['id'])) {
-            $user['password'] = Hash::make($data['password']);
         }
 
         return $user;
@@ -93,7 +99,8 @@ class UserService
 
         $user = $this->repository->save($formattedDataForCreateUser);
 
-        
+        $address = $user->address()->create($data);
+
         return $user;
     }
 

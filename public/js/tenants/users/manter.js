@@ -12,13 +12,14 @@ const manter = (new function () {
     self.admin = $('#admin');
     self.state = $('#state_id');
     self.city = $('#city_id');
+    self.citySelected = $('#city_selected');
 
     self.init = function () {
         self.isAdmin();
-        self.getCities()
+        self.buildComboCities()
         self.alterPassword();
         self.btnSave.on('click', self.save);
-        self.state.on('change', self.getCities);
+        self.state.on('change', self.buildComboCities);
         self.checkBoxAlterPassword.on('click', self.alterPassword);
         self.checkBoxIsAdmin.on('change', self.isAdmin);
     }
@@ -34,21 +35,32 @@ const manter = (new function () {
     }
 
     self.getCities = async function () {
-        const stateId = self.state.val();
-        if (stateId) {
-            const cities = await tenantAjax.get(`/tenants/cities/${stateId}`);
-            self.city.empty();
-            self.city.append(
-                `<option value="">Selecione</option>`
-            )
-            cities.data.map(city => {
-                self.city.append(
-                    `<option value="${city.id}">${city.name}</option>`
-                )
-            })
+        if (self.state.val()) {
+            return await tenantAjax.get(`/tenants/cities/${self.state.val()}`);
         }
     }
 
+    self.buildComboCities = async function () {
+        const cities = await self.getCities();
+
+        self.city.empty();
+        self.city.append(
+            `<option value="">Selecione</option>`
+        )
+        cities.data.map(city => {
+            self.city.append(
+                `<option value="${city.id}">${city.name}</option>`
+            )
+        })
+
+        self.selectCity();
+    }
+
+    self.selectCity = function () {
+        if (self.citySelected.val()) {
+            self.city.val(self.citySelected.val())
+        }
+    }
 
     self.alterPassword = function () {
 

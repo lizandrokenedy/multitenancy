@@ -62,10 +62,6 @@ class PermissionService
         }
     }
 
-    public function createPermissionModule(array $data)
-    {
-    }
-
     /**
      * Update Registre
      *
