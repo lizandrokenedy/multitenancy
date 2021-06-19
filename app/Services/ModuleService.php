@@ -8,15 +8,13 @@ use App\Repositories\Eloquent\ModuleRepository;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class ModuleService
+class ModuleService extends AbstractService
 {
     private $repository;
-    private $messages;
 
     public function __construct()
     {
         $this->repository = new ModuleRepository();
-        $this->messages = new ModuleMessages();
     }
 
 
@@ -51,9 +49,7 @@ class ModuleService
     {
         $registry = $this->findById($id);
 
-        if (!$registry) {
-            throw new Exception($this->messages::REGISTRO_NAO_ENCONTRADO);
-        }
+        $this->validateRecordNotFound($registry);
 
         return $this->repository->update($data, $id);
     }
@@ -82,8 +78,6 @@ class ModuleService
         });
     }
 
-
-
     /**
      * Delete Registre
      *
@@ -92,12 +86,9 @@ class ModuleService
      */
     public function delete(int $id): bool
     {
-
         $registry = $this->findById($id);
 
-        if (!$registry) {
-            throw new Exception($this->messages::REGISTRO_NAO_ENCONTRADO);
-        }
+        $this->validateRecordNotFound($registry);
 
         return $this->repository->delete($id);
     }

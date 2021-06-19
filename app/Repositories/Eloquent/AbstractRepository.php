@@ -7,7 +7,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 abstract class AbstractRepository
 {
-
     protected $model;
 
     public function __construct()
@@ -67,5 +66,10 @@ abstract class AbstractRepository
         } else {
             return false;
         }
+    }
+
+    public function query()
+    {
+        return $this->model->query();
     }
 }

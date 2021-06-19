@@ -9,17 +9,14 @@ use App\Repositories\Eloquent\PermissionRepository;
 use Illuminate\Support\Str;
 use Exception;
 
-class PermissionService
+class PermissionService extends AbstractService
 {
     private $repository;
-    private $messages;
 
     public function __construct()
     {
         $this->repository = new PermissionRepository();
-        $this->messages = new PermissionMessages();
     }
-
 
     /**
      * List All
@@ -28,7 +25,6 @@ class PermissionService
     {
         return $this->repository->query();
     }
-
 
     /**
      * Find by ID
@@ -73,13 +69,10 @@ class PermissionService
     {
         $registry = $this->findById($id);
 
-        if (!$registry) {
-            throw new Exception($this->messages::REGISTRO_NAO_ENCONTRADO);
-        }
+        $this->validateRecordNotFound($registry);
 
         return $this->repository->update($data, $id);
     }
-
 
 
     /**
@@ -106,9 +99,7 @@ class PermissionService
 
         $registry = $this->findById($id);
 
-        if (!$registry) {
-            throw new Exception($this->messages::REGISTRO_NAO_ENCONTRADO);
-        }
+        $this->validateRecordNotFound($registry);
 
         return $this->repository->delete($id);
     }

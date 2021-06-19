@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
-class RoleService
+class RoleService extends AbstractService
 {
     private $repository;
 
@@ -20,7 +20,6 @@ class RoleService
     {
         $this->repository = new RoleRepository();
     }
-
 
     /**
      * List All
@@ -37,24 +36,18 @@ class RoleService
         $this->validateRecordNotFound($userLogged);
 
         if ($userLogged->admin) {
-            return $this->listAll()->with('roles')->get();
+            return $this->listAll()->get();
         }
 
-        if ($userLogged->roles[0]->id == RoleEnum::ADMIN_ESCOLA) {
+        if (
+            isset($userLogged->roles[0]) &&
+            $userLogged->roles[0]->id == RoleEnum::ADMIN_ESCOLA
+        ) {
             return $this->repository->roleListAdminSchool();
         }
 
         return $this->repository->roleListAdminManager();
     }
-
-
-    private function validateRecordNotFound($registry)
-    {
-        if (!$registry) {
-            throw new Exception(RoleMessages::REGISTRO_NAO_ENCONTRADO);
-        }
-    }
-
 
     /**
      * Find by ID

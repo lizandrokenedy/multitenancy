@@ -31,11 +31,6 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
         });
     }
 
-    public function query()
-    {
-        return $this->model::query();
-    }
-
     public function getUserByIdAndRelations(int $idUser)
     {
         return $this->model::where('id', $idUser)

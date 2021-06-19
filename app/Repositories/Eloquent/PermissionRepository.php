@@ -6,15 +6,9 @@ use App\Models\Permission;
 use App\Repositories\Contracts\PermissionRepositoryInterface;
 use App\Repositories\Contracts\RepositoryInterface;
 
-class PermissionRepository extends AbstractRepository implements RepositoryInterface, PermissionRepositoryInterface
+class PermissionRepository extends AbstractRepository
 {
     protected $model = Permission::class;
-
-    public function query()
-    {
-        return $this->model::query();
-    }
-
 
     public function save(array $data): Permission
     {

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
-class UserService
+class UserService extends AbstractService
 {
     private $repository;
 
@@ -19,7 +19,6 @@ class UserService
     {
         $this->repository = new UserRepository();
     }
-
 
     /**
      * List All
@@ -39,19 +38,14 @@ class UserService
             return $this->listAll()->with('roles')->get();
         }
 
-        if ($userLogged->roles[0]->id == RoleEnum::ADMIN_ESCOLA) {
+        if (
+            isset($userLogged->roles[0]) &&
+            $userLogged->roles[0]->id == RoleEnum::ADMIN_ESCOLA
+        ) {
             return $this->repository->userListAdminSchool();
         }
 
         return $this->repository->userListAdminManager();
-    }
-
-
-    private function validateRecordNotFound($registry)
-    {
-        if (!$registry) {
-            throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
-        }
     }
 
     /**
@@ -106,8 +100,8 @@ class UserService
         $user['telephone'] = preg_replace('/[^0-9]/', '', $data['telephone']);
         $user['cell'] = preg_replace('/[^0-9]/', '', $data['cell']);
 
-        $user['password'] = Hash::make($data['password']);
         if (isset($data['alter-password']) || !isset($data['id'])) {
+            $user['password'] = Hash::make($data['password']);
         }
 
         return $user;
