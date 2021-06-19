@@ -67,7 +67,7 @@ class UserController extends Controller
                 (object)['title' => 'Criar Usuário', 'url' => '']
             ];
 
-            $roles = (new RoleService())->listAll()->get();
+            $roles = (new RoleService())->listRoleAccordingToPermission();
             $states = State::all();
 
             return view('tenants.users.create', compact('items', 'roles', 'states'));
@@ -115,9 +115,10 @@ class UserController extends Controller
     {
         try {
             $this->checkPermission('tela-usuarios-administrativo-visualizar');
-            return DataTables::of($this->service->listAll()->with('roles'))->toJson();
+
+            return DataTables::of($this->service->listUserAccordingToPermission())->toJson();
         } catch (Exception $e) {
-            return $this->responseError();
+            return $this->responseError($e->getMessage());
         }
     }
 
@@ -138,8 +139,8 @@ class UserController extends Controller
             ];
 
             $user = $this->service->findById($id);
-            
-            $roles = (new RoleService())->listAll()->get();
+
+            $roles = (new RoleService())->listRoleAccordingToPermission();
             $states = State::all();
 
             return view('tenants.users.update', compact('user', 'items', 'roles', 'states'));

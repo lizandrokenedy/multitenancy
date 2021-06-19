@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Messages\UserMessages;
 use App\Models\User;
 use App\Repositories\Eloquent\UserRepository;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -26,6 +29,30 @@ class UserService
         return $this->repository->query();
     }
 
+    public function listUserAccordingToPermission()
+    {
+        $userLogged = $this->repository->getUserByIdAndRelations(Auth::id());
+
+        $this->validateRecordNotFound($userLogged);
+
+        if ($userLogged->admin) {
+            return $this->listAll()->with('roles')->get();
+        }
+
+        if ($userLogged->roles[0]->id == RoleEnum::ADMIN_ESCOLA) {
+            return $this->repository->userListAdminSchool();
+        }
+
+        return $this->repository->userListAdminManager();
+    }
+
+
+    private function validateRecordNotFound($registry)
+    {
+        if (!$registry) {
+            throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
+        }
+    }
 
     /**
      * Find by ID
@@ -49,11 +76,9 @@ class UserService
     {
         $registry = $this->findById($id);
 
-        $address = $registry->address()->first();
+        $this->validateRecordNotFound($registry);
 
-        if (!$registry) {
-            throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
-        }
+        $address = $registry->address()->first();
 
         $formattedData = $this->formatData($data);
 
@@ -76,7 +101,7 @@ class UserService
 
         $user['name'] = $data['name'];
         $user['email'] = $data['email'];
-        $user['admin'] = $data['admin'] == 'true' ? true : false;
+        $user['admin'] = isset($data['admin']) && $data['admin'] == 'true' ? true : false;
         $user['role_id'] = $data['role_id'] ? $data['role_id'] : [];
         $user['telephone'] = preg_replace('/[^0-9]/', '', $data['telephone']);
         $user['cell'] = preg_replace('/[^0-9]/', '', $data['cell']);
@@ -120,9 +145,7 @@ class UserService
 
         $registry = $this->findById($id);
 
-        if (!$registry) {
-            throw new Exception(UserMessages::REGISTRO_NAO_ENCONTRADO);
-        }
+        $this->validateRecordNotFound($registry);
 
         return $this->repository->delete($id);
     }

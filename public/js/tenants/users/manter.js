@@ -43,6 +43,10 @@ const manter = (new function () {
     self.buildComboCities = async function () {
         const cities = await self.getCities();
 
+        if (!cities) {
+            return;
+        }
+
         self.city.empty();
         self.city.append(
             `<option value="">Selecione</option>`

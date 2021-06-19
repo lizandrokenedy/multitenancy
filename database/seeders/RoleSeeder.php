@@ -18,15 +18,15 @@ class RoleSeeder extends Seeder
         $roles = [
             [
                 'name' => 'ADMIN GESTOR PÚBLICO',
-                'description' => 'Full access aos perfis: ADMIN ESCOLA / PROFESSOR / ALUNOS',
+                'description' => 'Full access aos perfis: ADMIN ESCOLA / PROFESSOR / ALUNOS / USUÁRIOS (ADMIN ESCOLA e ALUNOS)',
                 'permissions' => [
                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 25, 26, 27, 28
                 ]
             ],
             [
                 'name' => 'ADMIN ESCOLA',
-                'description' => 'Full access aos perfis: PROFESSOR / ALUNOS / AMBIENTE DE AVALIAÇÕES',
-                'permissions' => [5, 6, 7, 8, 9, 10, 11, 12, 17, 18, 19, 20]
+                'description' => 'Full access aos perfis: PROFESSOR / ALUNOS / USUÁRIOS (ALUNOS) / AMBIENTE DE AVALIAÇÕES',
+                'permissions' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 17, 18, 19, 20]
             ],
             [
                 'name' => 'PROFESSOR',

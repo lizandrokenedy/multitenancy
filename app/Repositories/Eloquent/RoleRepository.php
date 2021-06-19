@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Models\Role;
 use App\Repositories\Contracts\RepositoryInterface;
 use App\Repositories\Contracts\RoleRepositoryInterface;
@@ -41,5 +42,23 @@ class RoleRepository extends AbstractRepository implements RepositoryInterface, 
         return $this->model::where('id', $idRole)
             ->with('permissions:id')
             ->first();
+    }
+
+    public function roleListAdminManager()
+    {
+        return $this->model::where('id', '<>', RoleEnum::ADMIN_GESTOR)
+            ->whereHas('users', function ($q) {
+                $q->where('admin', 0);
+            })
+            ->get();
+    }
+
+    public function roleListAdminSchool()
+    {
+        return $this->model::whereNotIn('id', [RoleEnum::ADMIN_GESTOR, RoleEnum::ADMIN_ESCOLA])
+            ->whereHas('users', function ($q) {
+                $q->where('admin', 0);
+            })
+            ->get();
     }
 }

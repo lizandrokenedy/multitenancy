@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Models\User;
 use App\Repositories\Contracts\RepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
@@ -40,5 +41,25 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
         return $this->model::where('id', $idUser)
             ->with(['roles.permissions', 'address'])
             ->first();
+    }
+
+    public function userListAdminManager()
+    {
+        return $this->model::with('roles')
+            ->where('admin', 0)
+            ->whereHas('roles', function ($q) {
+                $q->where('id', '<>', RoleEnum::ADMIN_GESTOR);
+            })
+            ->get();
+    }
+
+    public function userListAdminSchool()
+    {
+        return $this->model::with('roles')
+            ->where('admin', 0)
+            ->whereHas('roles', function ($q) {
+                $q->whereNotIn('id', [RoleEnum::ADMIN_GESTOR, RoleEnum::ADMIN_ESCOLA]);
+            })
+            ->get();
     }
 }

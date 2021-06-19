@@ -30,7 +30,8 @@
         <select class="form-control" name="state_id" id="state_id">
             <option value="">Selecione</option>
             @foreach ($states as $state)
-                <option {{ isset($user->address->state_id) && $user->address->state_id == $state->id ? 'selected' : '' }}
+                <option
+                    {{ isset($user->address->state_id) && $user->address->state_id == $state->id ? 'selected' : '' }}
                     value="{{ $state->id }}">
                     {{ $state->name }}
                 </option>
@@ -103,15 +104,16 @@
     </div>
 </div>
 
-<div class="form-row">
-    <div class="custom-control custom-switch ml-1">
-        <input type="hidden" name="admin" id="admin">
-        <input type="checkbox" class="custom-control-input" id="is-admin"
-            {{ isset($user) && $user->admin ? 'checked' : '' }}>
-        <label class="custom-control-label" for="is-admin">Administrador</label>
+@if (Auth::user()->admin)
+    <div class="form-row">
+        <div class="custom-control custom-switch ml-1">
+            <input type="hidden" name="admin" id="admin">
+            <input type="checkbox" class="custom-control-input" id="is-admin"
+                {{ isset($user) && $user->admin ? 'checked' : '' }}>
+            <label class="custom-control-label" for="is-admin">Administrador</label>
+        </div>
     </div>
-</div>
-
+@endif
 
 <div class="text-center">
     <x-btn-save />
