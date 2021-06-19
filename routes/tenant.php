@@ -49,10 +49,11 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     #Users/Usuários
-    Route::resource('users', UserController::class);
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+        Route::get('profile', [UserController::class, 'profile'])->name('profile');
         Route::post('list-all', [UserController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('users', UserController::class);
 
     #Roles/Perfis
     Route::resource('roles', RoleController::class);
@@ -97,9 +98,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
-     #Help Center/Central de Ajuda
-     Route::resource('reports', ReportController::class);
-     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
-         Route::post('list-all', [ReportController::class, 'listAll'])->name('list-all');
-     });
+    #Help Center/Central de Ajuda
+    Route::resource('reports', ReportController::class);
+    Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
+        Route::post('list-all', [ReportController::class, 'listAll'])->name('list-all');
+    });
 });

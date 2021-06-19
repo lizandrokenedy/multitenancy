@@ -208,4 +208,10 @@ class UserController extends Controller
             return $this->responseError($e->getMessage());
         }
     }
+
+
+    public function profile()
+    {
+        return view('tenants.users.profile');
+    }
 }
