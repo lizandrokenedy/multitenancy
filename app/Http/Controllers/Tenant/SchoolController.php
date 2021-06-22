@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Tenant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SchoolRequest;
 use App\Models\State;
+use App\Repositories\Eloquent\UserRepository;
 use App\Services\SchoolService;
+use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -56,11 +58,14 @@ class SchoolController extends Controller
 
         $states = State::all();
 
+        $managers = (new UserService)->getAllManagers();
+
         return view("tenants.{$this->path}.create", [
             'items' => $items,
             'title' => $this->title,
             'path' => $this->path,
-            'states' => $states
+            'states' => $states,
+            'managers' => $managers
         ]);
     }
 
@@ -106,6 +111,22 @@ class SchoolController extends Controller
         }
     }
 
+
+    /**
+     * List all
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function listManagers(Request $request)
+    {
+        try {
+            return DataTables::of((new UserRepository())->getSchoolManagersById($request->school_id))->toJson();
+        } catch (Exception $e) {
+            return $this->responseError();
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -124,12 +145,15 @@ class SchoolController extends Controller
 
         $states = State::all();
 
+        $managers = (new UserService)->getAllManagers();
+
         return view("tenants.{$this->path}.update", [
             'items' => $items,
             'title' => $this->title,
             'path' => $this->path,
             'data' => $data,
-            'states' => $states
+            'states' => $states,
+            'managers' => $managers
         ]);
     }
 

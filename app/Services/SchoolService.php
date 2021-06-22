@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\School;
 use App\Repositories\Eloquent\SchoolRepository;
+use App\Repositories\Eloquent\UserRepository;
 use Illuminate\Support\Facades\DB;
 
 class SchoolService extends AbstractService

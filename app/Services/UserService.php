@@ -143,4 +143,10 @@ class UserService extends AbstractService
 
         return $this->repository->delete($id);
     }
+
+
+    public function getAllManagers()
+    {
+        return $this->repository->getAllManagers();
+    }
 }

@@ -19,34 +19,35 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('cities/{state_id}', [CityController::class, 'getCitiesFromStates']);
 
     #Schools/Escolas
-    Route::resource('schools', SchoolController::class);
     Route::group(['prefix' => 'schools', 'as' => 'schools.'], function () {
         Route::post('list-all', [SchoolController::class, 'listAll'])->name('list-all');
+        Route::post('list-managers', [SchoolController::class, 'listManagers']);
     });
+    Route::resource('schools', SchoolController::class);
 
     #Teachers/Professores
-    Route::resource('teachers', TeacherController::class);
     Route::group(['prefix' => 'teachers', 'as' => 'teachers.'], function () {
         Route::post('list-all', [TeacherController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('teachers', TeacherController::class);
 
     #Students/Alunos
-    Route::resource('students', StudentController::class);
     Route::group(['prefix' => 'students', 'as' => 'students.'], function () {
         Route::post('list-all', [StudentController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('students', StudentController::class);
 
     #Grades/Notas
-    Route::resource('grades', GradeController::class);
     Route::group(['prefix' => 'grades', 'as' => 'grades.'], function () {
         Route::post('list-all', [GradeController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('grades', GradeController::class);
 
     #Assessments/Avaliações
-    Route::resource('assessments', AssessmentController::class);
     Route::group(['prefix' => 'assessments', 'as' => 'assessments.'], function () {
         Route::post('list-all', [AssessmentController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('assessments', AssessmentController::class);
 
     #Users/Usuários
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
@@ -56,51 +57,51 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class);
 
     #Roles/Perfis
-    Route::resource('roles', RoleController::class);
     Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
         Route::post('list-all', [RoleController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('roles', RoleController::class);
 
     #Permissions/Permissões
-    Route::resource('permissions', PermissionController::class);
     Route::group(['prefix' => 'permissions', 'as' => 'permissions.'], function () {
         Route::post('list-all', [PermissionController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('permissions', PermissionController::class);
 
     #Modules/Módulos
-    Route::resource('modules', ModuleController::class);
     Route::group(['prefix' => 'modules', 'as' => 'modules.'], function () {
         Route::post('list-all', [ModuleController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('modules', ModuleController::class);
 
     #Imports/Importações
     Route::group(['prefix' => 'imports', 'as' => 'imports.'], function () {
         Route::group(['prefix' => 'schools', 'as' => 'schools.'], function () {
-            Route::get('index', [SchoolController::class, 'viewImport'])->name('index');
+            Route::get('index', [SchoolController::class, 'index'])->name('index');
             Route::post('import', [SchoolController::class, 'import'])->name('import');
         });
 
         Route::group(['prefix' => 'teachers', 'as' => 'teachers.'], function () {
-            Route::get('index', [TeacherController::class, 'viewImport'])->name('index');
+            Route::get('index', [TeacherController::class, 'index'])->name('index');
             Route::post('import', [TeacherController::class, 'import'])->name('import');
         });
 
         Route::group(['prefix' => 'students', 'as' => 'students.'], function () {
-            Route::get('index', [StudentController::class, 'viewImport'])->name('index');
+            Route::get('index', [StudentController::class, 'index'])->name('index');
             Route::post('import', [StudentController::class, 'import'])->name('import');
         });
     });
 
     #Help Center/Central de Ajuda
-    Route::resource('help-center', HelpCenterController::class);
     Route::group(['prefix' => 'help-center', 'as' => 'help-center.'], function () {
         Route::post('list-all', [HelpCenterController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('help-center', HelpCenterController::class);
 
 
     #Help Center/Central de Ajuda
-    Route::resource('reports', ReportController::class);
     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
         Route::post('list-all', [ReportController::class, 'listAll'])->name('list-all');
     });
+    Route::resource('reports', ReportController::class);
 });

@@ -6,7 +6,7 @@
     </div>
     <div class="form-group col-sm-12 col-md-6">
         <label for="status" class="required">Status</label>
-        <x-select-status status="{{$data->status ?? 1}}"/>
+        <x-select-status status="{{ $data->status ?? 1 }}" />
     </div>
 </div>
 
@@ -50,6 +50,41 @@
         <label for="number" class="required">Número</label>
         <input type="text" class="form-control" id="number" name="number" placeholder="Número do Endereço"
             value="{{ $data->address->number ?? '' }}">
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-sm-12 col-md-6">
+        <label for="status" class="required">Gestores</label>
+        <select class="form-control" name="manager" id="manager">
+            <option value="">Selecione</option>
+            @foreach ($managers as $manager)
+                <option value="{{ $manager->id }}">{{ $manager->name }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group col-sm-12 col-md-2 d-flex align-items-end">
+        <button class="btn btn-success">
+            <i class="fa fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+<div class="card mt-3">
+
+    <div class="card-header">
+        <h3 class="card-title">Gestores</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="table" class="table table-striped">
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

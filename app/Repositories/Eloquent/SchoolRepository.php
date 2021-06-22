@@ -14,4 +14,5 @@ class SchoolRepository extends AbstractRepository
     {
         return $this->model::create($data);
     }
+
 }
