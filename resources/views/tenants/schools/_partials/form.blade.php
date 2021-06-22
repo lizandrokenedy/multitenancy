@@ -59,12 +59,12 @@
         <select class="form-control" name="manager" id="manager">
             <option value="">Selecione</option>
             @foreach ($managers as $manager)
-                <option value="{{ $manager->id }}">{{ $manager->name }}</option>
+                <option value="{{ $manager }}">{{ $manager->name }}</option>
             @endforeach
         </select>
     </div>
     <div class="form-group col-sm-12 col-md-2 d-flex align-items-end">
-        <button class="btn btn-success">
+        <button type="button" id="add-manager" class="btn btn-success">
             <i class="fa fa-plus"></i>
         </button>
     </div>

@@ -7,12 +7,15 @@ const manter = (new function () {
     self.city = $('#city_id');
     self.citySelected = $('#city_selected');
     self.table = $('#table');
+    self.btnAddManager = $('#add-manager');
+    self.manager = $('#manager');
 
     self.init = function () {
-        self.btnSave.on('click', self.save);
-        self.state.on('change', self.buildComboCities);
         self.buildComboCities();
         self.createTable();
+        self.btnSave.on('click', self.save);
+        self.state.on('change', self.buildComboCities);
+        self.btnAddManager.on('click', self.addManager);
     }
 
     self.createTable = function () {
@@ -24,6 +27,7 @@ const manter = (new function () {
                     school_id: self.id.val()
                 }
             },
+            serverSide: false,
             columns: [
                 { data: "name", name: "name", title: "Nome" },
                 { data: "email", name: "email", title: "E-mail" },
@@ -35,6 +39,7 @@ const manter = (new function () {
                 console.log(data)
             }
         });
+
     }
 
     self.renderActions = function (id) {
@@ -86,6 +91,22 @@ const manter = (new function () {
         if (self.citySelected.val()) {
             self.city.val(self.citySelected.val())
         }
+    }
+
+
+    self.addManager = function () {
+        if (self.manager.val() != "") {
+            const manager = JSON.parse(self.manager.val());
+            self.table.DataTable().row.add({
+                "name": manager.name,
+                "email": manager.email,
+                "telephone": manager.telephone,
+                "cell": manager.cell,
+                "id": manager.id
+            }).draw(true);
+        }
+
+        self.manager.val('');
     }
 
 });
