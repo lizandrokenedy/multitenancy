@@ -83,4 +83,9 @@ class User extends Authenticatable
         $user = $this->roles()->with('permissions')->first();
         return $user->permissions->contains('slug', $permission);
     }
+
+    public function userManager()
+    {
+        return $this->belongsToMany(School::class, 'school_managers', 'manager_id', 'school_id');
+    }
 }
