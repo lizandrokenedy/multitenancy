@@ -41,6 +41,12 @@ class UserSeed extends Seeder
                 'admin' => false,
                 'role' => 3
             ],
+            [
+                'name' => 'Aluno',
+                'email' => 'aluno@gmail.com',
+                'admin' => false,
+                'role' => 4
+            ],
         ];
 
         foreach ($users as $user) {

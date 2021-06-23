@@ -123,7 +123,7 @@
     </li>
 @endcanany
 
-@if (env('APP_ENV') == 'local')
+{{-- @if (env('APP_ENV') == 'local')
     <li
         class="nav-item {{ Route::is('tenants.schools*', 'tenants.students*', 'tenants.teachers*') ? 'menu-open' : '' }}">
         <a href="#"
@@ -164,18 +164,4 @@
             </li>
         </ul>
     </li>
-@endif
-
-
-
-@can('tela-avaliacoes-administrativo-visualizar')
-    <li class="nav-item">
-        <a class="nav-link {{ Route::is('tenants.help-center*') ? 'active' : '' }}"
-            href="{{ route('tenants.help-center.index') }}">
-            <i class="fa fa-question-circle mr-1"></i>
-            <p>
-                Central de Ajuda
-            </p>
-        </a>
-    </li>
-@endcan
+@endif --}}

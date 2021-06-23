@@ -33,6 +33,11 @@ class RoleSeeder extends Seeder
                 'description' => 'Acesso aos perfis dos alunos designados pela coordenação apenas para visualizar. Acesso ao ambiente de avaliações',
                 'permissions' => [5, 6, 7, 8, 9, 10, 11, 12]
             ],
+            [
+                'name' => 'ALUNO',
+                'description' => 'Consulta ao ambiente de avaliações',
+                'permissions' => [9]
+            ],
         ];
 
         foreach ($roles as $role) {

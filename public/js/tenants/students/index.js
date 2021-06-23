@@ -11,12 +11,12 @@ const index = (new function () {
     self.createTable = function () {
         self.table.DataTable({
             ajax: {
-                url: '/tenants/teachers/list-all',
+                url: '/tenants/students/list-all',
                 type: "POST"
             },
             columns: [
                 { data: "name", name: "name", title: "Nome" },
-                { data: "teachers_school", name: "schools", title: "Escolas", orderable: false, render: self.renderSchools },
+                { data: "students_school", name: "schools", title: "Escolas", orderable: false, render: self.renderSchools },
                 { data: "id", name: "id", title: "Ações", class: 'text-center', orderable: false, render: self.renderActions },
             ],
             rowCallback: function (row, data) {
@@ -36,7 +36,7 @@ const index = (new function () {
     }
 
     self.renderActions = function (id) {
-        const edit = self.canEdit ? `<a href="/tenants/teachers/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>` : '';
+        const edit = self.canEdit ? `<a href="/tenants/students/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>` : '';
         const actions = `
         <div>
             ${edit}

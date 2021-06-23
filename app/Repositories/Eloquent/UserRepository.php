@@ -78,6 +78,16 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
             ->get();
     }
 
+    public function getAllStudents()
+    {
+        return $this->model::with('studentsSchool')
+            ->where('admin', 0)
+            ->whereHas('roles', function ($q) {
+                $q->where('id', RoleEnum::ALUNO);
+            })
+            ->get();
+    }
+
     public function getSchoolManagersById($idSchool)
     {
         return $this->model::whereHas('managers', function ($q) use ($idSchool) {
