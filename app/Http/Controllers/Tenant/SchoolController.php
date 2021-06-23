@@ -39,9 +39,9 @@ class SchoolController extends Controller
                 (object)['title' => 'Home', 'url' => route('home'),],
                 (object)['title' => $this->title, 'url' => ''],
             ];
-            $canCreate = Gate::check('tela-usuarios-administrativo-criar');
-            $canEdit = Gate::check('tela-usuarios-administrativo-editar');
-            $canRemove = Gate::check('tela-usuarios-administrativo-excluir');
+            $canCreate = Gate::check('tela-escolas-administrativo-criar');
+            $canEdit = Gate::check('tela-escolas-administrativo-editar');
+            $canRemove = Gate::check('tela-escolas-administrativo-excluir');
 
             return view("tenants.{$this->path}.index", [
                 'items' => $items,
@@ -112,9 +112,7 @@ class SchoolController extends Controller
                 return $this->responseError($validate->errors());
             }
 
-
             $this->service->create($request->all());
-
 
             return $this->responseSuccess();
         } catch (Exception $e) {
@@ -208,7 +206,7 @@ class SchoolController extends Controller
     {
         try {
             $this->checkPermission('tela-escolas-administrativo-editar');
-            
+
             $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {
