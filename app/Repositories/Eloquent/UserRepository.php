@@ -33,9 +33,8 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
 
     public function getUserByIdAndRelations(int $idUser)
     {
-        return $this->model::where('id', $idUser)
-            ->with(['roles.permissions', 'address'])
-            ->first();
+        return $this->model::with(['roles.permissions', 'address', 'teachersSchool', 'studentsSchool'])
+            ->find($idUser);
     }
 
     public function userListAdminManager()
@@ -69,6 +68,15 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
             ->get();
     }
 
+    public function getAllTeachers()
+    {
+        return $this->model::with('teachersSchool')
+            ->where('admin', 0)
+            ->whereHas('roles', function ($q) {
+                $q->where('id', RoleEnum::PROFESSOR);
+            })
+            ->get();
+    }
 
     public function getSchoolManagersById($idSchool)
     {

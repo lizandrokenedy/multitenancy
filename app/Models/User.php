@@ -89,12 +89,12 @@ class User extends Authenticatable
         return $this->belongsToMany(School::class, 'school_managers', 'manager_id', 'school_id');
     }
 
-    public function teachers()
+    public function teachersSchool()
     {
         return $this->belongsToMany(School::class, 'school_teacher', 'teacher_id', 'school_id');
     }
 
-    public function students()
+    public function studentsSchool()
     {
         return $this->belongsToMany(School::class, 'school_student', 'student_id', 'school_id');
     }

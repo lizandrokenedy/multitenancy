@@ -30,12 +30,12 @@ class School extends Model
         return $this->belongsToMany(User::class, 'school_managers', 'school_id', 'manager_id');
     }
 
-    public function teachers()
+    public function teachersSchool()
     {
         return $this->belongsToMany(User::class, 'school_teacher', 'school_id', 'teacher_id');
     }
 
-    public function students()
+    public function studentsSchool()
     {
         return $this->belongsToMany(User::class, 'school_student', 'school_id', 'student_id');
     }
