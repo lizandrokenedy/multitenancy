@@ -72,7 +72,7 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
 
     public function getSchoolManagersById($idSchool)
     {
-        return $this->model::whereHas('userManager', function ($q) use ($idSchool) {
+        return $this->model::whereHas('managers', function ($q) use ($idSchool) {
             $q->where('school_id', $idSchool);
         })->get();
     }

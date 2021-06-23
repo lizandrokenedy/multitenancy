@@ -1,12 +1,13 @@
 <div class="form-row">
     <div class="form-group col-sm-12 col-md-6">
         <label for="name" class="required">Nome</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Nome do Módulo"
+        <input type="text" class="form-control" id="name" name="name" placeholder="Nome da Escola"
             value="{{ $data->name ?? '' }}">
     </div>
     <div class="form-group col-sm-12 col-md-6">
-        <label for="status" class="required">Status</label>
-        <x-select-status status="{{ $data->status ?? 1 }}" />
+        <label for="telephone" class="required">Telefone</label>
+        <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telefone da Escola"
+            value="{{ $data->telephone ?? '' }}">
     </div>
 </div>
 
@@ -56,7 +57,7 @@
 <div class="form-row">
     <div class="form-group col-sm-12 col-md-6">
         <label for="status" class="required">Gestores</label>
-        <select class="form-control" name="manager" id="manager">
+        <select class="form-control" id="manager">
             <option value="">Selecione</option>
             @foreach ($managers as $manager)
                 <option value="{{ $manager }}">{{ $manager->name }}</option>

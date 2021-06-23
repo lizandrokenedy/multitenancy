@@ -17,6 +17,7 @@ class School extends Model
 
     protected $fillable = [
         'name',
+        'telephone',
     ];
 
     public function address()
@@ -24,8 +25,18 @@ class School extends Model
         return $this->hasOne(SchoolAddress::class, 'school_id', 'id');
     }
 
-    public function manager()
+    public function managers()
     {
         return $this->belongsToMany(User::class, 'school_managers', 'school_id', 'manager_id');
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class, 'school_teacher', 'school_id', 'teacher_id');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'school_student', 'school_id', 'student_id');
     }
 }

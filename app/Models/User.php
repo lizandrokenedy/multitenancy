@@ -84,8 +84,18 @@ class User extends Authenticatable
         return $user->permissions->contains('slug', $permission);
     }
 
-    public function userManager()
+    public function managers()
     {
         return $this->belongsToMany(School::class, 'school_managers', 'manager_id', 'school_id');
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(School::class, 'school_teacher', 'teacher_id', 'school_id');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(School::class, 'school_student', 'student_id', 'school_id');
     }
 }

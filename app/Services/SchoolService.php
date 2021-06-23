@@ -63,6 +63,10 @@ class SchoolService extends AbstractService
         $address->fill($data);
         $address->save();
 
+        $idManagers = isset($data['idmanagers']) ? $data['idmanagers'] : [];
+
+        $registry->managers()->sync($idManagers);
+
         return $school;
     }
 
@@ -80,6 +84,10 @@ class SchoolService extends AbstractService
         $school = $this->repository->save($data);
 
         $school->address()->create($data);
+
+        $idManagers = isset($data['idmanagers']) ? $data['idmanagers'] : [];
+
+        $school->managers()->sync($idManagers);
 
         return $school;
     }

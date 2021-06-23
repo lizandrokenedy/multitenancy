@@ -36,7 +36,7 @@ const manter = (new function () {
                 { data: "id", name: "id", title: "Ações", class: 'text-center', orderable: false, render: self.renderActions },
             ],
             rowCallback: function (row, data) {
-                console.log(data)
+                // console.log(data)
             }
         });
 
@@ -45,20 +45,35 @@ const manter = (new function () {
     self.renderActions = function (id) {
         const actions = `
         <div>
-            <a href="javascript:void(0)" data-acao="excluir" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>
+            <a href="javascript:void(0)" data-acao="excluir" id="item-${id}" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>
         </div>
         `
         return actions;
     }
 
+    destroy = async function (id) {
+        self.table.on('click', 'tbody tr', function () {
+            self.table.DataTable().row(this).remove().draw();
+        });
+    }
+
     self.save = function () {
         const data = self.form.serializeArray();
+        const idmanagers = self.getManagersTable();
+        idmanagers.map(idmanagers => data.push({ name: 'idmanagers[]', value: idmanagers }))
 
         if (self.id.val()) {
             tenantAjax.put(`/tenants/schools/${self.id.val()}`, data)
             return;
         }
         tenantAjax.post('/tenants/schools', data);
+    }
+
+
+    self.getManagersTable = function () {
+        const idmanagers = []
+        self.table.DataTable().rows().data().map(item => idmanagers.push(item.id))
+        return idmanagers;
     }
 
     self.getCities = async function () {
@@ -97,6 +112,12 @@ const manter = (new function () {
     self.addManager = function () {
         if (self.manager.val() != "") {
             const manager = JSON.parse(self.manager.val());
+            const result = self.validaManagerExists(manager.id);
+
+            if (result[0]) {
+                return tenantMessage.toastrMessage('Gestor já cadastrado para esta escola.', false);
+            }
+
             self.table.DataTable().row.add({
                 "name": manager.name,
                 "email": manager.email,
@@ -107,6 +128,16 @@ const manter = (new function () {
         }
 
         self.manager.val('');
+    }
+
+    self.validaManagerExists = function (idManager) {
+        const managersTable = self.getData();
+
+        return managersTable.filter(item => item.id === idManager);
+    }
+
+    self.getData = function () {
+        return self.table.DataTable().rows().data();
     }
 
 });

@@ -36,6 +36,11 @@ class CreateSchoolAddressesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('school_addresses');
+        // Schema::table('school_address', function (Blueprint $table) {
+        //     $table->dropForeign('school_address_school_id_foreign');
+        //     $table->dropForeign('school_address_city_id_foreign');
+        //     $table->dropForeign('school_address_state_id_foreign');
+        // });
+        Schema::dropIfExists('school_address');
     }
 }
