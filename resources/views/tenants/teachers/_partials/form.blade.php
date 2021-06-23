@@ -11,8 +11,12 @@
     </div>
 </div>
 
-
+@if($schools->count())
 <h4 class="text-center">Selecione as escolas</h4>
+@else
+<h4 class="text-center">Nenhuma escola cadastrada</h4>
+@endif
+
 <div class="row d-flex justify-content-center">
 
     @foreach ($schools as $school)

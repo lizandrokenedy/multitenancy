@@ -24,7 +24,28 @@ class SchoolRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'telephone' => 'required',
+            'state_id' => 'required',
+            'city_id' => 'required',
+            'address' => 'required',
+            'district' => 'required',
+            'number' => 'required',
+            'idmanagers' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'O campo nome é obrigatório.',
+            'telephone.required' => 'O campo telefone é obrigatório.',
+            'state_id.required' => 'O campo estado é obrigatório.',
+            'city_id.required' => 'O campo cidade é obrigatório.',
+            'address.required' => 'O campo endereço é obrigatório.',
+            'district.required' => 'O campo bairro é obrigatório.',
+            'number.required' => 'O campo número é obrigatório.',
+            'idmanagers.required' => 'É necessário informar ao menos um gestor.'
         ];
     }
 }
