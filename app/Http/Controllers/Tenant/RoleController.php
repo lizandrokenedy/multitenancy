@@ -16,7 +16,7 @@ class RoleController extends Controller
 {
     private $service;
     private $title = "Perfil";
-    private $routePath = 'tenants.roles';
+    private $path = 'roles';
 
     public function __construct()
     {
@@ -37,9 +37,9 @@ class RoleController extends Controller
                 (object)['title' => 'Home', 'url' => route('home'),],
                 (object)['title' => $this->title, 'url' => ''],
             ];
-            $canCreate = Gate::check('tela-usuarios-administrativo-criar');
-            $canEdit = Gate::check('tela-usuarios-administrativo-editar');
-            $canRemove = Gate::check('tela-usuarios-administrativo-excluir');
+            $canCreate = Gate::check('tela-perfis-administrativo-criar');
+            $canEdit = Gate::check('tela-perfis-administrativo-editar');
+            $canRemove = Gate::check('tela-perfis-administrativo-excluir');
 
             return view("tenants.{$this->path}.index", [
                 'items' => $items,
@@ -70,13 +70,13 @@ class RoleController extends Controller
 
             $items = [
                 (object)['title' => 'Home', 'url' => route('home'),],
-                (object)['title' => $this->title, 'url' => route("{$this->routePath}.index")],
+                (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
                 (object)['title' => "Criar {$this->title}", 'url' => '']
             ];
 
             $modules = (new ModuleService)->listAll()->get();
 
-            return view("{$this->routePath}.create", compact('items', 'modules'));
+            return view("tenants.{$this->path}.create", compact('items', 'modules'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 return redirect()->route('access-denied');
@@ -142,14 +142,14 @@ class RoleController extends Controller
 
             $items = [
                 (object)['title' => 'Home', 'url' => route('home'),],
-                (object)['title' => $this->title, 'url' => route("{$this->routePath}.index")],
+                (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
                 (object)['title' => "Editar {$this->title}", 'url' => '']
             ];
 
             $role = $this->service->findById($id);
 
             $modules = (new ModuleService)->listAll()->get();
-            return view("{$this->routePath}.update", compact('role', 'modules', 'items'));
+            return view("tenants.{$this->path}.update", compact('role', 'modules', 'items'));
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
                 return redirect()->route('access-denied');
