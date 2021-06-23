@@ -31,13 +31,16 @@ const index = (new function () {
     }
 
     self.renderActions = function (id) {
+        const edit = self.canEdit ? `<a href="/tenants/roles/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>` : ''
+        const remove = self.canRemove ? `<a href="javascript:void(0)" data-acao="excluir" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>` : ''
         const actions = `
         <div>
-            <a href="/tenants/roles/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
-            <a href="javascript:void(0)" data-acao="excluir" onclick="destroy(${id})" class="btn-sm btn-danger fa fa-trash"></a>
-        </div>
-        `
+            ${edit}
+            ${remove}
+        </div>`;
+
         return actions;
+
     }
 
 });

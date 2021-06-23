@@ -5,9 +5,7 @@
 @section('content_header')
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            @if ($canCreate)
-                <x-btn-new route="tenants.{{ $path }}.create" />
-            @endif
+            <x-btn-new route="tenants.{{ $path }}.create" />
             <x-breadcrumb :items="$items" />
         </div>
     </div>
