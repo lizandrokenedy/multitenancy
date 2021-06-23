@@ -33,7 +33,10 @@
 @section('js')
     <script src="{{ asset("js/tenants/{$path}/index.js") }}"></script>
     <script>
-        index.path = "{{$path}}"
+        index.path = "{{ $path }}"
         index.init();
+        index.canEdit = "{{ $canEdit }}"
+        index.canRemove = "{{ $canRemove }}"
+
     </script>
 @stop

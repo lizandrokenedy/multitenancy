@@ -10,6 +10,7 @@ use App\Services\SchoolService;
 use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -31,16 +32,31 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => $this->title, 'url' => ''],
-        ];
+        try {
+            $this->checkPermission('tela-escolas-administrativo-visualizar');
 
-        return view("tenants.{$this->path}.index", [
-            'items' => $items,
-            'title' => $this->title,
-            'path' => $this->path
-        ]);
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => $this->title, 'url' => ''],
+            ];
+            $canCreate = Gate::check('tela-usuarios-administrativo-criar');
+            $canEdit = Gate::check('tela-usuarios-administrativo-editar');
+            $canRemove = Gate::check('tela-usuarios-administrativo-excluir');
+
+            return view("tenants.{$this->path}.index", [
+                'items' => $items,
+                'title' => $this->title,
+                'path' => $this->path,
+                'canCreate' => $canCreate,
+                'canEdit' => $canEdit,
+                'canRemove' => $canRemove,
+            ]);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError();
+        }
     }
 
     /**
@@ -50,23 +66,32 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
-            (object)['title' => "Criar {$this->title}", 'url' => '']
-        ];
+        try {
+            $this->checkPermission('tela-escolas-administrativo-criar');
 
-        $states = State::all();
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
+                (object)['title' => "Criar {$this->title}", 'url' => '']
+            ];
 
-        $managers = (new UserService)->getAllManagers();
+            $states = State::all();
 
-        return view("tenants.{$this->path}.create", [
-            'items' => $items,
-            'title' => $this->title,
-            'path' => $this->path,
-            'states' => $states,
-            'managers' => $managers
-        ]);
+            $managers = (new UserService)->getAllManagers();
+
+            return view("tenants.{$this->path}.create", [
+                'items' => $items,
+                'title' => $this->title,
+                'path' => $this->path,
+                'states' => $states,
+                'managers' => $managers
+            ]);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError();
+        }
     }
 
     /**
@@ -78,6 +103,8 @@ class SchoolController extends Controller
     public function store(Request $request)
     {
         try {
+
+            $this->checkPermission('tela-escolas-administrativo-criar');
 
             $validate = $this->validateRequest($request);
 
@@ -105,9 +132,11 @@ class SchoolController extends Controller
     public function listAll(Request $request)
     {
         try {
+            $this->checkPermission('tela-escolas-administrativo-visualizar');
+
             return DataTables::of($this->service->listAll())->toJson();
         } catch (Exception $e) {
-            return $this->responseError();
+            return $this->responseError($e->getMessage());
         }
     }
 
@@ -121,9 +150,11 @@ class SchoolController extends Controller
     public function listManagers(Request $request)
     {
         try {
+            $this->checkPermission('tela-escolas-administrativo-visualizar');
+
             return DataTables::of((new UserRepository())->getSchoolManagersById($request->school_id))->toJson();
         } catch (Exception $e) {
-            return $this->responseError();
+            return $this->responseError($e->getMessage());
         }
     }
 
@@ -135,26 +166,35 @@ class SchoolController extends Controller
      */
     public function edit($id)
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
-            (object)['title' => "Editar {$this->title}", 'url' => '']
-        ];
+        try {
+            $this->checkPermission('tela-escolas-administrativo-editar');
 
-        $data = $this->service->findById($id);
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
+                (object)['title' => "Editar {$this->title}", 'url' => '']
+            ];
 
-        $states = State::all();
+            $data = $this->service->findById($id);
 
-        $managers = (new UserService)->getAllManagers();
+            $states = State::all();
 
-        return view("tenants.{$this->path}.update", [
-            'items' => $items,
-            'title' => $this->title,
-            'path' => $this->path,
-            'data' => $data,
-            'states' => $states,
-            'managers' => $managers
-        ]);
+            $managers = (new UserService)->getAllManagers();
+
+            return view("tenants.{$this->path}.update", [
+                'items' => $items,
+                'title' => $this->title,
+                'path' => $this->path,
+                'data' => $data,
+                'states' => $states,
+                'managers' => $managers
+            ]);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError();
+        }
     }
 
     /**
@@ -198,7 +238,14 @@ class SchoolController extends Controller
      */
     public function destroy($id)
     {
-        $this->service->delete($id);
-        return $this->responseSuccess();
+        try {
+            $this->checkPermission('tela-escolas-administrativo-excluir');
+
+            $this->service->delete($id);
+
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            return $this->responseError($e->getMessage());
+        }
     }
 }
