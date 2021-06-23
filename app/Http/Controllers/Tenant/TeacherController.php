@@ -8,6 +8,7 @@ use App\Services\SchoolService;
 use App\Services\TeacherService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -30,16 +31,28 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => $this->title, 'url' => ''],
-        ];
+        try {
+            $this->checkPermission('tela-professores-administrativo-visualizar');
 
-        return view("tenants.{$this->path}.index", [
-            'items' => $items,
-            'title' => $this->title,
-            'path' => $this->path
-        ]);
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => $this->title, 'url' => ''],
+            ];
+
+            $canEdit = Gate::check('tela-professores-administrativo-editar');
+
+            return view("tenants.{$this->path}.index", [
+                'items' => $items,
+                'title' => $this->title,
+                'path' => $this->path,
+                'canEdit' => $canEdit,
+            ]);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError();
+        }
     }
 
     /**
@@ -51,9 +64,11 @@ class TeacherController extends Controller
     public function listAll(Request $request)
     {
         try {
+            $this->checkPermission('tela-professores-administrativo-visualizar');
+
             return DataTables::of($this->service->listAll())->toJson();
         } catch (Exception $e) {
-            return $this->responseError();
+            return $this->responseError($e->getMessage());
         }
     }
 
@@ -65,23 +80,32 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
-        $items = [
-            (object)['title' => 'Home', 'url' => route('home'),],
-            (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
-            (object)['title' => "Editar {$this->title}", 'url' => '']
-        ];
+        try {
+            $this->checkPermission('tela-professores-administrativo-editar');
 
-        $data = $this->service->findById($id);
- 
-        $schools = (new SchoolService)->listAll()->get();
+            $items = [
+                (object)['title' => 'Home', 'url' => route('home'),],
+                (object)['title' => $this->title, 'url' => route("tenants.{$this->path}.index")],
+                (object)['title' => "Editar {$this->title}", 'url' => '']
+            ];
 
-        return view("tenants.{$this->path}.update", [
-            'items' => $items,
-            'title' => $this->title,
-            'path' => $this->path,
-            'data' => $data,
-            'schools' => $schools
-        ]);
+            $data = $this->service->findById($id);
+
+            $schools = (new SchoolService)->listAll()->get();
+
+            return view("tenants.{$this->path}.update", [
+                'items' => $items,
+                'title' => $this->title,
+                'path' => $this->path,
+                'data' => $data,
+                'schools' => $schools
+            ]);
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->route('access-denied');
+            }
+            return $this->responseError();
+        }
     }
 
     /**
@@ -94,6 +118,8 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $this->checkPermission('tela-professores-administrativo-editar');
+
             $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {

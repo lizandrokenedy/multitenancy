@@ -36,9 +36,10 @@ const index = (new function () {
     }
 
     self.renderActions = function (id) {
+        const edit = self.canEdit ? `<a href="/tenants/teachers/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>` : '';
         const actions = `
         <div>
-            <a href="/tenants/teachers/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>
+            ${edit}
         </div>
         `
         return actions;

@@ -207,6 +207,8 @@ class SchoolController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $this->checkPermission('tela-escolas-administrativo-editar');
+            
             $validate = $this->validateRequest($request);
 
             if ($validate->fails()) {
