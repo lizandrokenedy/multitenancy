@@ -39,4 +39,9 @@ class School extends Model
     {
         return $this->belongsToMany(User::class, 'school_student', 'school_id', 'student_id');
     }
+
+    public function assessments()
+    {
+        return $this->hasMany(Assessment::class, 'school_id', 'id');
+    }
 }

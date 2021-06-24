@@ -36,7 +36,7 @@ class RoleSeeder extends Seeder
             [
                 'name' => 'ALUNO',
                 'description' => 'Consulta ao ambiente de avaliações',
-                'permissions' => [9]
+                'permissions' => [10]
             ],
         ];
 

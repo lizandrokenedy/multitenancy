@@ -5,7 +5,9 @@
 @section('content_header')
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
-            <x-btn-new route="tenants.{{ $path }}.create" />
+            @if ($canCreate)
+                <x-btn-new route="tenants.{{ $path }}.create" />
+            @endif
             <x-breadcrumb :items="$items" />
         </div>
     </div>
@@ -33,7 +35,10 @@
 @section('js')
     <script src="{{ asset("js/tenants/{$path}/index.js") }}"></script>
     <script>
-        index.path = "{{$path}}"
+        index.path = "{{ $path }}"
         index.init();
+        index.canEdit = "{{ $canEdit }}"
+        index.canRemove = "{{ $canRemove }}"
+
     </script>
 @stop

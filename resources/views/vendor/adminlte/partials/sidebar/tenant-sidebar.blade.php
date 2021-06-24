@@ -55,7 +55,7 @@
 @endcan
 
 
-<li class="nav-item">
+{{-- <li class="nav-item">
     <a class="nav-link {{ Route::is('tenants.reports*') ? 'active' : '' }}"
         href="{{ route('tenants.reports.index') }}">
         <i class="fa fa-chart-pie mr-1"></i>
@@ -63,7 +63,7 @@
             Relatórios
         </p>
     </a>
-</li>
+</li> --}}
 
 @canany(['tela-usuarios-administrativo-visualizar', 'tela-perfis-administrativo-visualizar'])
     <li
