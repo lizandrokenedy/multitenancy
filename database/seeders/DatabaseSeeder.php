@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
             ModulosAndPermissionsSeeder::class,
             RoleSeeder::class,
             UserSeed::class,
+            FlexibilityStatusSeed::class,
+            AbdominalResistanceStatusSeed::class,
+            // SchoolSeed::class,
         ]);
     }
 }

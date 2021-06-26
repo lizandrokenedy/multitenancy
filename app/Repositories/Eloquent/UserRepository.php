@@ -94,4 +94,12 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
             $q->where('school_id', $idSchool);
         })->get();
     }
+
+
+    public function getStudentSchool(int $idSchool)
+    {
+        return $this->model::whereHas('studentsSchool', function ($q) use ($idSchool) {
+            $q->where('school_id', $idSchool);
+        })->get();
+    }
 }

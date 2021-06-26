@@ -17,8 +17,8 @@ class CreateAssessmentsTable extends Migration
             $table->id();
             $table->double('body_mass');
             $table->double('height');
-            $table->integer('flexibility');
-            $table->integer('abdominal_resistance');
+            $table->unsignedBigInteger('flexibility_id');
+            $table->unsignedBigInteger('abdominal_resistance_id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('evaluator_id');
             $table->unsignedBigInteger('school_id');
@@ -26,6 +26,8 @@ class CreateAssessmentsTable extends Migration
             $table->foreign('student_id')->references('id')->on('users');
             $table->foreign('evaluator_id')->references('id')->on('users');
             $table->foreign('school_id')->references('id')->on('schools');
+            $table->foreign('flexibility_id')->references('id')->on('flexibility_status');
+            $table->foreign('abdominal_resistance_id')->references('id')->on('abdominal_resistance_status');
             $table->timestamps();
         });
     }

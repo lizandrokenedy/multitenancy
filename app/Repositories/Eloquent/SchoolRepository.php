@@ -15,4 +15,10 @@ class SchoolRepository extends AbstractRepository
         return $this->model::create($data);
     }
 
+    public function listSchoolsTeacher(int $idTeacher)
+    {
+        return $this->model::whereHas('teachersSchool', function ($q) use ($idTeacher) {
+            $q->where('teacher_id', $idTeacher);
+        })->get();
+    }
 }

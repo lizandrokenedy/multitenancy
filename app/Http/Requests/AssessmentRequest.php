@@ -13,7 +13,7 @@ class AssessmentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,28 @@ class AssessmentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'school_id' => 'required|exists:schools,id',
+            'student_id' => 'required|exists:users,id',
+            'body_mass' => 'required',
+            'height' => 'required',
+            'flexibility_id' => 'required',
+            'abdominal_resistance_id' => 'required',
+        ];
+    }
+
+
+    public function messages()
+    {
+        return [
+
+            'school_id.required' => 'O campo escola é obrigatório.',
+            'school_id.exists' => 'Escola não encontrada.',
+            'student_id.required' => 'O campo aluno é obrigatório.',
+            'student_id.exists' => 'Aluno não encontrado.',
+            'body_mass.required' => 'O campo massa corporal é obrigatório.',
+            'height.required' => 'O campo altura é obrigatório.',
+            'flexibility_id.required' => 'O campo flexibilidade é obrigatório.',
+            'abdominal_resistance_id.required' => 'O campo resistência abdominal é obrigatório.',
         ];
     }
 }

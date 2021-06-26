@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     #Students/Alunos
     Route::group(['prefix' => 'students', 'as' => 'students.'], function () {
+        Route::get('list-students-school/{school_id}', [StudentController::class, 'listStudentSchool'])->name('list-student-school');
         Route::post('list-all', [StudentController::class, 'listAll'])->name('list-all');
     });
     Route::resource('students', StudentController::class);

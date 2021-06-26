@@ -20,8 +20,8 @@ class Assessment extends Model
     protected $fillable = [
         'body_mass',
         'height',
-        'flexibility',
-        'abdominal_resistance',
+        'flexibility_id',
+        'abdominal_resistance_id',
         'student_id',
         'evaluator_id',
         'school_id',
@@ -30,7 +30,7 @@ class Assessment extends Model
 
     public function students()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'student_id', 'id');
     }
 
     public function evaluator()
@@ -43,4 +43,13 @@ class Assessment extends Model
         return $this->belongsTo(School::class, 'school_id', 'id');
     }
 
+    public function abdominalResistance()
+    {
+        return $this->belongsTo(AbdominalResistanceStatus::class, 'abdominal_resistance_id', 'id');
+    }
+
+    public function flexibility()
+    {
+        return $this->belongsTo(FlexibilityStatus::class, 'flexibility_id', 'id');
+    }
 }

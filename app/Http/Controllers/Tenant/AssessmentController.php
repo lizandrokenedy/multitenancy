@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssessmentRequest;
+use App\Models\AbdominalResistanceStatus;
+use App\Models\FlexibilityStatus;
 use App\Services\AssessmentService;
+use App\Services\SchoolService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -75,10 +78,17 @@ class AssessmentController extends Controller
                 (object)['title' => "Criar {$this->title}", 'url' => '']
             ];
 
+            $schools = (new SchoolService())->listSchoolsAccordingToRole();
+            $flexibilitys = FlexibilityStatus::all();
+            $resistences = AbdominalResistanceStatus::all();
+
             return view("tenants.{$this->path}.create", [
                 'items' => $items,
                 'title' => $this->title,
-                'path' => $this->path
+                'path' => $this->path,
+                'schools' => $schools,
+                'flexibilitys' => $flexibilitys,
+                'resistences' => $resistences,
             ]);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {
@@ -126,7 +136,7 @@ class AssessmentController extends Controller
         try {
             $this->checkPermission('tela-avaliacoes-administrativo-visualizar');
 
-            return DataTables::of($this->service->listAll())->toJson();
+            return DataTables::of($this->service->listAll()->with(['evaluator', 'students', 'schools', 'abdominalResistance', 'flexibility']))->toJson();
         } catch (Exception $e) {
             return $this->responseError();
         }
@@ -149,12 +159,18 @@ class AssessmentController extends Controller
                 (object)['title' => "Editar {$this->title}", 'url' => '']
             ];
 
+            $schools = (new SchoolService())->listSchoolsAccordingToRole();
+            $flexibilitys = FlexibilityStatus::all();
+            $resistences = AbdominalResistanceStatus::all();
             $data = $this->service->findById($id);
             return view("tenants.{$this->path}.update", [
                 'items' => $items,
                 'title' => $this->title,
                 'path' => $this->path,
-                'data' => $data
+                'data' => $data,
+                'schools' => $schools,
+                'flexibilitys' => $flexibilitys,
+                'resistences' => $resistences,
             ]);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {

@@ -142,4 +142,10 @@ class StudentController extends Controller
             (new StudentRequest())->messages()
         );
     }
+
+
+    public function listStudentSchool($idSchool)
+    {
+        return $this->responseDataSuccess($this->service->listStudentSchool($idSchool));
+    }
 }

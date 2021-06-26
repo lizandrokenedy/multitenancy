@@ -55,4 +55,10 @@ class StudentService extends AbstractService
 
         return true;
     }
+
+
+    public function listStudentSchool(int $idSchool)
+    {
+        return $this->repository->getStudentSchool($idSchool);
+    }
 }

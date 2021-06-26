@@ -105,6 +105,7 @@
         @endif
     @endif
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <script src="{{ asset('js/plugins/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('js/config.js') }}"></script>
     <script src="{{ asset('js/custom/messages.js') }}"></script>
     <script src="{{ asset('js/custom/redirect.js') }}"></script>

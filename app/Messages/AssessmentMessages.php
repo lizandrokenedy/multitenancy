@@ -2,6 +2,6 @@
 
 namespace App\Messages;
 
-class ModuleMessages extends Messages
+class AssessmentMessages extends Messages
 {
 }

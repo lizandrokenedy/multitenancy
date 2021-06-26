@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Messages\AssessmentMessages;
 use App\Models\Assessment;
 use App\Repositories\Eloquent\AssessmentRepository;
+use Illuminate\Support\Facades\Auth;
 
 class AssessmentService extends AbstractService
 {
@@ -63,6 +64,7 @@ class AssessmentService extends AbstractService
      */
     public function create(array $data): Assessment
     {
+        $data = array_merge($data, ['evaluator_id' => Auth::id()]);
         return $this->repository->save($data);
     }
 

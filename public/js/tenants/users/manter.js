@@ -16,7 +16,7 @@ const manter = (new function () {
 
     self.init = function () {
         self.isAdmin();
-        self.buildComboCities()
+        self.buildComboCities();
         self.alterPassword();
         self.btnSave.on('click', self.save);
         self.state.on('change', self.buildComboCities);

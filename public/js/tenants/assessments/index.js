@@ -15,7 +15,14 @@ const index = (new function () {
                 type: "POST"
             },
             columns: [
-                { data: "name", name: "name", title: "Nome" },
+                { data: "body_mass", name: "body_mass", title: "Massa Corporal" },
+                { data: "height", name: "height", title: "Altura" },
+                { data: "flexibility.description", name: "flexibility", title: "Flexibilidade" },
+                { data: "abdominal_resistance.description", name: "abdominal_resistance", title: "Resistência Abdominal" },
+                { data: "students.name", name: "student_id", title: "Aluno" },
+                { data: "evaluator.name", name: "evaluator_id", title: "Avaliador" },
+                { data: "schools.name", name: "school_id", title: "Escola" },
+                { data: "imc", name: "imc", title: "IMC" },
                 { data: "id", name: "id", title: "Ações", class: 'text-center', orderable: false, render: self.renderActions },
             ],
             rowCallback: function (row, data) {

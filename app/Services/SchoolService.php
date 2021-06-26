@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Models\School;
 use App\Repositories\Eloquent\SchoolRepository;
 use App\Repositories\Eloquent\UserRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SchoolService extends AbstractService
@@ -26,6 +28,17 @@ class SchoolService extends AbstractService
         return $this->repository->query();
     }
 
+    public function listSchoolsAccordingToRole()
+    {
+
+        if (!empty(Auth::user()->roles->first()) && Auth::user()->roles->first()->id == RoleEnum::PROFESSOR) {
+            // if () {
+            return $this->repository->listSchoolsTeacher(Auth::id());
+            // }
+        }
+
+        return $this->repository->all();
+    }
 
     /**
      * Find by ID
