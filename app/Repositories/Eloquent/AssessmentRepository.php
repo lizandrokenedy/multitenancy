@@ -12,4 +12,9 @@ class AssessmentRepository extends AbstractRepository
     {
         return $this->model::create($data);
     }
+
+    public function listAssessmentByStudent($idStudent)
+    {
+        return $this->model::query()->where('student_id', $idStudent);
+    }
 }

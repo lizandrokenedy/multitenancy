@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Messages\AssessmentMessages;
 use App\Models\Assessment;
 use App\Repositories\Eloquent\AssessmentRepository;
@@ -22,9 +23,12 @@ class AssessmentService extends AbstractService
      */
     public function listAll()
     {
+        $roleUser = Auth::user()->roles->first();
+        if (isset($roleUser) && $roleUser->id === RoleEnum::ALUNO) {
+            return $this->repository->listAssessmentByStudent(Auth::id());
+        }
         return $this->repository->query();
     }
-
 
     /**
      * Find by ID

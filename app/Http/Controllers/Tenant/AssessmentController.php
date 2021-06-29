@@ -138,7 +138,7 @@ class AssessmentController extends Controller
 
             return DataTables::of($this->service->listAll()->with(['evaluator', 'students', 'schools', 'abdominalResistance', 'flexibility']))->toJson();
         } catch (Exception $e) {
-            return $this->responseError();
+            return $this->responseError($e->getMessage());
         }
     }
 

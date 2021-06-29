@@ -16,7 +16,7 @@
 
     <div class="form-row">
         <div class="form-group col-sm-12 col-md-6">
-            <label for="name" class="required">Nome</label>
+            <label for="name" class="required">Escola</label>
             <select class="form-control" name="school" id="school">
                 <option value="">Selecione</option>
                 @foreach ($schools as $school)

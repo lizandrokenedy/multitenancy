@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Models\User;
 use App\Repositories\Eloquent\UserRepository;
+use Illuminate\Support\Facades\Auth;
 
 class StudentService extends AbstractService
 {
@@ -21,6 +23,13 @@ class StudentService extends AbstractService
      */
     public function listAll()
     {
+        $roleUser = Auth::user()->roles->first();
+
+        if (isset($roleUser) && $roleUser->id === RoleEnum::PROFESSOR) {
+            $teacherSchoolsId = Auth::user()->teachersSchool->count() > 0 ? Auth::user()->teachersSchool->pluck('id')->toArray() : [];
+
+            return $this->repository->listStudentsAccordingToTeacherSchools($teacherSchoolsId);
+        }
         return $this->repository->getAllStudents();
     }
 
