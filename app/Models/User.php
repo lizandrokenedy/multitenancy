@@ -96,7 +96,7 @@ class User extends Authenticatable
 
     public function studentsSchool()
     {
-        return $this->belongsToMany(School::class, 'school_student', 'student_id', 'school_id');
+        return $this->belongsToMany(School::class, 'school_student', 'student_id', 'school_id')->withPivot('class');
     }
 
     public function studentsAssessments()
@@ -107,5 +107,15 @@ class User extends Authenticatable
     public function evaluatorsAssessments()
     {
         return $this->hasMany(Assessment::class, 'evaluator_id', 'id');
+    }
+
+    public function studentsSerie()
+    {
+        return $this->belongsToMany(Serie::class, 'school_student', 'student_id', 'serie_id');
+    }
+
+    public function studentsPeriod()
+    {
+        return $this->belongsToMany(Period::class, 'school_student', 'student_id', 'period_id');
     }
 }

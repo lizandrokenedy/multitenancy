@@ -33,8 +33,14 @@ class UserRepository extends AbstractRepository implements RepositoryInterface, 
 
     public function getUserByIdAndRelations(int $idUser)
     {
-        return $this->model::with(['roles.permissions', 'address', 'teachersSchool', 'studentsSchool'])
-            ->find($idUser);
+        return $this->model::with([
+            'roles.permissions',
+            'address',
+            'teachersSchool',
+            'studentsSchool',
+            'studentsPeriod',
+            'studentsSerie',
+        ])->find($idUser);
     }
 
     public function userListAdminManager()

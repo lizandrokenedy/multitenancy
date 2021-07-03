@@ -60,7 +60,13 @@ class StudentService extends AbstractService
 
         $idSchool = isset($data['school']) ? $data['school'] : [];
 
-        $registry->studentsSchool()->sync($idSchool);
+        $registry->studentsSchool()->sync([
+            $idSchool => [
+                'serie_id' => $data['serie'],
+                'period_id' => $data['period'],
+                'class' => $data['class']
+            ]
+        ]);
 
         return true;
     }

@@ -6,7 +6,7 @@ use App\Models\City;
 use App\Models\State;
 use Illuminate\Database\Seeder;
 
-class StateAndCitySeeder extends Seeder
+class StateAndCitySeed extends Seeder
 {
     /**
      * Run the database seeds.

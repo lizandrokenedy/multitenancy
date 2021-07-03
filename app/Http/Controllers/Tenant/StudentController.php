@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
+use App\Models\Period;
+use App\Models\Serie;
 use App\Services\SchoolService;
 use App\Services\StudentService;
 use Exception;
@@ -90,15 +92,19 @@ class StudentController extends Controller
             ];
 
             $data = $this->service->findById($id);
-
+            // dd($data);
             $schools = (new SchoolService)->listAll()->get();
+            $series = Serie::all();
+            $periods = Period::all();
 
             return view("tenants.{$this->path}.update", [
                 'items' => $items,
                 'title' => $this->title,
                 'path' => $this->path,
                 'data' => $data,
-                'schools' => $schools
+                'schools' => $schools,
+                'series' => $series,
+                'periods' => $periods,
             ]);
         } catch (Exception $e) {
             if ($e->getCode() === 403) {

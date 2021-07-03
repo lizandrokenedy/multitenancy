@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Services\ModuleService;
 use Illuminate\Database\Seeder;
 
-class ModulosAndPermissionsSeeder extends Seeder
+class ModulosAndPermissionsSeed extends Seeder
 {
     /**
      * Run the database seeds.

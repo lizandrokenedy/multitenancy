@@ -16,12 +16,14 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
-            StateAndCitySeeder::class,
-            ModulosAndPermissionsSeeder::class,
-            RoleSeeder::class,
+            StateAndCitySeed::class,
+            ModulosAndPermissionsSeed::class,
+            RoleSeed::class,
             UserSeed::class,
             FlexibilityStatusSeed::class,
             AbdominalResistanceStatusSeed::class,
+            SerieSeed::class,
+            PeriodSeed::class,
             // SchoolSeed::class,
         ]);
     }

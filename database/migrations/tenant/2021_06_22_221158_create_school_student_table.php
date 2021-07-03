@@ -17,9 +17,13 @@ class CreateSchoolStudentTable extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('school_id');
+            $table->unsignedBigInteger('serie_id');
+            $table->unsignedBigInteger('period_id');
+            $table->string('class');
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
+            $table->foreign('serie_id')->references('id')->on('series');
+            $table->foreign('period_id')->references('id')->on('periods');
         });
     }
 
