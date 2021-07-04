@@ -59,7 +59,7 @@
     <li class="nav-item {{ Route::is('tenants.reports.students*', 'tenants.reports.schools*') ? 'menu-open' : '' }}">
         <a href="#"
             class="nav-link {{ Route::is('tenants.reports.students*', 'tenants.reports.schools*') ? 'active' : '' }}">
-            <i class="fa fa-lock mr-1"></i>
+            <i class="fa fa-folder-open mr-1"></i>
             <p>
                 Relatórios
                 <i class="right fas fa-angle-left"></i>
