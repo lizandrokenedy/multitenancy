@@ -3,16 +3,26 @@ const report = (new function () {
     self.student = $('#student');
     self.school = $('#school');
     self.chart = $('#chart');
+    self.infoAssessment = $('#info-assessment');
 
     self.init = function () {
+        self.school.on('change', self.cleanComboStudents);
         self.school.on('change', self.buildComboStudents);
-        self.buildChart();
+        self.student.on('change', self.getDataReport);
+        self.getDataReport();
     }
 
-    self.getStudents = async function () {
+    self.getStudents = function () {
         if (self.school.val()) {
-            return await tenantAjax.get(`/tenants/students/list-students-school/${self.school.val()}`);
+            return tenantAjax.get(`/tenants/students/list-students-school/${self.school.val()}`);
         }
+    }
+
+    self.cleanComboStudents = function () {
+        self.student.empty();
+        self.student.append(
+            `<option value="">Selecione</option>`
+        )
     }
 
     self.buildComboStudents = async function () {
@@ -22,10 +32,6 @@ const report = (new function () {
             return;
         }
 
-        self.student.empty();
-        self.student.append(
-            `<option value="">Selecione</option>`
-        )
         students.data.map(student => {
             self.student.append(
                 `<option value="${student.id}">${student.name}</option>`
@@ -33,78 +39,129 @@ const report = (new function () {
         })
     }
 
-    self.getData = function () {
-        return [
-            {
-                "labels": "07/2021",
-                "imc": 22.63
-            },
-            {
-                "labels": "08/2021",
-                "imc": 26
-            },
-            {
-                "labels": "09/2021",
-                "imc": 30.63
-            },
-            {
-                "labels": "10/2021",
-                "imc": 22.63
-            },
-            {
-                "labels": "11/2021",
-                "imc": 30
-            },
-            {
-                "labels": "12/2021",
-                "imc": 33.55
-            },
-        ]
+    self.getDataReport = async function () {
+        if (self.student.val()) {
+            const dataStudent = await tenantAjax.get(`/tenants/reports/students/data/${self.student.val()}`)
 
+            if (!dataStudent) {
+                self.buildChart([], []);
+                return;
+            }
+
+            const data = self.pluck(dataStudent.data.chart, 'imc');
+            const labels = self.pluck(dataStudent.data.chart, 'labels');
+
+            self.buildChart(data, labels);
+
+            self.buildInfos(dataStudent.data.info);
+            return;
+        }
+
+        self.buildChart([], []);
+
+    }
+
+    self.buildInfos = function (data) {
+        const school = $('#school option:selected').text();
+        const student = $('#student option:selected').text();
+        const body_mass = data ? data.body_mass : '';
+        const height = data ? data.height : '';
+        const flexibility = data ? data.flexibility.description : '';
+        const abdominal_resistance = data ? data.abdominal_resistance.description : '';
+        const imc = data ? data.imc : '';
+        $('#info').remove();
+        if (data) {
+            return self.infoAssessment.append(`
+            <div id="info">
+                <h3 class="profile-username text-center">Escola: ${school}</h3>
+
+                <p class="text-muted text-center">Aluno: ${student}</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Massa Corporal</b> <a class="float-right">${body_mass}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Altura</b> <a class="float-right">${height}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Flexibilidade</b> <a class="float-right">${flexibility}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Resistência Abdominal</b> <a class="float-right">${abdominal_resistance}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>IMC</b> <a class="float-right">${imc}</a>
+                    </li>
+                </ul>
+            </div>
+            `)
+
+        }
+
+        return self.infoAssessment.append(`
+        <div id="info">
+            <p class="text-center">Nenhum registro encontrado!</p>
+        </div>`)
     }
 
     self.pluck = function (arr, key) {
         return arr.map(i => i[key]);
+
     }
 
-    self.buildChart = function () {
-        const dataStudent = self.getData();
-        const data = self.pluck(dataStudent, 'imc');
-        const labels = self.pluck(dataStudent, 'labels');
+    self.buildChart = function (data, labels) {
+
         new Chart(self.chart, {
             type: 'line',
+
             data: {
                 labels,
                 datasets: [{
+                    fill: false,
                     label: '# IMC',
                     data,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
+                        '#117a8b',
+                        // 'rgba(54, 162, 235, 0.2)',
+                        // 'rgba(255, 206, 86, 0.2)',
+                        // 'rgba(75, 192, 192, 0.2)',
+                        // 'rgba(153, 102, 255, 0.2)',
+                        // 'rgba(255, 159, 64, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        '#117a8b',
+                        // 'rgba(54, 162, 235, 1)',
+                        // 'rgba(255, 206, 86, 1)',
+                        // 'rgba(75, 192, 192, 1)',
+                        // 'rgba(153, 102, 255, 1)',
+                        // 'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
+                // maintainAspectRatio: true,
+                // responsive: true,
+                // legend: {
+                //     display: false
+                // },
                 scales: {
+                    xAxes: [{
+                        // gridLines: {
+                        //     display: false,
+                        // }
+                    }],
                     yAxes: [{
+                        // gridLines: {
+                        //     display: false,
+                        // },
                         ticks: {
                             beginAtZero: true
                         }
                     }]
                 }
+
             }
         });
     }

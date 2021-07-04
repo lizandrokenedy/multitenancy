@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Tenant\Reports;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Repositories\Eloquent\AssessmentRepository;
 use App\Services\SchoolService;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentReportController extends Controller
 {
@@ -25,18 +28,48 @@ class StudentReportController extends Controller
         ];
 
         $schools = (new SchoolService())->listSchoolsAccordingToRole();
+        $isStudent = $this->userIsStudent();
 
         return view("tenants.{$this->path}.students", [
             'items' => $items,
             'title' => $this->title,
             'path' => $this->path,
             'schools' => $schools,
+            'isStudent' => $isStudent
         ]);
     }
 
-
-    public function getData()
+    private function userIsStudent()
     {
-        return $this->responseDataSuccess((new AssessmentRepository())->getDataReportStudent(5));
+        $userRole = Auth::user()->roles->first();
+
+        if (isset($userRole->id) && $userRole->id == RoleEnum::ALUNO) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function getData(int $id)
+    {
+        try {
+            $chart = (new AssessmentRepository())->getDataReportStudent($id);
+            $info = (new AssessmentRepository())->getLastAssessmentStudent($id);
+
+            if ($this->userIsStudent()) {
+                $chart = (new AssessmentRepository())->getDataReportStudent(Auth::id());
+                $info = (new AssessmentRepository())->getLastAssessmentStudent(Auth::id());
+            }
+
+            $data = [
+                'chart' => $chart,
+                'info' => $info
+            ];
+
+            return $this->responseDataSuccess($data);
+        } catch (Exception $e) {
+            return $this->responseError();
+        }
     }
 }

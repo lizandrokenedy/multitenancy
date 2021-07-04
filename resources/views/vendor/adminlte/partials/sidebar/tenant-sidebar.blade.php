@@ -55,7 +55,7 @@
 @endcan
 
 
-@canany(['tela-usuarios-administrativo-visualizar', 'tela-perfis-administrativo-visualizar'])
+{{-- @canany(['tela-usuarios-administrativo-visualizar', 'tela-perfis-administrativo-visualizar']) --}}
     <li class="nav-item {{ Route::is('tenants.reports.students*', 'tenants.reports.schools*') ? 'menu-open' : '' }}">
         <a href="#"
             class="nav-link {{ Route::is('tenants.reports.students*', 'tenants.reports.schools*') ? 'active' : '' }}">
@@ -66,7 +66,7 @@
             </p>
         </a>
         <ul class="nav nav-treeview">
-            @can('tela-usuarios-administrativo-visualizar')
+            {{-- @can('tela-usuarios-administrativo-visualizar') --}}
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('tenants.reports.students.index') ? 'active' : '' }}"
                         href="{{ route('tenants.reports.students.index') }}">
@@ -76,21 +76,10 @@
                         </p>
                     </a>
                 </li>
-            @endcan
-            @can('tela-perfis-administrativo-visualizar')
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::is('tenants.roles*') ? 'active' : '' }}"
-                        href="{{ route('tenants.roles.index') }}">
-                        <i class="fa fa-user-lock mr-1 ml-2"></i>
-                        <p>
-                            Escolas
-                        </p>
-                    </a>
-                </li>
-            @endcan
+            {{-- @endcan --}}
         </ul>
     </li>
-@endcanany
+{{-- @endcanany --}}
 
 @canany(['tela-usuarios-administrativo-visualizar', 'tela-perfis-administrativo-visualizar'])
     <li

@@ -20,8 +20,16 @@ class AssessmentRepository extends AbstractRepository
 
     public function getDataReportStudent($idStudent)
     {
-        return $this->model::selectRaw('DATE_FORMAT(created_at, "%m/%Y") as labels, imc')
+        return $this->model::selectRaw('DATE_FORMAT(created_at, "%d/%m/%Y") as labels, imc')
             ->where('student_id', $idStudent)
             ->get();
+    }
+
+    public function getLastAssessmentStudent($idStudent)
+    {
+        return $this->model::where('student_id', $idStudent)
+            ->with(['evaluator', 'students', 'schools', 'abdominalResistance', 'flexibility'])
+            ->orderBy('id', 'DESC')
+            ->first();
     }
 }
