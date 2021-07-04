@@ -4,11 +4,9 @@ namespace App\Repositories\Eloquent;
 
 use App\Helpers\Enum\RoleEnum;
 use App\Models\User;
-use App\Repositories\Contracts\RepositoryInterface;
-use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
-class UserRepository extends AbstractRepository implements RepositoryInterface, UserRepositoryInterface
+class UserRepository extends AbstractRepository
 {
     protected $model = User::class;
 

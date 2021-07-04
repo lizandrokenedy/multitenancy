@@ -6,12 +6,12 @@ use App\Http\Controllers\Tenant\GradeController;
 use App\Http\Controllers\Tenant\HelpCenterController;
 use App\Http\Controllers\Tenant\ModuleController;
 use App\Http\Controllers\Tenant\PermissionController;
-use App\Http\Controllers\Tenant\ReportController;
 use App\Http\Controllers\Tenant\RoleController;
 use App\Http\Controllers\Tenant\SchoolController;
 use App\Http\Controllers\Tenant\StudentController;
 use App\Http\Controllers\Tenant\TeacherController;
 use App\Http\Controllers\Tenant\UserController;
+use App\Http\Controllers\Tenant\Reports\StudentReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth']], function () {
@@ -102,7 +102,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     #Help Center/Central de Ajuda
     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
-        Route::post('list-all', [ReportController::class, 'listAll'])->name('list-all');
+
+        Route::group(['prefix' => 'students', 'as' => 'students.'], function () {
+            Route::get('index', [StudentReportController::class, 'index'])->name('index');
+            Route::get('data', [StudentReportController::class, 'getData'])->name('data');
+        });
     });
-    Route::resource('reports', ReportController::class);
 });

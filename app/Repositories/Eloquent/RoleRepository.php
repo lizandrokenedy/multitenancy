@@ -4,8 +4,6 @@ namespace App\Repositories\Eloquent;
 
 use App\Helpers\Enum\RoleEnum;
 use App\Models\Role;
-use App\Repositories\Contracts\RepositoryInterface;
-use App\Repositories\Contracts\RoleRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class RoleRepository extends AbstractRepository

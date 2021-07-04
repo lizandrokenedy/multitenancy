@@ -3,8 +3,6 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Module;
-use App\Repositories\Contracts\ModuleRepositoryInterface;
-use App\Repositories\Contracts\RepositoryInterface;
 
 class ModuleRepository extends AbstractRepository
 {

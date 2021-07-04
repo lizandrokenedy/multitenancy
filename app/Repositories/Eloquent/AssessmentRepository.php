@@ -17,4 +17,11 @@ class AssessmentRepository extends AbstractRepository
     {
         return $this->model::query()->where('student_id', $idStudent);
     }
+
+    public function getDataReportStudent($idStudent)
+    {
+        return $this->model::selectRaw('DATE_FORMAT(created_at, "%m/%Y") as labels, imc')
+            ->where('student_id', $idStudent)
+            ->get();
+    }
 }
