@@ -62,15 +62,18 @@ const report = (new function () {
     }
 
     self.buildInfos = function (data) {
-        const school = $('#school option:selected').text();
-        const student = $('#student option:selected').text();
-        const body_mass = data ? data.body_mass : '';
-        const height = data ? data.height : '';
-        const flexibility = data ? data.flexibility.description : '';
-        const abdominal_resistance = data ? data.abdominal_resistance.description : '';
-        const imc = data ? data.imc : '';
+
         $('#info').remove();
+
         if (data) {
+            const school = data.schools.name;
+            const student = data.students.name;
+            const body_mass = data.body_mass;
+            const height = data.height;
+            const flexibility = data.flexibility.description;
+            const abdominal_resistance = data.abdominal_resistance.description;
+            const imc = data.imc;
+
             return self.infoAssessment.append(`
             <div id="info">
                 <h3 class="profile-username text-center">Escola: ${school}</h3>
