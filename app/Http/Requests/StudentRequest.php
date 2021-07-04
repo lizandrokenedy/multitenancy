@@ -24,7 +24,20 @@ class StudentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'school' => 'required',
+            'serie' => 'required',
+            'class' => 'required',
+            'period' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'school.required' => "O campo escola é obrigatório.",
+            'serie.required' => "O campo série é obrigatório.",
+            'class.required' => "O campo turma é obrigatório.",
+            'period.required' => "O campo período é obrigatório.",
         ];
     }
 }
