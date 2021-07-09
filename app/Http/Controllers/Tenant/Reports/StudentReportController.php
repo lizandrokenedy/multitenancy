@@ -54,17 +54,40 @@ class StudentReportController extends Controller
     public function getData(int $id)
     {
         try {
-            $chart = (new AssessmentRepository())->getDataReportStudent($id);
+            $chart = (new AssessmentRepository())->getDataChartStudent($id);
             $info = (new AssessmentRepository())->getLastAssessmentStudent($id);
 
             if ($this->userIsStudent()) {
-                $chart = (new AssessmentRepository())->getDataReportStudent(Auth::id());
+                $chart = (new AssessmentRepository())->getDataChartStudent(Auth::id());
                 $info = (new AssessmentRepository())->getLastAssessmentStudent(Auth::id());
             }
 
             $data = [
                 'chart' => $chart,
                 'info' => $info
+            ];
+
+            return $this->responseDataSuccess($data);
+        } catch (Exception $e) {
+            return $this->responseError();
+        }
+    }
+
+
+    public function getHistoryStudent($id)
+    {
+        try {
+            $chart = (new AssessmentRepository())->getDataChartStudent($id);
+            $infos = (new AssessmentRepository())->getAllAssessmentStudent($id);
+
+            if ($this->userIsStudent()) {
+                $chart = (new AssessmentRepository())->getDataChartStudent(Auth::id());
+                $infos = (new AssessmentRepository())->getAllAssessmentStudent(Auth::id());
+            }
+
+            $data = [
+                'chart' => $chart,
+                'infos' => $infos
             ];
 
             return $this->responseDataSuccess($data);

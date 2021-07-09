@@ -19,6 +19,8 @@
                         <table id="table" class="table table-striped">
                         </table>
                     </div>
+
+                    @include("tenants.{$path}._partials.history-modal")
                 </div>
             </div>
         </div>

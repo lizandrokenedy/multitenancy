@@ -106,6 +106,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['prefix' => 'students', 'as' => 'students.'], function () {
             Route::get('index', [StudentReportController::class, 'index'])->name('index');
             Route::get('data/{student_id}', [StudentReportController::class, 'getData'])->name('data');
+            Route::get('history/{student_id}', [StudentReportController::class, 'getHistoryStudent'])->name('history');
         });
     });
 });
