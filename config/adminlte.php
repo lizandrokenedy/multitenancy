@@ -388,6 +388,26 @@ return [
                 ],
             ],
         ],
+        'jsPDF' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js',
+                ],
+            ],
+        ],
+        'DomToImage' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js',
+                ],
+            ],
+        ],
         'Sweetalert2' => [
             'active' => true,
             'files' => [

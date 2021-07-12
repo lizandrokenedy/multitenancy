@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\Tenant;
 
+use App\Helpers\Enum\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
+use App\Mail\HistoryStudent;
 use App\Models\Period;
 use App\Models\Serie;
+use App\Repositories\Eloquent\AssessmentRepository;
 use App\Services\SchoolService;
 use App\Services\StudentService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -153,5 +159,83 @@ class StudentController extends Controller
     public function listStudentSchool($idSchool)
     {
         return $this->responseDataSuccess($this->service->listStudentSchool($idSchool));
+    }
+
+    public function sendMailHistory($id)
+    {
+        try {
+
+            $chart = (new AssessmentRepository())->getDataChartStudent($id);
+            $infos = (new AssessmentRepository())->getAllAssessmentStudent($id);
+
+            if ($this->userIsStudent()) {
+                $chart = (new AssessmentRepository())->getDataChartStudent(Auth::id());
+                $infos = (new AssessmentRepository())->getAllAssessmentStudent(Auth::id());
+            }
+
+            $data = [
+                'chart' => $chart,
+                'infos' => $infos
+            ];
+
+            Mail::send((new HistoryStudent($data)));
+
+            return $this->responseSuccess();
+        } catch (Exception $e) {
+            return $this->responseError($e->getMessage());
+        }
+    }
+
+    // public function sendMailHistory(Request $request)
+    // {
+    //     try {
+
+    //         $file = base64_decode($request->file);
+
+    //         // dd(file_get_contents($file));
+
+    //         Storage::put('avaliacao.pdf', $file);
+
+    //         return $this->responseDataSuccess($request->all());
+    //     } catch (Exception $e) {
+    //         return $this->responseError($e->getMessage());
+    //     }
+    // }
+
+
+    private function userIsStudent()
+    {
+        $userRole = Auth::user()->roles->first();
+
+        if (isset($userRole->id) && $userRole->id == RoleEnum::ALUNO) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    public function testeView($id)
+    {
+        try {
+
+            $chart = (new AssessmentRepository())->getDataChartStudent($id);
+            $infos = (new AssessmentRepository())->getAllAssessmentStudent($id);
+
+            if ($this->userIsStudent()) {
+                $chart = (new AssessmentRepository())->getDataChartStudent(Auth::id());
+                $infos = (new AssessmentRepository())->getAllAssessmentStudent(Auth::id());
+            }
+
+            $data = [
+                'chart' => $chart,
+                'infos' => $infos
+            ];
+
+            return view('tenants.students.mail-history', compact('data'));
+        } catch (Exception $e) {
+            return $this->responseError($e->getMessage());
+        }
     }
 }

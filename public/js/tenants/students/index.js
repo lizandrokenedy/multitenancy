@@ -3,10 +3,11 @@ const index = (new function () {
     const self = this;
 
     self.table = $('#table');
-    self.closeModal = $('.close');
+    self.btnPDF = $('#btn-pdf')
 
     self.init = function () {
         self.createTable();
+        self.btnPDF.on('click', self.savePDF);
     }
 
     self.createTable = function () {
@@ -38,12 +39,14 @@ const index = (new function () {
 
     self.renderActions = function (id) {
         const edit = self.canEdit ? `<a href="/tenants/students/${id}/edit" class="btn-sm btn-primary fa fa-edit"></a>` : '';
-        const history = `<a href="#" onclick="setDataHistoryModal(${id})" class="btn-sm btn-success fa fa-eye" class="btn-sm btn-success" data-toggle="modal" data-target="#modal-xl"></a>`;
+        const history = `<a href="#" onclick="setDataHistoryModal(${id})" class="btn-sm btn-success fa fa-eye" data-toggle="modal" data-target="#modal-xl"></a>`;
+        const mail = `<a href="#" id="btn-mail" onclick="sendMailHistory(${id})" class="btn-sm btn-danger fa fa-envelope"></a>`;
 
         const actions = `
         <div>
             ${edit}
             ${history}
+            ${mail}
         </div>
         `
         return actions;
@@ -171,5 +174,112 @@ const index = (new function () {
             }
         });
     }
+
+
+    sendMailHistory = async function (id) {
+
+
+        console.log('enviando email')
+        $('#btn-mail').css({ 'pointer-events': 'none', 'cursor': 'default', 'opacity': '0.6' });
+        await tenantAjax.get(`/tenants/students/send-mail-history/${id}`)
+
+        setTimeout(() => {
+            $('#btn-mail').css({ 'pointer-events': '', 'cursor': '', 'opacity': '' });
+            console.log('terminou envio');
+        }, 3000);
+
+    }
+
+
+    self.savePDF = function () {
+        const node = document.querySelector('.modal-body');
+
+        domtoimage.toPng(node)
+            .then(function (dataUrl) {
+
+                const width = $('.modal-body').width();
+                const height = $('.modal-body').height();
+
+                const pdf = new jsPDF('l', 'pt', [width, height]);
+                pdf.addImage(dataUrl, 'PNG', 0, 0, width, height);
+                // pdf.save("story.pdf");
+
+                const binary = pdf.output();
+                const binaryEncode = btoa(binary);
+
+                const data = new FormData();
+                data.append('id', 1);
+                data.append('file', binaryEncode);
+                // tenantAjax.post('/tenants/students/send-mail-history', data)
+                $.ajax('/tenants/students/send-mail-history',
+                    {
+                        method: 'POST',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) { console.log(data) },
+                        error: function (data) { console.log(data) }
+                    });
+
+
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
+            });
+
+    }
+
+
+    // self.savePDF = function () {
+    //     var reportPageHeight = $('.modal-body').innerHeight();
+    //     var reportPageWidth = $('.modal-body').innerWidth();
+
+
+
+    //     // create a new canvas object that we will populate with all other canvas objects
+    //     var pdfCanvas = $('<canvas />').attr({
+    //         id: "canvaspdf",
+    //         width: reportPageWidth,
+    //         height: reportPageHeight
+    //     });
+
+    //     // keep track canvas position
+    //     var pdfctx = $(pdfCanvas)[0].getContext('2d');
+    //     var pdfctxX = 0;
+    //     var pdfctxY = 0;
+    //     var buffer = 100;
+
+
+
+    //     // for each chart.js chart
+    //     $("canvas").each(function (index) {
+    //         // get the chart height/width
+    //         var canvasHeight = $(this).innerHeight();
+    //         var canvasWidth = $(this).innerWidth();
+
+    //         // draw the chart into the new canvas
+    //         pdfctx.drawImage($(this)[0], pdfctxX, pdfctxY, canvasWidth, canvasHeight);
+    //         pdfctxX += canvasWidth + buffer;
+
+    //         // our report page is in a grid pattern so replicate that in the new canvas
+    //         if (index % 2 === 1) {
+    //             pdfctxX = 0;
+    //             pdfctxY += canvasHeight + buffer;
+    //         }
+    //     });
+
+
+
+
+    //     // create new pdf and add our new canvas as an image
+    //     var pdf = new jsPDF('l', 'pt', [reportPageWidth, reportPageHeight]);
+    //     pdf.addImage($(pdfCanvas)[0], 'PNG', 0, 0);
+
+    //     // download the pdf
+    //     pdf.save('filename.pdf');
+    // }
+
+
+
 
 });
